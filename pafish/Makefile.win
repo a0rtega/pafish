@@ -1,0 +1,55 @@
+# Project: pafish
+# Compiler: Default GCC compiler
+# Compiler Type: MingW 3
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 01/07/12 12:46
+
+WXLIBNAME = wxmsw29u
+CPP       = g++.exe
+CC        = gcc.exe
+WINDRES   = "windres.exe"
+OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o Objects/MingW/vbox.o Objects/MingW/pafish_private.res
+LINKOBJ   = "Objects/MingW/main.o" "Objects/MingW/common.o" "Objects/MingW/debuggers.o" "Objects/MingW/sandboxie.o" "Objects/MingW/vbox.o" Objects/MingW/pafish_private.res
+LIBS      = -L"C:/Archivos de programa/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Archivos de programa/Dev-Cpp/lib" -L"C:/Archivos de programa/Dev-Cpp/MinGW32/lib"  
+INCS      = -I"C:/Archivos de programa/Dev-Cpp/MinGW32/include"
+CXXINCS   = -I"C:/Archivos de programa/Dev-Cpp/MinGW32/include" -I"C:/Archivos de programa/Dev-Cpp/" -I"C:/Archivos de programa/Dev-Cpp/include/common"
+RCINCS    = --include-dir "C:/ARCHIV~1/Dev-Cpp/include/common"
+BIN       = Output/MingW/pafish.exe
+DEFINES   = 
+CXXFLAGS  = $(CXXINCS) $(DEFINES)  
+CFLAGS    = $(INCS) $(DEFINES)  
+GPROF     = gprof.exe
+ifeq ($(OS),Windows_NT)
+   RM = del /Q
+   FixPath = $(subst /,\,$1)
+else
+   RM = rm -f
+   FixPath = $1
+endif
+LINK      = g++.exe
+
+.PHONY: all all-before all-after clean clean-custom
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	$(RM) $(call FixPath,$(LINKOBJ)) "$(call FixPath,$(BIN))"
+
+$(BIN): $(OBJ)
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
+
+Objects/MingW/main.o: $(GLOBALDEPS) main.c
+	$(CC) -c main.c -o Objects/MingW/main.o $(CFLAGS)
+
+Objects/MingW/common.o: $(GLOBALDEPS) common.c
+	$(CPP) -c common.c -o Objects/MingW/common.o $(CXXFLAGS)
+
+Objects/MingW/debuggers.o: $(GLOBALDEPS) debuggers.c
+	$(CPP) -c debuggers.c -o Objects/MingW/debuggers.o $(CXXFLAGS)
+
+Objects/MingW/sandboxie.o: $(GLOBALDEPS) sandboxie.c
+	$(CPP) -c sandboxie.c -o Objects/MingW/sandboxie.o $(CXXFLAGS)
+
+Objects/MingW/vbox.o: $(GLOBALDEPS) vbox.c
+	$(CPP) -c vbox.c -o Objects/MingW/vbox.o $(CXXFLAGS)
+
+Objects/MingW/pafish_private.res: Objects/MingW/pafish_private.rc 
+	$(WINDRES) --input-format=rc -o Objects/MingW/pafish_private.res $(RCINCS) Objects/MingW/PAFISH~1.RC -O coff
