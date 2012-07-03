@@ -11,6 +11,10 @@ Note that the aim of the project is not to implement complex VM detections.
 
 The objective of this project is to collect usual tricks seen in malware samples. In this way, we can study it, and test if our analysis environments are properly implemented.
 
+# Build
+
+Pafish is written in C and developed with [wxDev-C++](http://wxdsgn.sourceforge.net/).
+
 # Author
 
 Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](https://profiles.google.com/alberto.kun666)) - alberto[at]pentbox.net
