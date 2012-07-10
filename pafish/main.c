@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");
     printf("[*] Looking for default vmtools working directory ... ");
-    if (vmtools_detect_work_dir()) == 0)
+    if (vmtools_detect_work_dir() == 0)
         print_traced();
     else
         print_not_traced();
@@ -82,6 +82,7 @@ int main(int argc, char *argv[])
 
     printf("\n\n");
     printf("[-] Finished, feel free to RE me.");
-    fflush(stdin); getchar();
+    fflush(stdin);
+    getch();
     return 0;
 }
