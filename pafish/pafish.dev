@@ -1,7 +1,7 @@
 [Project]
 FileName=pafish.dev
 Name=pafish
-UnitCount=9
+UnitCount=11
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -38,7 +38,7 @@ ProductName=Paranoid Fish
 ProductVersion=
 AutoIncBuildNrOnRebuild=0
 AutoIncBuildNrOnCompile=0
-UnitCount=9
+UnitCount=11
 
 [Profile1]
 ProfileName=MingW gcc
@@ -52,7 +52,7 @@ Compiler=
 CppCompiler=
 Linker=
 PreprocDefines=
-CompilerSettings=0000000000000000000000
+CompilerSettings=0000000000000001000000
 Icon=pafish.ico
 ExeOutput=Output\MingW
 ImagesOutput=Images\
@@ -168,6 +168,26 @@ BuildCmd=
 
 [Unit9]
 FileName=vbox.c
+CompileCpp=1
+Folder=pafish
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=vmware.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit10]
+FileName=..\..\..\..\..\..\dev\a0rtega-pafish-4642a9d\pafish\vmware.c
 CompileCpp=1
 Folder=pafish
 Compile=1

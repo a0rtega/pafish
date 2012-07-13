@@ -7,6 +7,7 @@
 #include "debuggers.h"
 #include "sandboxie.h"
 #include "vbox.h"
+#include "vmware.h"
 
 /*
   Pafish (Paranoid fish)
@@ -20,7 +21,10 @@
   your malware, you have to release the
   source code as well :)
   
-  - Alberto Ortega (alberto[at]pentbox.net)
+  Contributors:
+   - Alberto Ortega (alberto[at]pentbox[dot]net)
+   - Moshe Zioni aka dalmoz (zimoshe[at]gmail[dot]com)
+   
   
 */
 
@@ -66,9 +70,19 @@ int main(int argc, char *argv[])
         print_traced();
     else
         print_not_traced();
+        
+    /* VMware detection tricks */
+    printf("\n[-] VMware detection\n");
+    printf("[*] Looking for default vmtools working directory ... ");
+    if (vmtools_detect_work_dir() == 0)
+        print_traced();
+    else
+        print_not_traced();
+
 
     printf("\n\n");
     printf("[-] Finished, feel free to RE me.");
-    fflush(stdin); getchar();
+    fflush(stdin);
+    getch();
     return 0;
 }
