@@ -1,6 +1,11 @@
 
-#include "debuggers.c"
+#ifndef DEBUG_H
+#define DEBUG_H
 
 int debug_isdebuggerpresent();
 
+int debug_checkremotedebuggerpresent();
+
 int debug_outputdebugstring();
+
+#endif

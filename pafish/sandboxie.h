@@ -1,6 +1,7 @@
 
-#include "sandboxie.c"
+#ifndef SANBOXIE_H
+#define SANBOXIE_H
 
 int sboxie_detect_sbiedll();
 
-int sboxie_detect_work_dir();
+#endif

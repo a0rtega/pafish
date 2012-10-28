@@ -1,0 +1,19 @@
+
+v02
+
+- Now pafish writes a log file (pafish.log) to
+  easily track detections
+
+- Deleted one dummy detection for Sandboxie
+
+- Added two new detections for VirtualBox
+- Added one new detection for wine
+- Added three new detections for VMware
+- Added one new detection for generic sandboxes
+
+- Some coding style improvements
+- gcc optimization flag in compilation -O1
+
+v01
+
+- First version
