@@ -9,7 +9,9 @@ The project is open source, you can read the code of all anti-analysis checks. Y
 
 Note that the aim of the project is not to implement complex VM detections.
 
-The objective of this project is to collect usual tricks seen in malware samples. In this way, we can study it, and test if our analysis environments are properly implemented.
+The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
+
+Example of [execution](http://malwr.com/analysis/99f7c1358e1f488a32b8919083a9b25b/) (v02).
 
 # Build
 
