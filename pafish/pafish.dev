@@ -1,7 +1,7 @@
 [Project]
 FileName=pafish.dev
 Name=pafish
-UnitCount=15
+UnitCount=17
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -23,7 +23,7 @@ BuildCmd=
 [VersionInfo]
 Major=0
 Minor=2
-Release=1
+Release=2
 Build=1
 LanguageID=1033
 CharsetID=1252
@@ -38,7 +38,7 @@ ProductName=Paranoid Fish
 ProductVersion=
 AutoIncBuildNrOnRebuild=0
 AutoIncBuildNrOnCompile=0
-UnitCount=15
+UnitCount=17
 
 [Profile1]
 ProfileName=MingW gcc
@@ -235,4 +235,24 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[Unit16]
+FileName=qemu.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit17]
+FileName=qemu.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=	$(CC) -c qemu.c -o Objects/MingW/qemu.o $(CFLAGS)
 

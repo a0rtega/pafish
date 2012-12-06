@@ -1,14 +1,14 @@
 # Project: pafish
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 28/10/12 18:14
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 06/12/12 13:24
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
 CC        = gcc.exe
 WINDRES   = "windres.exe"
-OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o Objects/MingW/pafish_private.res
-LINKOBJ   = "Objects/MingW/main.o" "Objects/MingW/common.o" "Objects/MingW/debuggers.o" "Objects/MingW/sandboxie.o" "Objects/MingW/vbox.o" "Objects/MingW/gensandbox.o" "Objects/MingW/wine.o" "Objects/MingW/vmware.o" Objects/MingW/pafish_private.res
+OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o Objects/MingW/qemu.o Objects/MingW/pafish_private.res
+LINKOBJ   = "Objects/MingW/main.o" "Objects/MingW/common.o" "Objects/MingW/debuggers.o" "Objects/MingW/sandboxie.o" "Objects/MingW/vbox.o" "Objects/MingW/gensandbox.o" "Objects/MingW/wine.o" "Objects/MingW/vmware.o" "Objects/MingW/qemu.o" Objects/MingW/pafish_private.res
 LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -s 
 INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
@@ -59,6 +59,9 @@ Objects/MingW/wine.o: $(GLOBALDEPS) wine.c
 
 Objects/MingW/vmware.o: $(GLOBALDEPS) vmware.c
 	$(CC) -c vmware.c -o Objects/MingW/vmware.o $(CFLAGS)
+
+Objects/MingW/qemu.o: $(GLOBALDEPS) qemu.c
+	$(CC) -c qemu.c -o Objects/MingW/qemu.o $(CFLAGS)
 
 Objects/MingW/pafish_private.res: Objects/MingW/pafish_private.rc 
 	$(WINDRES) --input-format=rc -o Objects/MingW/pafish_private.res $(RCINCS) Objects/MingW/PAFISH~1.RC -O coff

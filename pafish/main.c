@@ -12,6 +12,7 @@
 #include "vbox.h"
 #include "wine.h"
 #include "vmware.h"
+#include "qemu.h"
 
 /*
   Pafish (Paranoid fish)
@@ -160,6 +161,17 @@ int main(int argc, char *argv[])
     printf("[*] Looking for C:\\WINDOWS\\system32\\drivers\\vmmouse.sys ... ");
     if (vmware_sysfile1() == 0) {
         write_log("VMware traced using file C:\\WINDOWS\\system32\\drivers\\vmmouse.sys");
+        print_traced();
+    }
+    else {
+        print_not_traced();
+    }
+    
+    /* Qemu detection tricks */
+    printf("\n[-] Qemu detection\n");
+    printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
+    if (qemu_reg_key1() == 0) {
+        write_log("Qemu traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
         print_traced();
     }
     else {

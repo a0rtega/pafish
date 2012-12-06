@@ -1,4 +1,8 @@
 
+v022
+
+- Added one new detection for Qemu
+
 v02
 
 - Now pafish writes a log file (pafish.log) to
