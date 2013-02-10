@@ -1,4 +1,10 @@
 
+v023
+
+- Added two new detections for generic sandboxes (username, file path)
+- Added one new detection for VMware (driver file)
+- Added one new detection for Qemu (reg key)
+
 v022
 
 - Added one new detection for Qemu

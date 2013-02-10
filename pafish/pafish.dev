@@ -23,7 +23,7 @@ BuildCmd=
 [VersionInfo]
 Major=0
 Minor=2
-Release=2
+Release=3
 Build=1
 LanguageID=1033
 CharsetID=1252
@@ -254,5 +254,5 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=	$(CC) -c qemu.c -o Objects/MingW/qemu.o $(CFLAGS)
+BuildCmd=$(CC) -c qemu.c -o Objects/MingW/qemu.o $(CFLAGS)
 

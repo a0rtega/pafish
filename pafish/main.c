@@ -82,6 +82,22 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+    printf("[*] Checking username ... ");
+    if (gensandbox_username() == 0) {
+        print_traced();
+        write_log("Sandbox traced by checking username");
+    }
+    else {
+        print_not_traced();
+    }
+    printf("[*] Checking file path ... ");
+    if (gensandbox_path() == 0) {
+        print_traced();
+        write_log("Sandbox traced by checking file path");
+    }
+    else {
+        print_not_traced();
+    }
     
     /* Sandboxie detection tricks */
     printf("\n[-] Sandboxie detection\n");
@@ -166,12 +182,28 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+    printf("[*] Looking for C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys ... ");
+    if (vmware_sysfile2() == 0) {
+        write_log("VMware traced using file C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys");
+        print_traced();
+    }
+    else {
+        print_not_traced();
+    }
     
     /* Qemu detection tricks */
     printf("\n[-] Qemu detection\n");
     printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
     if (qemu_reg_key1() == 0) {
         write_log("Qemu traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
+        print_traced();
+    }
+    else {
+        print_not_traced();
+    }
+    printf("[*] Reg key (HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\") ... ");
+    if (qemu_reg_key2() == 0) {
+        write_log("Qemu traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
         print_traced();
     }
     else {

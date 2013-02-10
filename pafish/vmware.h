@@ -8,4 +8,6 @@ int vmware_reg_key2();
 
 int vmware_sysfile1();
 
+int vmware_sysfile2();
+
 #endif

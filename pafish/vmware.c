@@ -59,3 +59,14 @@ int vmware_sysfile1() {
         return 1;
     }
 }
+
+int vmware_sysfile2() {
+    DWORD ret;
+    ret = GetFileAttributes("C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys");
+    if (ret != INVALID_FILE_ATTRIBUTES) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
