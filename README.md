@@ -13,6 +13,10 @@ The objective of this project is to collect usual tricks seen in malware samples
 
 Example of [execution](http://malwr.com/analysis/99f7c1358e1f488a32b8919083a9b25b/) (v02).
 
+# Executable certificate
+
+All releases from v024 will be shipped signed by the original development team. Consider everything without our certificate as unofficial, you can check it against the certificates present in the binaries from this repository.
+
 # Build
 
 Pafish is written in C and developed with [wxDev-C++](http://wxdsgn.sourceforge.net/).

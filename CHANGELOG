@@ -1,4 +1,9 @@
 
+v024
+
+- From now, official pafish executables will be signed, readme for
+  more information
+
 v023
 
 - Added two new detections for generic sandboxes (username, file path)
