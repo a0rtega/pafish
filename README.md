@@ -27,4 +27,6 @@ Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](https://p
 
 # Contributions
 
+[![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](http://flattr.com/thing/1179653/a0rtegapafish-on-GitHub)
+
 Feel free to send me malware samples or more tricks to add. GPG ID: 6A06CF5A
