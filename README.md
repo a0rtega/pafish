@@ -29,4 +29,6 @@ Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](https://p
 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](http://flattr.com/thing/1179653/a0rtegapafish-on-GitHub)
 
+Bitcoins are really appreciated: 1DeSQzrEuQLUDjD25CX6yrchVuQnArWTeN
+
 Feel free to send me malware samples or more tricks to add. GPG ID: 6A06CF5A
