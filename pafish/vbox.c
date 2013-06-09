@@ -80,6 +80,37 @@ int vbox_reg_key3() {
     }
 }
 
+int vbox_reg_key4() {
+    HKEY regkey;
+    LONG retu;
+    char value[1024];
+    int i;
+    DWORD size;
+    
+    size = sizeof(value);
+    retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\Description\\System", 0, KEY_READ, &regkey);
+    if (retu == ERROR_SUCCESS) {
+        retu = RegQueryValueEx(regkey, "VideoBiosVersion", NULL, NULL, (BYTE*)value, &size);
+        if (retu == ERROR_SUCCESS) {
+            for (i = 0; i < strlen(value); i++) { /* Uppercase to case-insensitive */
+                value[i] = toupper(value[i]);
+            }
+            if (strstr(value, "VIRTUALBOX") != NULL) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+        else {
+            return 1;
+        }
+    }
+    else {
+        return 1;
+    }
+}
+
 int vbox_sysfile1() {
     DWORD ret;
     ret = GetFileAttributes("C:\\WINDOWS\\system32\\drivers\\VBoxMouse.sys");

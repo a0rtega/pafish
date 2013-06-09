@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
     if (debug_isdebuggerpresent() == 0) {
         write_log("Debugger traced using IsDebuggerPresent()");
         print_traced();
+        write_trace("hi_debugger");
     }
     else {
         print_not_traced();
@@ -66,6 +67,7 @@ int main(int argc, char *argv[])
         if (debug_outputdebugstring() == 0) {
             write_log("Debugger traced using OutputDebugString()");
             print_traced();
+            write_trace("hi_debugger");
         }
         else {
             print_not_traced();
@@ -78,6 +80,7 @@ int main(int argc, char *argv[])
     if (gensandbox_mouse_act() == 0) {
         print_traced();
         write_log("Sandbox traced using mouse activity");
+        write_trace("hi_sandbox");
     }
     else {
         print_not_traced();
@@ -86,6 +89,7 @@ int main(int argc, char *argv[])
     if (gensandbox_username() == 0) {
         print_traced();
         write_log("Sandbox traced by checking username");
+        write_trace("hi_sandbox");
     }
     else {
         print_not_traced();
@@ -94,6 +98,7 @@ int main(int argc, char *argv[])
     if (gensandbox_path() == 0) {
         print_traced();
         write_log("Sandbox traced by checking file path");
+        write_trace("hi_sandbox");
     }
     else {
         print_not_traced();
@@ -105,6 +110,7 @@ int main(int argc, char *argv[])
     if (sboxie_detect_sbiedll() == 0) {
         write_log("Sandboxie traced using sbiedll.dll");
         print_traced();
+        write_trace("hi_sandboxie");
     }
     else {
         print_not_traced();
@@ -116,6 +122,7 @@ int main(int argc, char *argv[])
     if (wine_detect_get_unix_file_name() == 0) {
         write_log("Wine traced using GetProcAddress(wine_get_unix_file_name) from kernel32.dll");
         print_traced();
+        write_trace("hi_wine");
     }
     else {
         print_not_traced();
@@ -127,6 +134,7 @@ int main(int argc, char *argv[])
     if (vbox_reg_key1() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
         print_traced();
+        write_trace("hi_virtualbox");
     }
     else {
         print_not_traced();
@@ -135,6 +143,7 @@ int main(int argc, char *argv[])
     if (vbox_reg_key2() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
         print_traced();
+        write_trace("hi_virtualbox");
     }
     else {
         print_not_traced();
@@ -143,6 +152,16 @@ int main(int argc, char *argv[])
     if (vbox_reg_key3() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\SOFTWARE\\Oracle\\VirtualBox Guest Additions");
         print_traced();
+        write_trace("hi_virtualbox");
+    }
+    else {
+        print_not_traced();
+    }
+    printf("[*] Reg key (HKLM\\HARDWARE\\Description\\System \"VideoBiosVersion\") ... ");
+    if (vbox_reg_key4() == 0) {
+        write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\Description\\System \"VideoBiosVersion\"");
+        print_traced();
+        write_trace("hi_virtualbox");
     }
     else {
         print_not_traced();
@@ -151,6 +170,7 @@ int main(int argc, char *argv[])
     if (vbox_sysfile1() == 0) {
         write_log("VirtualBox traced using file C:\\WINDOWS\\system32\\drivers\\VBoxMouse.sys");
         print_traced();
+        write_trace("hi_virtualbox");
     }
     else {
         print_not_traced();
@@ -162,6 +182,7 @@ int main(int argc, char *argv[])
     if (vmware_reg_key1() == 0) {
         write_log("VMWare traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
         print_traced();
+        write_trace("hi_vmware");
     }
     else {
         print_not_traced();
@@ -170,6 +191,7 @@ int main(int argc, char *argv[])
     if (vmware_reg_key2() == 0) {
         write_log("VMware traced using Reg key HKLM\\SOFTWARE\\VMware, Inc.\\VMware Tools");
         print_traced();
+        write_trace("hi_vmware");
     }
     else {
         print_not_traced();
@@ -178,6 +200,7 @@ int main(int argc, char *argv[])
     if (vmware_sysfile1() == 0) {
         write_log("VMware traced using file C:\\WINDOWS\\system32\\drivers\\vmmouse.sys");
         print_traced();
+        write_trace("hi_vmware");
     }
     else {
         print_not_traced();
@@ -186,6 +209,7 @@ int main(int argc, char *argv[])
     if (vmware_sysfile2() == 0) {
         write_log("VMware traced using file C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys");
         print_traced();
+        write_trace("hi_vmware");
     }
     else {
         print_not_traced();
@@ -197,6 +221,7 @@ int main(int argc, char *argv[])
     if (qemu_reg_key1() == 0) {
         write_log("Qemu traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
         print_traced();
+        write_trace("hi_qemu");
     }
     else {
         print_not_traced();
@@ -205,6 +230,7 @@ int main(int argc, char *argv[])
     if (qemu_reg_key2() == 0) {
         write_log("Qemu traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
         print_traced();
+        write_trace("hi_qemu");
     }
     else {
         print_not_traced();

@@ -14,7 +14,7 @@ void init_cmd_colors() {
 void print_header() {
     HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
     printf("* Pafish (");
-    SetConsoleTextAttribute(handler, FOREGROUND_GREEN);
+    SetConsoleTextAttribute(handler, 11);
     printf("Paranoid fish");
     SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
     printf(") *\n\n");
@@ -25,21 +25,21 @@ void print_header() {
 
 void print_traced() {
      HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
-     SetConsoleTextAttribute(handler, FOREGROUND_RED);
+     SetConsoleTextAttribute(handler, 207);
      printf("traced!\n");
      SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
 }
 
 void print_not_traced() {
      HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
-     SetConsoleTextAttribute(handler, FOREGROUND_GREEN);
+     SetConsoleTextAttribute(handler, 10);
      printf("OK\n");
      SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
 }
 
 void print_suspicious() {
      HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
-     SetConsoleTextAttribute(handler, FOREGROUND_RED);
+     SetConsoleTextAttribute(handler, 207);
      printf("suspicious\n");
      SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
 }
@@ -51,4 +51,10 @@ void write_log(char msg[]) {
     log = fopen("pafish.log", "a");
     fputs(logstr, log);
     fclose(log);
+}
+
+void write_trace(char product[]) {
+    FILE *trace;
+    trace = fopen(product, "a");
+    fclose(trace);
 }

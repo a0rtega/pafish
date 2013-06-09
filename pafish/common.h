@@ -12,4 +12,8 @@ void print_not_traced();
 
 void print_suspicious();
 
+void write_log(char msg[]);
+
+void write_trace(char product[]);
+
 #endif

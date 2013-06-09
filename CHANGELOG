@@ -1,4 +1,11 @@
 
+v025
+
+- New colors schema
+- Added file creation traces when detection to
+  follow them
+- Added one new detection for VirtualBox
+
 v024
 
 - From now, official pafish executables will be signed, readme for
