@@ -13,7 +13,13 @@ Note that the aim of the project is not to implement complex VM detections.
 
 The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
 
-Example of [execution](http://malwr.com/analysis/99f7c1358e1f488a32b8919083a9b25b/) (v02).
+Examples of execution (v025 all of them):
+
+[ThreatExpert](http://www.threatexpert.com/report.aspx?md5=7662cb4b1abc4ccb30b3682acc3dae24)  
+[Cuckoo Sandbox](https://malwr.com/analysis/NTI1YjgyM2IxNzk3NDI3YjkyYzNkN2Y3NGE1NWFmZjE/)  
+[Anubis](http://anubis.iseclab.org/?action=result&task_id=1f3d255d33107d034adcfcd3f2b1fb52c&format=html)  
+[CWSandbox](https://mwanalysis.org/?page=report&analysisid=2154169&password=iplryjxwnj)  
+[Comodo](http://camas.comodo.com/cgi-bin/submit?file=bbf9b5b80121a82cf93a67d86c23a8bd9b18313414fe49c30054fb4348e65547)  
 
 # Certificate
 
