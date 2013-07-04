@@ -35,7 +35,7 @@ Pafish is written in C and developed with [wxDev-C++](http://wxdsgn.sourceforge.
 
 # Author
 
-Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](https://profiles.google.com/alberto.kun666)) - alberto[at]pentbox.net
+Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](http://about.me/a0rtega)) - alberto[at]pentbox.net
 
 # Donations
 
