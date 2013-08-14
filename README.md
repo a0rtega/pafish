@@ -41,7 +41,7 @@ Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](http://ab
 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](http://flattr.com/thing/1179653/a0rtegapafish-on-GitHub)
 
-Bitcoins are really appreciated: 1NJDdLcRXLZ5GAU8XnwpXfXnH2qFpey9UE
+Bitcoins are really appreciated: [1NJDdLcRXLZ5GAU8XnwpXfXnH2qFpey9UE](https://blockchain.info/address/1NJDdLcRXLZ5GAU8XnwpXfXnH2qFpey9UE)
 
 # Contributions
 
