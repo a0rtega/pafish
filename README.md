@@ -37,12 +37,6 @@ Pafish is written in C and developed with [wxDev-C++](http://wxdsgn.sourceforge.
 
 Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](http://about.me/a0rtega)) - alberto[at]pentbox.net
 
-# Donations
-
-[![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](http://flattr.com/thing/1179653/a0rtegapafish-on-GitHub)
-
-Bitcoins are really appreciated: [1NJDdLcRXLZ5GAU8XnwpXfXnH2qFpey9UE](https://blockchain.info/address/1NJDdLcRXLZ5GAU8XnwpXfXnH2qFpey9UE)
-
 # Contributions
 
 Feel free to send me malware samples or more tricks to add. GPG ID: 6A06CF5A
