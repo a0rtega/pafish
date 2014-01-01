@@ -1,7 +1,7 @@
 [Project]
 FileName=pafish.dev
 Name=pafish
-UnitCount=17
+UnitCount=19
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -22,8 +22,8 @@ BuildCmd=
 
 [VersionInfo]
 Major=0
-Minor=2
-Release=5
+Minor=3
+Release=0
 Build=1
 LanguageID=1033
 CharsetID=1252
@@ -38,7 +38,7 @@ ProductName=Paranoid Fish
 ProductVersion=
 AutoIncBuildNrOnRebuild=0
 AutoIncBuildNrOnCompile=0
-UnitCount=17
+UnitCount=19
 
 [Profile1]
 ProfileName=MingW gcc
@@ -255,4 +255,24 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c qemu.c -o Objects/MingW/qemu.o $(CFLAGS)
+
+[Unit18]
+FileName=hooks.c
+CompileCpp=0
+Folder=pafish
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c hooks.c -o Objects/MingW/hooks.o $(CFLAGS)
+
+[Unit19]
+FileName=hooks.h
+CompileCpp=1
+Folder=pafish
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 

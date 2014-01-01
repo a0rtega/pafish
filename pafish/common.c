@@ -20,7 +20,6 @@ void print_header() {
     printf(") *\n\n");
     printf("Some anti(debugger/VM/sandbox) tricks\n");
     printf("used by malware for the general public.\n\n");
-    printf("- Author: Alberto Ortega (alberto[at]pentbox.net)\n\n");
 }
 
 void print_traced() {

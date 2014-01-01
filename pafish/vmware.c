@@ -16,7 +16,7 @@ int vmware_reg_key1() {
     if (retu == ERROR_SUCCESS) {
         retu = RegQueryValueEx(regkey, "Identifier", NULL, NULL, (BYTE*)value, &size);
         if (retu == ERROR_SUCCESS) {
-            for (i = 0; i < strlen(value); i++) { /* Uppercase to case-insensitive */
+            for (i = 0; i < strlen(value); i++) { /* case-insensitive */
                 value[i] = toupper(value[i]);
             }
             if (strstr(value, "VMWARE") != NULL) {
@@ -38,8 +38,6 @@ int vmware_reg_key1() {
 int vmware_reg_key2() {
     HKEY regkey;
     LONG retu;
-    /* We just try to detect if VMware Tools are installed looking at
-       the RegKey */
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\VMware, Inc.\\VMware Tools", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
         return 0;

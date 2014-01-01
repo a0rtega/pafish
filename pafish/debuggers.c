@@ -14,7 +14,8 @@ int debug_isdebuggerpresent() {
     }
 }
 
-/* This function is not used because it doesn't work prety well */
+/* This function is not used because it isn't realiable in
+   some new environments */
 int debug_checkremotedebuggerpresent() {
     BOOL isdebug = FALSE;
     CheckRemoteDebuggerPresent(GetCurrentProcess(), &isdebug);

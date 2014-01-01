@@ -16,7 +16,7 @@ int vbox_reg_key1() {
     if (retu == ERROR_SUCCESS) {
         retu = RegQueryValueEx(regkey, "Identifier", NULL, NULL, (BYTE*)value, &size);
         if (retu == ERROR_SUCCESS) {
-            for (i = 0; i < strlen(value); i++) { /* Uppercase to case-insensitive */
+            for (i = 0; i < strlen(value); i++) { /* case-insensitive */
                 value[i] = toupper(value[i]);
             }
             if (strstr(value, "VBOX") != NULL) {
@@ -47,7 +47,7 @@ int vbox_reg_key2() {
     if (retu == ERROR_SUCCESS) {
         retu = RegQueryValueEx(regkey, "SystemBiosVersion", NULL, NULL, (BYTE*)value, &size);
         if (retu == ERROR_SUCCESS) {
-            for (i = 0; i < strlen(value); i++) { /* Uppercase to case-insensitive */
+            for (i = 0; i < strlen(value); i++) { /* case-insensitive */
                 value[i] = toupper(value[i]);
             }
             if (strstr(value, "VBOX") != NULL) {
@@ -69,8 +69,6 @@ int vbox_reg_key2() {
 int vbox_reg_key3() {
     HKEY regkey;
     LONG retu;
-    /* We just try to detect if VirtualBox Guest Additions are installed looking at
-       the RegKey */
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Oracle\\VirtualBox Guest Additions", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
         return 0;
@@ -92,7 +90,7 @@ int vbox_reg_key4() {
     if (retu == ERROR_SUCCESS) {
         retu = RegQueryValueEx(regkey, "VideoBiosVersion", NULL, NULL, (BYTE*)value, &size);
         if (retu == ERROR_SUCCESS) {
-            for (i = 0; i < strlen(value); i++) { /* Uppercase to case-insensitive */
+            for (i = 0; i < strlen(value); i++) { /* case-insensitive */
                 value[i] = toupper(value[i]);
             }
             if (strstr(value, "VIRTUALBOX") != NULL) {

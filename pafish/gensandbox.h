@@ -8,4 +8,6 @@ int gensandbox_username();
 
 int gensandbox_path();
 
+int gensandbox_drive_size();
+
 #endif

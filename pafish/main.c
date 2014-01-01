@@ -9,6 +9,7 @@
 #include "debuggers.h"
 #include "sandboxie.h"
 #include "gensandbox.h"
+#include "hooks.h"
 #include "vbox.h"
 #include "wine.h"
 #include "vmware.h"
@@ -26,7 +27,7 @@
   your malware, you have to release the
   source code as well :)
   
-  - Alberto Ortega (alberto[at]pentbox.net)
+  - Alberto Ortega
   
 */
 
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
     if (debug_isdebuggerpresent() == 0) {
         write_log("Debugger traced using IsDebuggerPresent()");
         print_traced();
-        write_trace("hi_debugger");
+        write_trace("hi_debugger_isdebuggerpresent");
     }
     else {
         print_not_traced();
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
         if (debug_outputdebugstring() == 0) {
             write_log("Debugger traced using OutputDebugString()");
             print_traced();
-            write_trace("hi_debugger");
+            write_trace("hi_debugger_outputdebugstring");
         }
         else {
             print_not_traced();
@@ -80,7 +81,7 @@ int main(int argc, char *argv[])
     if (gensandbox_mouse_act() == 0) {
         print_traced();
         write_log("Sandbox traced using mouse activity");
-        write_trace("hi_sandbox");
+        write_trace("hi_sandbox_mouse_act");
     }
     else {
         print_not_traced();
@@ -89,7 +90,7 @@ int main(int argc, char *argv[])
     if (gensandbox_username() == 0) {
         print_traced();
         write_log("Sandbox traced by checking username");
-        write_trace("hi_sandbox");
+        write_trace("hi_sandbox_username");
     }
     else {
         print_not_traced();
@@ -98,7 +99,28 @@ int main(int argc, char *argv[])
     if (gensandbox_path() == 0) {
         print_traced();
         write_log("Sandbox traced by checking file path");
-        write_trace("hi_sandbox");
+        write_trace("hi_sandbox_path");
+    }
+    else {
+        print_not_traced();
+    }
+    printf("[*] Checking if disk size <= 50GB ... ");
+    if (gensandbox_drive_size() == 0) {
+        print_traced();
+        write_log("Sandbox traced by checking disk size <= 50GB");
+        write_trace("hi_sandbox_drive_size");
+    }
+    else {
+        print_not_traced();
+    }
+    
+    /* Hooks detection tricks */
+    printf("\n[-] Hooks detection\n");
+    printf("[*] Checking function DeleteFileW method 1 ... ");
+    if (check_hook_DeleteFileW_m1() == 0) {
+        print_traced();
+        write_log("Hooks traced using DeleteFileW method 1");
+        write_trace("hi_hooks_deletefile_m1");
     }
     else {
         print_not_traced();

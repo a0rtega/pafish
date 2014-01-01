@@ -1,5 +1,6 @@
 
 #include <windows.h>
+#include <WinIoCtl.h>
 #include <string.h>
 
 #include "gensandbox.h"
@@ -7,7 +8,7 @@
 int gensandbox_mouse_act() {
     POINT position1, position2;
     GetCursorPos(&position1);
-    Sleep(1000); /* Sleep time */
+    Sleep(1750); /* Sleep time */
     GetCursorPos(&position2);
     if ((position1.x == position2.x) && (position1.y == position2.y)) {
         /* No mouse activity during the sleep */
@@ -24,7 +25,7 @@ int gensandbox_username() {
     int i;
     DWORD usersize = sizeof(username);
     GetUserName(username, &usersize);
-    for (i = 0; i < strlen(username); i++) { /* Uppercase to case-insensitive */
+    for (i = 0; i < strlen(username); i++) { /* case-insensitive */
         username[i] = toupper(username[i]);
     }
     if (strstr(username, "SANDBOX") != NULL) {
@@ -44,7 +45,7 @@ int gensandbox_path() {
     int i;
     DWORD pathsize = sizeof(path);
     GetModuleFileName(NULL, path, pathsize);
-    for (i = 0; i < strlen(path); i++) { /* Uppercase to case-insensitive */
+    for (i = 0; i < strlen(path); i++) { /* case-insensitive */
         path[i] = toupper(path[i]);
     }
     if (strstr(path, "\\SAMPLE") != NULL) {
@@ -55,6 +56,29 @@ int gensandbox_path() {
     }
     if (strstr(path, "SANDBOX") != NULL) {
         return 0;
+    }
+    return 1;
+}
+
+int gensandbox_drive_size() {
+    HANDLE drive;
+    BOOL result;
+    GET_LENGTH_INFORMATION size;
+    DWORD lpBytesReturned;
+    
+    drive = CreateFile("\\\\.\\PhysicalDrive0", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+    if (drive == INVALID_HANDLE_VALUE) {
+        // Someone is playing tricks. Or not enough privileges.
+        CloseHandle(drive);
+        return 1;
+    }
+    result = DeviceIoControl(drive, IOCTL_DISK_GET_LENGTH_INFO, NULL, 0, &size,
+                sizeof(GET_LENGTH_INFORMATION), &lpBytesReturned, NULL);
+    CloseHandle(drive);
+    if (result != 0) {
+        if (size.Length.QuadPart / 1073741824 <= 50) { /* <= 50 GB */
+            return 0;
+        }
     }
     return 1;
 }

@@ -1,4 +1,13 @@
 
+v03
+
+- Added disk size < 50 GB detection trick
+- Added ring3 hooks detection trick
+- Created files when detections match are more
+  accurate now
+- Sleep time in lack of mouse activity detection
+  increased to 1750 ms
+
 v025
 
 - New colors schema
