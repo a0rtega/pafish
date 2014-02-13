@@ -1,6 +1,6 @@
 
 #include <windows.h>
-#include <WinIoCtl.h>
+#include <winioctl.h>
 #include <string.h>
 
 #include "gensandbox.h"
