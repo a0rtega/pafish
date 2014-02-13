@@ -1,8 +1,10 @@
 
 #include <windows.h>
 #include <string.h>
-
+#include <stdio.h>
 #include "vbox.h"
+
+typedef char * string;
 
 int vbox_reg_key1() {
     HKEY regkey;
@@ -111,11 +113,32 @@ int vbox_reg_key4() {
 
 int vbox_sysfile1() {
     DWORD ret;
-    ret = GetFileAttributes("C:\\WINDOWS\\system32\\drivers\\VBoxMouse.sys");
-    if (ret != INVALID_FILE_ATTRIBUTES) {
-        return 0;
+    
+    const int count = 4;
+    string strs[count];
+    int res = 1;
+    char message[200];
+    int i=0;
+    
+    strs[0] = "C:\\WINDOWS\\system32\\drivers\\VBoxMouse.sys";
+    strs[1] = "C:\\WINDOWS\\system32\\drivers\\VBoxGuest.sys";
+    strs[2] = "C:\\WINDOWS\\system32\\drivers\\VBoxSF.sys";
+    strs[3] = "C:\\WINDOWS\\system32\\drivers\\VBoxVideo.sys";
+
+
+    for (i=0; i < count; i++){
+        sprintf(message, "[*] Looking for %s ... ", strs[i]);
+        printf(message);
+        ret = GetFileAttributes(strs[i]);
+        if (ret != INVALID_FILE_ATTRIBUTES) {
+            sprintf(message, "VirtualBox traced using file %s", strs[i]);
+            write_log(message);
+            print_traced();
+            write_trace("hi_virtualbox");
+            res = 0;
+        }
     }
-    else {
-        return 1;
-    }
+    
+    return res;
+    
 }
