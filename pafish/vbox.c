@@ -111,6 +111,9 @@ int vbox_reg_key4() {
     }
 }
 
+/**
+* VirtualBox Driver files in windows/system32
+**/
 int vbox_sysfile1() {
     DWORD ret;
     
@@ -125,6 +128,48 @@ int vbox_sysfile1() {
     strs[2] = "C:\\WINDOWS\\system32\\drivers\\VBoxSF.sys";
     strs[3] = "C:\\WINDOWS\\system32\\drivers\\VBoxVideo.sys";
 
+
+    for (i=0; i < count; i++){
+        sprintf(message, "[*] Looking for %s ... ", strs[i]);
+        printf(message);
+        ret = GetFileAttributes(strs[i]);
+        if (ret != INVALID_FILE_ATTRIBUTES) {
+            sprintf(message, "VirtualBox traced using driver file %s", strs[i]);
+            write_log(message);
+            print_traced();
+            write_trace("hi_virtualbox");
+            res = 0;
+        }
+    }
+    
+    return res;
+    
+}
+
+/**
+* VirtualBox files in windows/system32
+**/
+int vbox_sysfile2() {
+    DWORD ret;
+    
+    const int count = 12;
+    string strs[count];
+    int res = 1;
+    char message[200];
+    int i=0;
+
+    strs[0] = "C:\\WINDOWS\\system32\\vboxdisp.dll";
+    strs[1] = "C:\\WINDOWS\\system32\\vboxhook.dll";
+    strs[2] = "C:\\WINDOWS\\system32\\vboxmrxnp.dll";
+    strs[3] = "C:\\WINDOWS\\system32\\vboxogl.dll";
+    strs[4] = "C:\\WINDOWS\\system32\\vboxoglarrayspu.dll";
+    strs[5] = "C:\\WINDOWS\\system32\\vboxoglcrutil.dll";
+    strs[6] = "C:\\WINDOWS\\system32\\vboxoglerrorspu.dll";
+    strs[7] = "C:\\WINDOWS\\system32\\vboxoglfeedbackspu.dll";
+    strs[8] = "C:\\WINDOWS\\system32\\vboxoglpackspu.dll";
+    strs[9] = "C:\\WINDOWS\\system32\\vboxoglpassthroughspu.dll";
+    strs[10] = "C:\\WINDOWS\\system32\\vboxservice.exe";
+    strs[11] = "C:\\WINDOWS\\system32\\vboxtray.exe";
 
     for (i=0; i < count; i++){
         sprintf(message, "[*] Looking for %s ... ", strs[i]);

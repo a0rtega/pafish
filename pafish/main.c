@@ -194,6 +194,12 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
+    if (vbox_sysfile2() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
     
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");
