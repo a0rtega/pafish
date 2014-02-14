@@ -1,7 +1,9 @@
 
+#include <winsock2.h>
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
+#include <iphlpapi.h>
 #include "vbox.h"
 
 typedef char * string;
@@ -183,7 +185,46 @@ int vbox_sysfile2() {
             res = 0;
         }
     }
-    
-    return res;
-    
 }
+
+int vbox_mac() {
+    WSADATA WSD;
+    int res=1;
+    char * message[200];
+    char mac[6]={0};
+
+    if(!WSAStartup(MAKEWORD(2,2),&WSD)){
+        unsigned long alist_size=0;
+        // getting the size of the adapter list
+        int ret = GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,0,&alist_size);
+        if(ret==ERROR_BUFFER_OVERFLOW) {
+            IP_ADAPTER_ADDRESSES* palist = (IP_ADAPTER_ADDRESSES*)LocalAlloc(LMEM_ZEROINIT,alist_size);
+            if(palist) {
+                ret=GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,palist,&alist_size);
+                IP_ADAPTER_ADDRESSES* ppalist=palist;
+
+                while (ppalist){
+                    if (ppalist->PhysicalAddressLength==0x6){
+                        memcpy(mac,ppalist->PhysicalAddress,6);
+                        if(mac[0]==0x08 && mac[1]==0x00 && mac[2]==0x27) { // VirtualBox mac starts with 08:00:27
+                            write_log("VirtualBox traced using MAC starting with 08:00:27");
+                            res = 0;
+                            }
+                        }
+
+                    ppalist = ppalist->Next;
+                    }
+                LocalFree(palist);
+            }
+        }
+        if (res == 0){
+            print_traced();
+            write_trace("hi_virtualbox");
+        }
+
+        WSACleanup();
+    }
+
+    return res;
+}
+
