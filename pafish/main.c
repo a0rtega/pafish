@@ -188,11 +188,14 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    printf("[*] Looking for C:\\WINDOWS\\system32\\drivers\\VBoxMouse.sys ... ");
-    if (vbox_sysfile1() == 0) {
-        write_log("VirtualBox traced using file C:\\WINDOWS\\system32\\drivers\\VBoxMouse.sys");
-        print_traced();
-        write_trace("hi_virtualbox");
+
+    if (vbox_sysfile1() == 0) {        
+    }
+    else {
+        print_not_traced();
+    }
+
+    if (vbox_sysfile2() == 0) {
     }
     else {
         print_not_traced();
