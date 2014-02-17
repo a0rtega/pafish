@@ -228,3 +228,21 @@ int vbox_mac() {
     return res;
 }
 
+/**
+* Checking for the VirtualBox pseudo device VBoxMiniRdrDN
+**/
+int vbox_pseudodev() {
+    int res=1;
+    HANDLE h;
+
+    h = CreateFile("\\\\.\\VBoxMiniRdrDN", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h != INVALID_HANDLE_VALUE){
+        write_log("VirtualBox traced using MAC starting with 08:00:27");
+        print_traced();
+        write_trace("hi_virtualbox");
+        res = 0;
+        CloseHandle(h);
+        }
+ 
+    return res;
+}

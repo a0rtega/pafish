@@ -16,4 +16,6 @@ int vbox_sysfile2();
 
 int vbox_mac();
 
+int vbox_pseudodev();
+
 #endif

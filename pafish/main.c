@@ -207,6 +207,13 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
+    printf("[*] Looking for pseudo device ");
+    if (vbox_pseudodev() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
     
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");
