@@ -247,6 +247,12 @@ int main(int argc, char *argv[])
         print_not_traced();
     }
 
+    printf("[*] Looking for VBox network share ");
+    if (vbox_network_share() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
     
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");

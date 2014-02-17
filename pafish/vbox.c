@@ -1,6 +1,7 @@
 
 #include <winsock2.h>
 #include <windows.h>
+#include <winnetwk.h>
 #include <string.h>
 #include <stdio.h>
 #include <iphlpapi.h>
@@ -414,3 +415,29 @@ int vbox_traywindow() {
  
     return res;
 }
+
+
+/**
+* Checking network shared
+* http://waleedassar.blogspot.com
+**/
+int vbox_network_share() {
+    int res=1;
+
+    unsigned long pnsize=0x1000;
+
+    char * provider=(char *)LocalAlloc(LMEM_ZEROINIT, pnsize);
+    int retv = WNetGetProviderName(WNNC_NET_RDR2SAMPLE, provider, &pnsize);
+    if (retv==NO_ERROR){
+        if (lstrcmpi(provider, "VirtualBox Shared Folders") == 0){
+            write_log("VirtualBox shared folder detected");
+            print_traced();
+            write_trace("hi_virtualbox");
+            res = 0;
+        }
+    }
+ 
+    return res;
+}
+
+

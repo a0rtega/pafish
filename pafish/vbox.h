@@ -26,4 +26,6 @@ int vbox_pipe();
 
 int vbox_traywindow();
 
+int vbox_network_share();
+
 #endif

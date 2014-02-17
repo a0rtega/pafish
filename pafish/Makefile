@@ -5,7 +5,7 @@ SRC       = $(wildcard *.c)
 OBJ       = $(SRC:%.c=$(OBJDIR)/%.o) $(OBJDIR)/pafish_private.res
 BIN       = Output/MingW/pafish.exe
 LINKOBJ   = $(OBJDIR)/*.o $(OBJDIR)/pafish_private.res
-LIBS      = -s -lws2_32 -liphlpapi
+LIBS      = -s -lws2_32 -liphlpapi -lmpr
 CXXFLAGS  = -fexpensive-optimizations -O1 -static-libgcc
 CFLAGS    = -fexpensive-optimizations -O1
 GPROF     = i686-pc-mingw32-gprof
