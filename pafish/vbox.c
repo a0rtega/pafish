@@ -8,6 +8,18 @@
 
 typedef char * string;
 
+void ToUpper(unsigned char* Pstr) {
+    char* P=(char*)Pstr;
+    unsigned long length=strlen(P);
+    unsigned long i;
+
+    for(i=0;i<length;i++) P[i]=toupper(P[i]);
+
+    return;
+}
+
+
+
 int vbox_reg_key1() {
     HKEY regkey;
     LONG retu;
@@ -132,6 +144,101 @@ int vbox_reg_key5() {
         return 1;
     }
 }
+
+/**
+* IDE Registry key scanning
+* http://0xmalware.blogspot.de/2013/10/cuckoo-sandbox-hardening-virtualbox.html
+**/
+int vbox_reg_key6() {
+    HKEY HK=0;
+    int res=1;
+    unsigned long i;
+    char * message;
+    DWORD ValType;
+    long error;
+
+    char* subkey="SYSTEM\\CurrentControlSet\\Enum\\IDE";
+    if( (ERROR_SUCCESS==RegOpenKeyEx(HKEY_LOCAL_MACHINE,subkey,0,KEY_READ,&HK)) && HK ){
+        unsigned long n_subkeys=0;
+        unsigned long max_subkey_length=0;
+        if(ERROR_SUCCESS==RegQueryInfoKey(HK,0,0,0,&n_subkeys,&max_subkey_length,0,0,0,0,0,0)){
+            if(n_subkeys) { //Usually n_subkeys are 2
+                char* pNewKey=(char*)LocalAlloc(LMEM_ZEROINIT,max_subkey_length+1);
+                for(i=0;i<n_subkeys;i++) {  //Usually n_subkeys are 2
+                    memset(pNewKey,0,max_subkey_length+1);
+                    HKEY HKK=0;
+                    if(ERROR_SUCCESS==RegEnumKey(HK,i,pNewKey,max_subkey_length+1)) {
+                        if((RegOpenKeyEx(HK,pNewKey,0,KEY_READ,&HKK)==ERROR_SUCCESS)  && HKK) {
+                            unsigned long nn=0;
+                            unsigned long maxlen=0;
+                            RegQueryInfoKey(HKK,0,0,0,&nn,&maxlen,0,0,0,0,0,0);
+                            char* pNewNewKey=(char*)LocalAlloc(LMEM_ZEROINIT,maxlen+1);
+                            if(RegEnumKey(HKK,0,pNewNewKey,maxlen+1)==ERROR_SUCCESS) {
+                                HKEY HKKK=0;
+                                if(RegOpenKeyEx(HKK,pNewNewKey,0,KEY_READ,&HKKK)==ERROR_SUCCESS) {
+                                    unsigned long size=0xFFFF;
+                                    unsigned char ValName[0x10000]={0};
+                                    if(RegQueryValueEx(HKKK,"FriendlyName",0,0,ValName,&size)==ERROR_SUCCESS) {
+                                        ToUpper(ValName);
+                                        if(strstr((char*)ValName,"VBOX")) {
+                                            message = (char*)LocalAlloc(LMEM_ZEROINIT,strlen(ValName)+200);
+                                            if (message) {
+                                                sprintf(message, "VBOX traced in IDE Registry based on FriendlyName containing VBOX %s ", ValName);
+                                                write_log(message);
+                                                LocalFree(message);
+                                            }                                            
+                                            res = 0;
+                                        }
+                                    }
+
+                                    size = 0xFFFF;
+                                    error = RegQueryValueEx(HKKK,"HardwareID",0,&ValType,ValName,&size);
+                                    if(error==ERROR_SUCCESS) {
+                                        if (ValType == REG_MULTI_SZ){
+                                            char * sp = ValName;
+                                            while(strlen(sp)){
+                                                ToUpper(sp);
+                                                if(strstr((char*)sp,"VBOX")) {
+                                                    message = (char*)LocalAlloc(LMEM_ZEROINIT,strlen(sp)+200);
+                                                    if (message) {
+                                                        sprintf(message, "VBOX traced in IDE Registry based on HardwareID containing VBOX %s ", sp);
+                                                        write_log(message);
+                                                        LocalFree(message);
+                                                    }                                            
+                                                    res = 0;
+                                                }
+                                                sp = sp + strlen(sp) + 1;
+                                            }
+                                        }                                            
+                                    }
+                                    else{
+                                        message = (char*)LocalAlloc(LMEM_ZEROINIT,200);
+                                        sprintf(message, "%d", error);
+                                        write_log(message);
+                                        LocalFree(message);
+                                    }
+                                    RegCloseKey(HKKK);
+                               }
+                           }    
+                           LocalFree(pNewNewKey);
+                           RegCloseKey(HKK);
+                       }
+                   }
+               }
+               LocalFree(pNewKey);
+           }
+       }
+       RegCloseKey(HK);
+    }
+
+    if (res == 0) {
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+
+    return res;
+}
+
 
 /**
 * VirtualBox Driver files in windows/system32

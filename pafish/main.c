@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
         print_not_traced();
     }
 
-    printf("[*] Reg key (HKLM\\HARDWARE\\ACPI\\DSDT\\VBOX__");
+    printf("[*] Reg key (HKLM\\HARDWARE\\ACPI\\DSDT\\VBOX__ ... ");
     if (vbox_reg_key5() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\ACPI\\DSDT\\VBOX__");
         print_traced();
@@ -198,6 +198,14 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
+    printf("[*] Reg key (HKLM\\SYSTEM\\CurrentControlSet\\Enum\\IDE ... ");
+    if (vbox_reg_key6() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
 
     if (vbox_sysfile1() == 0) {        
     }
