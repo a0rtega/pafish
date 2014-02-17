@@ -22,4 +22,6 @@ int vbox_pseudodev();
 
 int vbox_pipe();
 
+int vbox_traywindow();
+
 #endif

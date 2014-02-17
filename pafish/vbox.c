@@ -286,3 +286,24 @@ int vbox_pipe() {
     return res;
 
 }
+
+/**
+* Checking for Tray window
+**/
+int vbox_traywindow() {
+    int res=1;
+    HWND h1;
+    HWND h2;
+
+    h1 = FindWindow("VBoxTrayToolWndClass", 0);
+    h2 = FindWindow(0, "VBoxTrayToolWnd");
+
+    if (h1 || h2){
+        write_log("VirtualBox Tray tool window detected");
+        print_traced();
+        write_trace("hi_virtualbox");
+        res = 0;
+        }
+ 
+    return res;
+}
