@@ -20,4 +20,6 @@ int vbox_mac();
 
 int vbox_pseudodev();
 
+int vbox_pipe();
+
 #endif

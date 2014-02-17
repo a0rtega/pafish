@@ -224,6 +224,13 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
+    printf("[*] Looking for pipe ");
+    if (vbox_pipe() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
     
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");

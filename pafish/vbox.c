@@ -257,7 +257,7 @@ int vbox_pseudodev() {
 
     h = CreateFile("\\\\.\\VBoxMiniRdrDN", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (h != INVALID_HANDLE_VALUE){
-        write_log("VirtualBox traced using MAC starting with 08:00:27");
+        write_log("VBoxMiniRdrDN pseudo device detected");
         print_traced();
         write_trace("hi_virtualbox");
         res = 0;
@@ -265,4 +265,24 @@ int vbox_pseudodev() {
         }
  
     return res;
+}
+
+/**
+* Checking for the VirtualBox pipe
+**/
+int vbox_pipe() {
+    int res=1;
+    HANDLE h;
+
+    h = CreateFile("\\\\.\\pipe\\VBoxTrayIPC", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h != INVALID_HANDLE_VALUE){
+        write_log("VirtualBox VBoxTrayIPC pipe detected");
+        print_traced();
+        write_trace("hi_virtualbox");
+        res = 0;
+        CloseHandle(h);
+        }
+ 
+    return res;
+
 }
