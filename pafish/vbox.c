@@ -149,6 +149,7 @@ int vbox_reg_key5() {
 /**
 * IDE Registry key scanning
 * http://0xmalware.blogspot.de/2013/10/cuckoo-sandbox-hardening-virtualbox.html
+* https://twitter.com/waleedassar
 **/
 int vbox_reg_key6() {
     HKEY HK=0;
@@ -358,6 +359,7 @@ int vbox_mac() {
 
 /**
 * Checking for the VirtualBox pseudo device VBoxMiniRdrDN
+* https://twitter.com/waleedassar
 **/
 int vbox_pseudodev() {
     int res=1;
@@ -377,6 +379,7 @@ int vbox_pseudodev() {
 
 /**
 * Checking for the VirtualBox pipe
+* https://twitter.com/waleedassar
 **/
 int vbox_pipe() {
     int res=1;
@@ -397,6 +400,7 @@ int vbox_pipe() {
 
 /**
 * Checking for Tray window
+* https://twitter.com/waleedassar
 **/
 int vbox_traywindow() {
     int res=1;
@@ -419,7 +423,7 @@ int vbox_traywindow() {
 
 /**
 * Checking network shared
-* http://waleedassar.blogspot.com
+* https://twitter.com/waleedassar
 **/
 int vbox_network_share() {
     int res=1;
