@@ -189,6 +189,24 @@ int main(int argc, char *argv[])
         print_not_traced();
     }
 
+    printf("[*] Reg key (HKLM\\HARDWARE\\ACPI\\DSDT\\VBOX__ ... ");
+    if (vbox_reg_key5() == 0) {
+        write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\ACPI\\DSDT\\VBOX__");
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+    else {
+        print_not_traced();
+    }
+
+    printf("[*] Reg key (HKLM\\SYSTEM\\CurrentControlSet\\Enum\\IDE ... ");
+    if (vbox_reg_key6() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
+
     if (vbox_sysfile1() == 0) {        
     }
     else {
@@ -203,6 +221,34 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for MAC ");
     if (vbox_mac() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
+    printf("[*] Looking for pseudo device ");
+    if (vbox_pseudodev() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
+    printf("[*] Looking for pipe ");
+    if (vbox_pipe() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
+    printf("[*] Looking for VBox tray tool window ");
+    if (vbox_traywindow() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
+    printf("[*] Looking for VBox network share ");
+    if (vbox_network_share() == 0) {
     }
     else {
         print_not_traced();
