@@ -226,6 +226,14 @@ int main(int argc, char *argv[])
         print_not_traced();
     }
 
+    printf("[*] Reg key (HKLM\\SYSTEM\\ControlSet001\\Services\\VBox* ... ");
+    if (vbox_reg_key9() == 0) {        
+    }
+    else {
+        print_not_traced();
+    }
+
+
     if (vbox_sysfile1() == 0) {        
     }
     else {

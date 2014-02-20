@@ -283,6 +283,42 @@ int vbox_reg_key8() {
 }
 
 /**
+* Service Regkey detection
+**/
+int vbox_reg_key9() {
+    HKEY regkey;
+    int res = 1;
+    LONG retu;
+    int i;
+    const int count = 5;
+    char message[200];
+
+    string strs[count];
+    strs[0] = "SYSTEM\\ControlSet001\\Services\\VBoxGuest";
+    strs[1] = "SYSTEM\\ControlSet001\\Services\\VBoxMouse";
+    strs[2] = "SYSTEM\\ControlSet001\\Services\\VBoxService";
+    strs[3] = "SYSTEM\\ControlSet001\\Services\\VBoxSF";
+    strs[4] = "SYSTEM\\ControlSet001\\Services\\VBoxVideo";
+
+    for (i=0;i<count; i++){
+        retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, strs[i], 0, KEY_READ, &regkey);
+        if (retu == ERROR_SUCCESS) {
+            sprintf(message, "VirtualBox traced registry key %s", strs[i]);
+            write_log(message);
+            res = 0;
+        }
+    }
+
+    if (res == 0){
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+
+    return res;
+}
+
+
+/**
 * VirtualBox Driver files in windows/system32
 **/
 int vbox_sysfile1() {
