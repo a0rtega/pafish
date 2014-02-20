@@ -28,4 +28,6 @@ int vbox_traywindow();
 
 int vbox_network_share();
 
+int vbox_processes();
+
 #endif

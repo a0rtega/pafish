@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <iphlpapi.h>
+#include <tlhelp32.h>
 #include "vbox.h"
 
 typedef char * string;
@@ -444,4 +445,38 @@ int vbox_network_share() {
     return res;
 }
 
+/**
+* Checking for virtual box processes
+**/
+int vbox_processes() {
+    int res=1;
+    HANDLE hpSnap;
+    PROCESSENTRY32 pentry;
 
+    hpSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
+    if (hpSnap != INVALID_HANDLE_VALUE){
+        pentry.dwSize = sizeof (PROCESSENTRY32);
+    }
+
+    if( !Process32First( hpSnap, &pentry ) ){
+        CloseHandle(hpSnap);
+        return 0;
+    }
+
+    do {
+        if (lstrcmpi(pentry.szExeFile, "vboxservice.exe") == 0){
+            write_log("vboxservice.exe process detected");
+            res = 0;
+        }
+        if (lstrcmpi(pentry.szExeFile, "vboxtray.exe") == 0){
+            write_log("vboxtray.exe process detected");
+            res = 0;
+        }
+    } while( Process32Next( hpSnap, &pentry ) );
+ 
+    if (res == 0){
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+    return res;
+}
