@@ -242,6 +242,45 @@ int vbox_reg_key6() {
     return res;
 }
 
+/**
+* FADT ACPI Regkey detection
+**/
+int vbox_reg_key7() {
+    HKEY regkey;
+    LONG retu;
+    char value[1024];
+    int i;
+    DWORD size;
+    
+    size = sizeof(value);
+    retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\FADT\\VBOX__", 0, KEY_READ, &regkey);
+    if (retu == ERROR_SUCCESS) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
+
+/**
+* RSDT ACPI Regkey detection
+**/
+int vbox_reg_key8() {
+    HKEY regkey;
+    LONG retu;
+    char value[1024];
+    int i;
+    DWORD size;
+    
+    size = sizeof(value);
+    retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\RSDT\\VBOX__", 0, KEY_READ, &regkey);
+    if (retu == ERROR_SUCCESS) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
 
 /**
 * VirtualBox Driver files in windows/system32

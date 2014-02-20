@@ -14,6 +14,10 @@ int vbox_reg_key5();
 
 int vbox_reg_key6();
 
+int vbox_reg_key7();
+
+int vbox_reg_key8();
+
 int vbox_sysfile1();
 
 int vbox_sysfile2();
