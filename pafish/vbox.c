@@ -20,6 +20,9 @@ void ToUpper(unsigned char* Pstr) {
     return;
 }
 
+/**
+* SCSI registry key check
+**/
 int vbox_reg_key1() {
     HKEY regkey;
     LONG retu;
@@ -51,6 +54,9 @@ int vbox_reg_key1() {
     }
 }
 
+/**
+* SystemBiosVersion registry key check
+**/
 int vbox_reg_key2() {
     HKEY regkey;
     LONG retu;
@@ -82,6 +88,9 @@ int vbox_reg_key2() {
     }
 }
 
+/**
+* GuestAdditions key check
+**/
 int vbox_reg_key3() {
     HKEY regkey;
     LONG retu;
@@ -94,6 +103,9 @@ int vbox_reg_key3() {
     }
 }
 
+/**
+* VideoBiosVersion key check
+**/
 int vbox_reg_key4() {
     HKEY regkey;
     LONG retu;
@@ -131,7 +143,6 @@ int vbox_reg_key4() {
 int vbox_reg_key5() {
     HKEY regkey;
     LONG retu;
-    char value[1024];
 
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\DSDT\\VBOX__", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
@@ -379,10 +390,12 @@ int vbox_sysfile2() {
     }
 }
 
+/**
+* NIC MAC check
+**/
 int vbox_mac() {
     WSADATA WSD;
     int res=1;
-    char * message[200];
     char mac[6]={0};
 
     if(!WSAStartup(MAKEWORD(2,2),&WSD)){
