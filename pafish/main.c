@@ -161,6 +161,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
     printf("[*] Reg key (HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\") ... ");
     if (vbox_reg_key2() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
@@ -170,6 +171,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
     printf("[*] Reg key (HKLM\\SOFTWARE\\Oracle\\VirtualBox Guest Additions) ... ");
     if (vbox_reg_key3() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\SOFTWARE\\Oracle\\VirtualBox Guest Additions");
@@ -179,6 +181,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
     printf("[*] Reg key (HKLM\\HARDWARE\\Description\\System \"VideoBiosVersion\") ... ");
     if (vbox_reg_key4() == 0) {
         write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\Description\\System \"VideoBiosVersion\"");
@@ -232,7 +235,6 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-
 
     if (vbox_sysfile1() == 0) {        
     }
