@@ -20,8 +20,6 @@ void ToUpper(unsigned char* Pstr) {
     return;
 }
 
-
-
 int vbox_reg_key1() {
     HKEY regkey;
     LONG retu;
@@ -134,10 +132,7 @@ int vbox_reg_key5() {
     HKEY regkey;
     LONG retu;
     char value[1024];
-    int i;
-    DWORD size;
-    
-    size = sizeof(value);
+
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\DSDT\\VBOX__", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
         return 0;
@@ -248,11 +243,7 @@ int vbox_reg_key6() {
 int vbox_reg_key7() {
     HKEY regkey;
     LONG retu;
-    char value[1024];
-    int i;
-    DWORD size;
-    
-    size = sizeof(value);
+
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\FADT\\VBOX__", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
         return 0;
@@ -268,11 +259,7 @@ int vbox_reg_key7() {
 int vbox_reg_key8() {
     HKEY regkey;
     LONG retu;
-    char value[1024];
-    int i;
-    DWORD size;
-    
-    size = sizeof(value);
+
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\RSDT\\VBOX__", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
         return 0;
