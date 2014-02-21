@@ -14,6 +14,12 @@ int vbox_reg_key5();
 
 int vbox_reg_key6();
 
+int vbox_reg_key7();
+
+int vbox_reg_key8();
+
+int vbox_reg_key9();
+
 int vbox_sysfile1();
 
 int vbox_sysfile2();
@@ -27,5 +33,7 @@ int vbox_pipe();
 int vbox_traywindow();
 
 int vbox_network_share();
+
+int vbox_processes();
 
 #endif

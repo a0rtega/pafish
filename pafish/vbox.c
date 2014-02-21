@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <iphlpapi.h>
+#include <tlhelp32.h>
 #include "vbox.h"
 
 typedef char * string;
@@ -19,8 +20,9 @@ void ToUpper(unsigned char* Pstr) {
     return;
 }
 
-
-
+/**
+* SCSI registry key check
+**/
 int vbox_reg_key1() {
     HKEY regkey;
     LONG retu;
@@ -52,6 +54,9 @@ int vbox_reg_key1() {
     }
 }
 
+/**
+* SystemBiosVersion registry key check
+**/
 int vbox_reg_key2() {
     HKEY regkey;
     LONG retu;
@@ -83,6 +88,9 @@ int vbox_reg_key2() {
     }
 }
 
+/**
+* GuestAdditions key check
+**/
 int vbox_reg_key3() {
     HKEY regkey;
     LONG retu;
@@ -95,6 +103,9 @@ int vbox_reg_key3() {
     }
 }
 
+/**
+* VideoBiosVersion key check
+**/
 int vbox_reg_key4() {
     HKEY regkey;
     LONG retu;
@@ -132,11 +143,7 @@ int vbox_reg_key4() {
 int vbox_reg_key5() {
     HKEY regkey;
     LONG retu;
-    char value[1024];
-    int i;
-    DWORD size;
-    
-    size = sizeof(value);
+
     retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\DSDT\\VBOX__", 0, KEY_READ, &regkey);
     if (retu == ERROR_SUCCESS) {
         return 0;
@@ -241,6 +248,73 @@ int vbox_reg_key6() {
     return res;
 }
 
+/**
+* FADT ACPI Regkey detection
+**/
+int vbox_reg_key7() {
+    HKEY regkey;
+    LONG retu;
+
+    retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\FADT\\VBOX__", 0, KEY_READ, &regkey);
+    if (retu == ERROR_SUCCESS) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
+
+/**
+* RSDT ACPI Regkey detection
+**/
+int vbox_reg_key8() {
+    HKEY regkey;
+    LONG retu;
+
+    retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\ACPI\\RSDT\\VBOX__", 0, KEY_READ, &regkey);
+    if (retu == ERROR_SUCCESS) {
+        return 0;
+    }
+    else {
+        return 1;
+    }
+}
+
+/**
+* Service Regkey detection
+**/
+int vbox_reg_key9() {
+    HKEY regkey;
+    int res = 1;
+    LONG retu;
+    int i;
+    const int count = 5;
+    char message[200];
+
+    string strs[count];
+    strs[0] = "SYSTEM\\ControlSet001\\Services\\VBoxGuest";
+    strs[1] = "SYSTEM\\ControlSet001\\Services\\VBoxMouse";
+    strs[2] = "SYSTEM\\ControlSet001\\Services\\VBoxService";
+    strs[3] = "SYSTEM\\ControlSet001\\Services\\VBoxSF";
+    strs[4] = "SYSTEM\\ControlSet001\\Services\\VBoxVideo";
+
+    for (i=0;i<count; i++){
+        retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, strs[i], 0, KEY_READ, &regkey);
+        if (retu == ERROR_SUCCESS) {
+            sprintf(message, "VirtualBox traced registry key %s", strs[i]);
+            write_log(message);
+            res = 0;
+        }
+    }
+
+    if (res == 0){
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+
+    return res;
+}
+
 
 /**
 * VirtualBox Driver files in windows/system32
@@ -316,10 +390,12 @@ int vbox_sysfile2() {
     }
 }
 
+/**
+* NIC MAC check
+**/
 int vbox_mac() {
     WSADATA WSD;
     int res=1;
-    char * message[200];
     char mac[6]={0};
 
     if(!WSAStartup(MAKEWORD(2,2),&WSD)){
@@ -444,4 +520,38 @@ int vbox_network_share() {
     return res;
 }
 
+/**
+* Checking for virtual box processes
+**/
+int vbox_processes() {
+    int res=1;
+    HANDLE hpSnap;
+    PROCESSENTRY32 pentry;
 
+    hpSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
+    if (hpSnap != INVALID_HANDLE_VALUE){
+        pentry.dwSize = sizeof (PROCESSENTRY32);
+    }
+
+    if( !Process32First( hpSnap, &pentry ) ){
+        CloseHandle(hpSnap);
+        return 0;
+    }
+
+    do {
+        if (lstrcmpi(pentry.szExeFile, "vboxservice.exe") == 0){
+            write_log("vboxservice.exe process detected");
+            res = 0;
+        }
+        if (lstrcmpi(pentry.szExeFile, "vboxtray.exe") == 0){
+            write_log("vboxtray.exe process detected");
+            res = 0;
+        }
+    } while( Process32Next( hpSnap, &pentry ) );
+ 
+    if (res == 0){
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+    return res;
+}
