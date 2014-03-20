@@ -289,7 +289,14 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
+    printf("[*] Looking for VBox DMI ");
+    if (vbox_dmi() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");
     printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
