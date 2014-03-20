@@ -290,6 +290,13 @@ int main(int argc, char *argv[])
         print_not_traced();
     }
     
+    printf("[*] Looking for VBox devices ");
+    if (vbox_devices() == 0) {
+    }
+    else {
+        print_not_traced();
+    }
+
     /* VMware detection tricks */
     printf("\n[-] VMware detection\n");
     printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");

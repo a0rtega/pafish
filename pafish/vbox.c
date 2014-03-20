@@ -6,14 +6,22 @@
 #include <stdio.h>
 #include <iphlpapi.h>
 #include <tlhelp32.h>
+#include <setupapi.h>
+#include <devguid.h>
+#include <regstr.h>
 #include "vbox.h"
 
 typedef char * string;
 
 void ToUpper(unsigned char* Pstr) {
     char* P=(char*)Pstr;
-    unsigned long length=strlen(P);
+    unsigned long length;
     unsigned long i;
+
+    if (Pstr == NULL)
+        return;
+
+    length=strlen(P);
 
     for(i=0;i<length;i++) P[i]=toupper(P[i]);
 
@@ -549,6 +557,101 @@ int vbox_processes() {
         }
     } while( Process32Next( hpSnap, &pentry ) );
  
+    if (res == 0){
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+    return res;
+}
+
+
+/**
+* Helper function to get device propery. Free return buffer after use ! Only for REG_SZ data
+*
+*
+**/
+LPTSTR device_property(HDEVINFO hDevInfo, SP_DEVINFO_DATA DevInfoData, DWORD property){
+
+    LPTSTR buffer = NULL;
+    DWORD buffersize = 0;
+    DWORD DataT;
+
+    while (!SetupDiGetDeviceRegistryProperty(
+            hDevInfo,
+            &DevInfoData,
+            property,
+            &DataT,
+            (PBYTE) buffer,
+            buffersize,
+            &buffersize
+            )){
+
+        if (GetLastError () == ERROR_INSUFFICIENT_BUFFER){
+            if (buffer) LocalFree(buffer);
+            buffer = LocalAlloc (LPTR, buffersize * 2);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return buffer;
+}
+
+/**
+* VBox devices
+*
+* http://support.microsoft.com/kb/259695/EN-US
+**/
+int vbox_devices() {
+    int res=1;
+    HDEVINFO hDevInfo;
+    DWORD i;
+    SP_DEVINFO_DATA DevInfoData;
+
+    hDevInfo = SetupDiGetClassDevs(NULL, 0, 0, DIGCF_PRESENT | DIGCF_ALLCLASSES);
+
+    if (hDevInfo == INVALID_HANDLE_VALUE){
+        return res;
+    }
+
+    DevInfoData.cbSize = sizeof(SP_DEVINFO_DATA);
+
+    // Enum devices
+    for (i=0; SetupDiEnumDeviceInfo(hDevInfo, i, &DevInfoData); i++){
+
+        LPTSTR buffer = NULL;
+
+
+        DWORD properties[] = {SPDRP_CLASS, SPDRP_CLASSGUID, SPDRP_DEVICEDESC, SPDRP_ENUMERATOR_NAME, SPDRP_FRIENDLYNAME, SPDRP_LOCATION_INFORMATION, SPDRP_MFG, SPDRP_PHYSICAL_DEVICE_OBJECT_NAME, SPDRP_SERVICE};
+        int prop;
+        const int max_prop = 9;
+        char * message;
+
+        for (prop=0; prop < max_prop ; prop ++){
+            buffer = device_property(hDevInfo, DevInfoData, properties[prop]);
+            if (buffer != NULL){
+                ToUpper(buffer);
+                if ((strstr((char *)buffer, "VBOX")) ||
+                    (strstr((char *)buffer, "VIRTUALBOX"))){
+                    message = (char*)LocalAlloc(LMEM_ZEROINIT,strlen(buffer)+200);
+                    if (message) {
+                        sprintf(message, "VBOX traced by device property %s ", buffer);
+                        write_log(message);
+                        LocalFree(message);
+                    }
+                    res = 0;
+                }
+                LocalFree(buffer);
+                buffer = NULL;                    
+            }
+        }
+    }
+ 
+    // Cleanup
+    SetupDiDestroyDeviceInfoList(hDevInfo);
+
     if (res == 0){
         print_traced();
         write_trace("hi_virtualbox");

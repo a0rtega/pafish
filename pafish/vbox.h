@@ -36,4 +36,6 @@ int vbox_network_share();
 
 int vbox_processes();
 
+int vbox_devices();
+
 #endif
