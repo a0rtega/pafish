@@ -29,6 +29,10 @@ All releases from v024 will be shipped signed by the original development team. 
 
 Some software projects may be interested in use some of the functions pafish brings. To make it possible, [pafish-dll](https://github.com/a0rtega/pafish-dll) is a side project to maintain a DLL with all the features present on pafish.
 
+# Additional software
+
+The DMI tests require dmidecode.exe in the same directory as pafish.exe. Dmidecode for windows can be obtained here: http://gnuwin32.sourceforge.net/packages/dmidecode.htm
+
 # Build
 
 Pafish is written in C and developed with [wxDev-C++](http://wxdsgn.sourceforge.net/).

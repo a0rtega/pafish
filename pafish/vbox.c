@@ -555,3 +555,53 @@ int vbox_processes() {
     }
     return res;
 }
+
+/**
+* VBox dmi
+*
+**/
+int vbox_dmi() {
+    int res=1;
+    int ret;
+    FILE* f;
+    char * message;
+
+    ret = system("dmidecode.exe >dmi.log");
+    if (ret != 0){
+        printf("ERROR: dmidecode tool missing ");
+        write_log("ERROR: dmidecode tool missing, please install it");
+        return res;
+    }
+
+    f = fopen("z:\\dmi.log", "r");
+
+    fseek(f, 0, SEEK_END);
+    long fsize = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    char * content = (char*) malloc(fsize + 1);
+    
+    if (content != NULL){
+        fread(content, fsize, 1, f);
+        ToUpper(content);
+        if ((strstr((char *)content, "VBOX")) ||
+            (strstr((char *)content, "VIRTUALBOX")) ||
+            (strstr((char *)content, "INNOTEK")) ||
+            (strstr((char *)content, "VIRTUAL MACHINE")) ||
+            (strstr((char *)content, "ORACLE CORPORATION"))
+            ){
+            printf("VBOX traced by dmi (bios) content, see dmi.log ");
+            write_log("VBOX traced by dmi (bios), see dmi.log");
+            res = 0;
+        }
+    }
+
+    fclose(f);
+    if (content) free(content);
+
+    if (res == 0){
+        print_traced();
+        write_trace("hi_virtualbox");
+    }
+    return res;
+}
