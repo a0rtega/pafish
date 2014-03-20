@@ -585,7 +585,11 @@ int vbox_dmi() {
         fread(content, fsize, 1, f);
         ToUpper(content);
         if ((strstr((char *)content, "VBOX")) ||
-                    (strstr((char *)content, "VIRTUALBOX"))){
+            (strstr((char *)content, "VIRTUALBOX")) ||
+            (strstr((char *)content, "INNOTEK")) ||
+            (strstr((char *)content, "VIRTUAL MACHINE")) ||
+            (strstr((char *)content, "ORACLE CORPORATION"))
+            ){
             printf("VBOX traced by dmi (bios) content, see dmi.log ");
             write_log("VBOX traced by dmi (bios), see dmi.log");
             res = 0;
