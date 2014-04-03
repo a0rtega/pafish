@@ -555,3 +555,42 @@ int vbox_processes() {
     }
     return res;
 }
+
+/**
+* Checking for the VBoxControl and other vbox tools
+**/
+int vbox_guest_tools() {
+    int res=1;
+    HANDLE h;
+
+    h = CreateFile("c:\\windows\\system32\\VBoxControl.exe", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h != INVALID_HANDLE_VALUE){
+        write_log("VirtualBox VBoxControl.exe detected");
+        print_traced();
+        write_trace("hi_virtualbox");
+        res = 0;
+        CloseHandle(h);
+        }
+ 
+    h = CreateFile("c:\\program files\\oracle\\virtualbox guest additions\\VBoxDrvInst.exe", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h != INVALID_HANDLE_VALUE){
+        write_log("VirtualBox VBoxDrvInst.exe detected");
+        print_traced();
+        write_trace("hi_virtualbox");
+        res = 0;
+        CloseHandle(h);
+        }
+
+    h = CreateFile("c:\\program files\\oracle\\virtualbox guest additions\\VBoxWHQLFake.exe", GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (h != INVALID_HANDLE_VALUE){
+        write_log("VirtualBox VBoxWHQLFake.exe detected");
+        print_traced();
+        write_trace("hi_virtualbox");
+        res = 0;
+        CloseHandle(h);
+        }
+
+    return res;
+
+}
+
