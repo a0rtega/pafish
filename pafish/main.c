@@ -355,6 +355,9 @@ int main(int argc, char *argv[])
     
     write_log("End");
     
-    fflush(stdin); getchar();
-    return 0;
+    fflush(stdin);
+    if (argc != 2 || strncmp(argv[1], "-q", 2) != 0) {
+        getchar();
+    }
+    return analysis_result;
 }
