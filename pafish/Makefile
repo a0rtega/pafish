@@ -1,5 +1,5 @@
-CC        = i686-pc-mingw32-gcc
-WINDRES   = i686-pc-mingw32-windres
+CC        = i686-w64-mingw32-gcc
+WINDRES   = i686-w64-mingw32-windres
 OBJDIR    = Objects/MingW
 SRC       = $(wildcard *.c)
 OBJ       = $(SRC:%.c=$(OBJDIR)/%.o) $(OBJDIR)/pafish_private.res
@@ -18,7 +18,7 @@ else
    RM = rm -f
    FixPath = $1
 endif
-LINK      = i686-pc-mingw32-g++
+LINK      = i686-w64-mingw32-g++
 
 .PHONY: all all-before all-after clean clean-custom
 all: all-before $(BIN) all-after
