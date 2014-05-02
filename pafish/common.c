@@ -6,6 +6,8 @@
 
 #include "common.h"
 
+int analysis_result = 0;
+
 void init_cmd_colors() {
      HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
      SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
@@ -27,6 +29,7 @@ void print_traced() {
      SetConsoleTextAttribute(handler, 207);
      printf("traced!\n");
      SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
+     analysis_result = 2;
 }
 
 void print_not_traced() {
@@ -41,6 +44,9 @@ void print_suspicious() {
      SetConsoleTextAttribute(handler, 207);
      printf("suspicious\n");
      SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
+     if (analysis_result == 0) {
+        analysis_result = 1;
+     }
 }
 
 void write_log(char msg[]) {
