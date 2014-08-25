@@ -46,7 +46,7 @@ void print_suspicious() {
 void write_log(char msg[]) {
     FILE *log;
     char logstr[1024];
-    snprintf(logstr, sizeof(logstr), "\n[pafish] %s", msg);
+	_snprintf_s(logstr, sizeof(logstr), _TRUNCATE, "\n[pafish] %s", msg);
     log = fopen("pafish.log", "a");
     fputs(logstr, log);
     fclose(log);
