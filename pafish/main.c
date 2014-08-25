@@ -43,10 +43,10 @@ int main(int argc, char *argv[])
     
     winver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&winver);
-    snprintf(winverstr, sizeof(winverstr), "%d.%d build %d", winver.dwMajorVersion, winver.dwMinorVersion, winver.dwBuildNumber);
+    _snprintf_s(winverstr, sizeof(winverstr), _TRUNCATE, "%d.%d build %d", winver.dwMajorVersion, winver.dwMinorVersion, winver.dwBuildNumber);
     
     printf("[*] Windows version: %s\n", winverstr);
-    snprintf(aux, sizeof(aux), "Windows version: %s", winverstr);
+	_snprintf_s(aux, sizeof(aux), "Windows version: %s", winverstr);
     write_log(aux);
     
     printf("[*] Running checks ...\n");
@@ -236,6 +236,15 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+	printf("[*] Looking for VMware VMX magic value ... ");
+	if (vmware_magic_value() == 0) {
+		write_log("VMware traced using VMX magic value");
+		print_traced();
+		write_trace("hi_vmware");
+	}
+	else {
+		print_not_traced();
+	}
     
     /* Qemu detection tricks */
     printf("\n[-] Qemu detection\n");
