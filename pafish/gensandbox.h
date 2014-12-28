@@ -10,4 +10,6 @@ int gensandbox_path();
 
 int gensandbox_drive_size();
 
+int gensandbox_drive_size2();
+
 #endif

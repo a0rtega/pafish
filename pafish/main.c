@@ -113,6 +113,16 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
+
+    printf("[*] Checking if disk size by GetDiskFreeSpace <= 60GB ... ");
+    if (gensandbox_drive_size2() == 0) {
+        print_traced();
+        write_log("Sandbox traced by checking disk size GetDiskFreeSpace <= 60GB");
+        write_trace("hi_sandbox_drive_size_2");
+    }
+    else {
+        print_not_traced();
+    }
     
     /* Hooks detection tricks */
     printf("\n[-] Hooks detection\n");

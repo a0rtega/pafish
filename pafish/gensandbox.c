@@ -82,3 +82,24 @@ int gensandbox_drive_size() {
     }
     return 1;
 }
+
+
+int gensandbox_drive_size2() {
+    ULARGE_INTEGER bytes_available;
+    ULARGE_INTEGER total_bytes;
+    ULARGE_INTEGER total_number_free_bytes;
+
+    if (GetDiskFreeSpaceExA("C:\\", &bytes_available, &total_bytes, &total_number_free_bytes))
+    {
+        if (bytes_available.QuadPart / 1073741824 <= 60) { /* <= 60 GB */
+            return 0;
+        }
+        if (total_bytes.QuadPart / 1073741824 <= 60) { /* <= 60 GB */
+            return 0;
+        }
+        if (total_number_free_bytes.QuadPart / 1073741824 <= 60) { /* <= 60 GB */
+            return 0;
+        }
+    }
+    return 1;
+}
