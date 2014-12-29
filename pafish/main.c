@@ -17,40 +17,40 @@
 
 /*
   Pafish (Paranoid fish)
-  
+
   All code from this project, including
   functions, procedures and the main program
   is licensed under GNU/GPL version 3.
-  
+
   So, if you are going to use functions or
   procedures from this project to develop
   your malware, you have to release the
   source code as well :)
-  
+
   - Alberto Ortega
-  
+
 */
 
 int main(int argc, char *argv[])
 {
     char icon[] = "Blue fish icon thanks to http://www.fasticon.com/", winverstr[32], aux[1024];
     OSVERSIONINFO winver;
-    
+
     write_log("Start");
-    
+
     init_cmd_colors();
     print_header();
-    
+
     winver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&winver);
     snprintf(winverstr, sizeof(winverstr), "%d.%d build %d", winver.dwMajorVersion, winver.dwMinorVersion, winver.dwBuildNumber);
-    
+
     printf("[*] Windows version: %s\n", winverstr);
     snprintf(aux, sizeof(aux), "Windows version: %s", winverstr);
     write_log(aux);
-    
+
     printf("[*] Running checks ...\n");
-    
+
     /* Debuggers detection tricks */
     printf("\n[-] Debuggers detection\n");
     printf("[*] Using IsDebuggerPresent() ... ");
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
             print_not_traced();
         }
     }
-    
+
     /* Generic sandbox detection tricks */
     printf("\n[-] Generic sandbox detection\n");
     printf("[*] Using mouse activity ... ");
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
     /* Hooks detection tricks */
     printf("\n[-] Hooks detection\n");
     printf("[*] Checking function DeleteFileW method 1 ... ");
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
     /* Sandboxie detection tricks */
     printf("\n[-] Sandboxie detection\n");
     printf("[*] Using sbiedll.dll ... ");
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
     /* Wine detection tricks */
     printf("\n[-] Wine detection\n");
     printf("[*] Using GetProcAddress(wine_get_unix_file_name) from kernel32.dll ... ");
@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
     /* VirtualBox detection tricks */
     printf("\n[-] VirtualBox detection\n");
     printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
@@ -240,13 +240,13 @@ int main(int argc, char *argv[])
     }
 
     printf("[*] Reg key (HKLM\\SYSTEM\\ControlSet001\\Services\\VBox* ... ");
-    if (vbox_reg_key9() == 0) {        
+    if (vbox_reg_key9() == 0) {
     }
     else {
         print_not_traced();
     }
 
-    if (vbox_sysfile1() == 0) {        
+    if (vbox_sysfile1() == 0) {
     }
     else {
         print_not_traced();
@@ -302,6 +302,9 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for guest tools ");
     if (vbox_guest_tools() == 0) {
+
+    printf("[*] Looking for VBox devices ");
+    if (vbox_devices() == 0) {
     }
     else {
         print_not_traced();
@@ -345,7 +348,7 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
     /* Qemu detection tricks */
     printf("\n[-] Qemu detection\n");
     printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
@@ -366,12 +369,12 @@ int main(int argc, char *argv[])
     else {
         print_not_traced();
     }
-    
+
     printf("\n\n");
     printf("[-] Finished, feel free to RE me.");
-    
+
     write_log("End");
-    
+
     fflush(stdin);
     if (argc != 2 || strncmp(argv[1], "-q", 2) != 0) {
         getchar();

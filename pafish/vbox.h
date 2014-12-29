@@ -38,4 +38,6 @@ int vbox_processes();
 
 int vbox_guest_tools();
 
+int vbox_devices();
+
 #endif
