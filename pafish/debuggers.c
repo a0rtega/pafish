@@ -14,7 +14,7 @@ int debug_isdebuggerpresent() {
     }
 }
 
-/* This function is not used because it isn't realiable in
+/* This function is not used because it isn't reliable in
    some new environments */
 int debug_checkremotedebuggerpresent() {
     BOOL isdebug = FALSE;

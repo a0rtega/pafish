@@ -214,6 +214,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Reg key (HKLM\\SYSTEM\\CurrentControlSet\\Enum\\IDE ... ");
     if (vbox_reg_key6() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -241,18 +242,21 @@ int main(int argc, char *argv[])
 
     printf("[*] Reg key (HKLM\\SYSTEM\\ControlSet001\\Services\\VBox* ... ");
     if (vbox_reg_key9() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
     }
 
     if (vbox_sysfile1() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
     }
 
     if (vbox_sysfile2() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -260,6 +264,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for MAC ");
     if (vbox_mac() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -267,6 +272,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for pseudo device ");
     if (vbox_pseudodev() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -274,6 +280,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for pipe ");
     if (vbox_pipe() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -281,6 +288,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for VBox tray tool window ");
     if (vbox_traywindow() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -288,6 +296,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for VBox network share ");
     if (vbox_network_share() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -295,6 +304,7 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for VBox processes ");
     if (vbox_processes() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -302,9 +312,12 @@ int main(int argc, char *argv[])
 
     printf("[*] Looking for guest tools ");
     if (vbox_guest_tools() == 0) {
+		print_traced();
+	}
 
     printf("[*] Looking for VBox devices ");
     if (vbox_devices() == 0) {
+		print_traced();
     }
     else {
         print_not_traced();
@@ -376,8 +389,7 @@ int main(int argc, char *argv[])
     write_log("End");
 
     fflush(stdin);
-    if (argc != 2 || strncmp(argv[1], "-q", 2) != 0) {
-        getchar();
-    }
-    return analysis_result;
+	getchar();
+
+    return 0;
 }

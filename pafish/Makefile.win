@@ -1,40 +1,25 @@
-# Project: pafish
-# Compiler: Default GCC compiler
-# Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 01/01/14 13:37
-
-WXLIBNAME = wxmsw29u
-CPP       = g++.exe
+﻿
 CC        = gcc.exe
-WINDRES   = "windres.exe"
-OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/pafish_private.res
-LINKOBJ   = "Objects/MingW/main.o" "Objects/MingW/common.o" "Objects/MingW/debuggers.o" "Objects/MingW/sandboxie.o" "Objects/MingW/vbox.o" "Objects/MingW/gensandbox.o" "Objects/MingW/wine.o" "Objects/MingW/vmware.o" "Objects/MingW/qemu.o" "Objects/MingW/hooks.o" Objects/MingW/pafish_private.res
-LIBS      = -L"C:/Program Files (x86)/Dev-Cpp/lib/wx/gcc_lib" -L"C:/Program Files (x86)/Dev-Cpp/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib"  -s 
-INCS      = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
-CXXINCS   = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include" -I"C:/Program Files (x86)/Dev-Cpp/" -I"C:/Program Files (x86)/Dev-Cpp/include/common"
-RCINCS    = --include-dir "C:/PROGRA~2/Dev-Cpp/include/common"
+LINK      = gcc.exe
+WINDRES   = windres.exe
+OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o \
+            Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o \
+            Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/pafish_private.res
+LINKOBJ   = $(OBJ)
+LIBS      = -L"C:/MinGW32/lib" -lwsock32 -liphlpapi -lsetupapi -lmpr -s
+INCS      = -I"C:/MinGW32/include"
 BIN       = Output/MingW/pafish.exe
-DEFINES   = 
-CXXFLAGS  = $(CXXINCS) $(DEFINES)   -fexpensive-optimizations -O1
-CFLAGS    = $(INCS) $(DEFINES)   -fexpensive-optimizations -O1
-GPROF     = gprof.exe
-ifeq ($(OS),Windows_NT)
-   RM = del /Q
-   FixPath = $(subst /,\,$1)
-else
-   RM = rm -f
-   FixPath = $1
-endif
-LINK      = g++.exe
+CFLAGS    = $(INCS) $(DEFINES) -O0
 
-.PHONY: all all-before all-after clean clean-custom
-all: all-before $(BIN) all-after
+all: $(BIN)
 
-clean: clean-custom
-	$(RM) $(call FixPath,$(LINKOBJ)) "$(call FixPath,$(BIN))"
+clean:
+	del /Q Objects\MingW\*.o
+	del /Q Objects\MingW\*.res
+	del /Q Output\MingW\*.exe
 
 $(BIN): $(OBJ)
-	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS)
 
 Objects/MingW/main.o: $(GLOBALDEPS) main.c
 	$(CC) -c main.c -o Objects/MingW/main.o $(CFLAGS)
@@ -66,5 +51,5 @@ Objects/MingW/qemu.o: $(GLOBALDEPS) qemu.c
 Objects/MingW/hooks.o: $(GLOBALDEPS) hooks.c
 	$(CC) -c hooks.c -o Objects/MingW/hooks.o $(CFLAGS)
 
-Objects/MingW/pafish_private.res: Objects/MingW/pafish_private.rc 
-	$(WINDRES) --input-format=rc -o Objects/MingW/pafish_private.res $(RCINCS) Objects/MingW/PAFISH~1.RC -O coff
+Objects/MingW/pafish_private.res: Objects/MingW/pafish_private.rc
+	$(WINDRES) Objects/MingW/pafish_private.rc --input-format=rc -o Objects/MingW/pafish_private.res -O coff
