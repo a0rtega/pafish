@@ -16,6 +16,4 @@ void write_log(char msg[]);
 
 void write_trace(char product[]);
 
-extern int analysis_result;
-
 #endif

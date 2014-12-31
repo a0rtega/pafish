@@ -4,39 +4,38 @@
 #include <windows.h>
 
 #include "debuggers.h"
+#include "types.h"
 
 int debug_isdebuggerpresent() {
-    if (IsDebuggerPresent()) {
-        return 0;
-    }
-    else {
-        return 1;
-    }
+	if (IsDebuggerPresent())
+	return TRUE;
+	else
+	return FALSE;
 }
 
 /* This function is not used because it isn't reliable in
-   some new environments */
+some new environments */
 int debug_checkremotedebuggerpresent() {
-    BOOL isdebug = FALSE;
-    CheckRemoteDebuggerPresent(GetCurrentProcess(), &isdebug);
-    if (isdebug) {
-        return 0;
-    }
-    else {
-        return 1;
-    }
+	BOOL isdebug = FALSE;
+	CheckRemoteDebuggerPresent(GetCurrentProcess(), &isdebug);
+	if (isdebug) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
 }
 
 int debug_outputdebugstring() {
-    DWORD err = 99; /* Random error */
-    SetLastError(err);
-    /* If we're been debugging, this shouldn't
-       drop an error. */
-    OutputDebugString("useless");
-    if (GetLastError() == err){
-        return 0;
-    }
-    else {
-        return 1;
-    }
+	DWORD err = 99; /* Random error */
+	SetLastError(err);
+	/* If we're been debugging, this shouldn't
+	drop an error. */
+	OutputDebugString("useless");
+	if (GetLastError() == err){
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
 }
