@@ -342,11 +342,11 @@ int vbox_processes(int writelogs) {
 
 	do {
 		if (lstrcmpi(pentry.szExeFile, "vboxservice.exe") == 0) {
-			write_log("VirtualBox traced using vboxservice.exe process");
+			if (writelogs) write_log("VirtualBox traced using vboxservice.exe process");
 			res = TRUE;
 		}
 		if (lstrcmpi(pentry.szExeFile, "vboxtray.exe") == 0) {
-			write_log("VirtualBox traced using vboxtray.exe process");
+			if (writelogs) write_log("VirtualBox traced using vboxtray.exe process");
 			res = TRUE;
 		}
 	} while (Process32Next(hpSnap, &pentry));
