@@ -1,4 +1,31 @@
 
+v04
+
+- Added new VirtualBox detections and system traces
+	- HKLM\\HARDWARE\\ACPI\\DSDT\\VBOX__
+	- HKLM\\HARDWARE\\ACPI\\FADT\\VBOX__
+	- HKLM\\HARDWARE\\ACPI\\RSDT\\VBOX__
+	- HKLM\\SYSTEM\\ControlSet001\\Services\\VBox*
+	- C:\\WINDOWS\\system32\\drivers\\VBox*
+	- C:\\WINDOWS\\system32\\vbox*
+	- C:\\program files\\oracle\\virtualbox guest additions\\
+	- MAC address starting with 08:00:27
+	- Pseudo devices (VBoxMiniRdrDN, VBoxTrayIPC)
+	- VBoxTray windows
+	- VBox network share
+	- VBox processes (vboxservice.exe, vboxtray.exe)
+- Added GetTickCount() sleep patching detection
+- Added new way to get disk size (GetDiskFreeSpaceExA)
+
+Developers:
+- Build system migrated to pure MinGW (make + gcc) + windres for resources
+- utils.c now contains repetitive functions
+- TRUE FALSE types defined in types.h, no more confusion when returning
+
+Contributions:
+- Thanks to Thorsten Sick (https://github.com/Thorsten-Sick) for it's
+  valuable contributions, most of this release is thanks to him.
+
 v03
 
 - Added disk size < 50 GB detection trick
