@@ -1,22 +1,22 @@
 
-CC        = gcc.exe
-LINK      = gcc.exe
-WINDRES   = windres.exe
+CC        = i686-w64-mingw32-gcc
+LINK      = i686-w64-mingw32-gcc
+WINDRES   = i686-w64-mingw32-windres
 OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/utils.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o \
             Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o \
             Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/pafish_private.res
 LINKOBJ   = $(OBJ)
-LIBS      = -L"C:/MinGW32/lib" -lwsock32 -liphlpapi -lsetupapi -lmpr -s
-INCS      = -I"C:/MinGW32/include"
+LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -s
+INCS      =
 BIN       = Output/MingW/pafish.exe
 CFLAGS    = $(INCS) -O1
 
 all: $(BIN)
 
 clean:
-	del /Q Objects\MingW\*.o
-	del /Q Objects\MingW\*.res
-	del /Q Output\MingW\*.exe
+	rm -f Objects\MingW\*.o
+	rm -f Objects\MingW\*.res
+	rm -f Output\MingW\*.exe
 
 $(BIN): $(OBJ)
 	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS)
