@@ -1,3 +1,4 @@
+
 # Pafish
 ## (Paranoid Fish)
 
@@ -11,7 +12,7 @@ It is licensed under GNU/GPL version 3.
 
 Note that the aim of the project is not to implement complex VM detections.
 
-The objective of this project is to collect usual tricks seen in malware samples. This allows us to study it, and test if our analysis environments are properly implemented.
+The objective of this project is to collect usual tricks seen in malware samples. This allows us to study them, and test if our analysis environments are properly implemented.
 
 Examples of execution (v025 all of them):
 
@@ -23,15 +24,11 @@ Examples of execution (v025 all of them):
 
 # Certificate
 
-All releases from v024 will be shipped signed by the original development team. Consider everything without our certificate as unofficial, you can check it against the certificates present in the binaries from this repository.
-
-# DLL
-
-Some software projects may be interested in use some of the functions pafish brings. To make it possible, [pafish-dll](https://github.com/a0rtega/pafish-dll) is a side project to maintain a DLL with all the features present on pafish.
+All releases from v024 will be shipped signed by the original development team. Consider everything without our certificate unofficial, you can check it against the certificates present in the binaries from this repository.
 
 # Build
 
-Pafish is written in C and developed with [wxDev-C++](http://wxdsgn.sourceforge.net/).
+Pafish is written in C and built with pure MinGW (make + gcc).
 
 # Author
 
@@ -39,5 +36,4 @@ Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](http://ao
 
 # Contributions
 
-Feel free to send me malware samples or more tricks to add. GPG ID: 6A06CF5A
-
+Feel free to send me malware samples or more tricks to add. GPG ID: [6A06CF5A](https://keybase.io/alberto/key.asc)
