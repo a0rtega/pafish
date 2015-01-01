@@ -93,3 +93,12 @@ int gensandbox_drive_size2() {
 	}
 	return FALSE;
 }
+
+int gensandbox_sleep_patched() {
+	DWORD time1;
+
+	time1 = GetTickCount();
+	Sleep(500);
+	if ((GetTickCount() - time1) > 450 ) return FALSE;
+	else return TRUE;
+}

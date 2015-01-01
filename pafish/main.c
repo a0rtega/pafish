@@ -116,6 +116,14 @@ int main(int argc, char *argv[])
 	}
 	else print_not_traced();
 
+	printf("[*] Checking if Sleep() is patched using GetTickCount() ... ");
+	if (gensandbox_sleep_patched() == TRUE) {
+		print_traced();
+		write_log("Sandbox traced by checking if Sleep() was patched using GetTickCount()");
+		write_trace("hi_sandbox_sleep_gettickcount");
+	}
+	else print_not_traced();
+
 	/* Hooks detection tricks */
 	printf("\n[-] Hooks detection\n");
 	printf("[*] Checking function DeleteFileW method 1 ... ");
