@@ -8,7 +8,6 @@
 
 unsigned short init_cmd_colors() {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	unsigned short original_colors = 0;
 	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
 	// Get original console colors
 	GetConsoleScreenBufferInfo(handler, &csbi);
