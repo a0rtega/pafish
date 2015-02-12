@@ -6,9 +6,21 @@
 
 #include "common.h"
 
-void init_cmd_colors() {
+unsigned short init_cmd_colors() {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	unsigned short original_colors = 0;
 	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
+	// Get original console colors
+	GetConsoleScreenBufferInfo(handler, &csbi);
 	SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
+	// Return original console colors
+	return csbi.wAttributes;
+}
+
+void restore_cmd_colors(unsigned short original_colors) {
+	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
+	// Restore original console colors
+	SetConsoleTextAttribute(handler, original_colors);
 }
 
 void print_header() {

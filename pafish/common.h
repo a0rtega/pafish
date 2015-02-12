@@ -2,7 +2,9 @@
 #ifndef COMM_H
 #define COMM_H
 
-void init_cmd_colors();
+unsigned short init_cmd_colors();
+
+void restore_cmd_colors(unsigned short);
 
 void print_header();
 

@@ -36,10 +36,11 @@ int main(int argc, char *argv[])
 {
 	char icon[] = "Blue fish icon thanks to http://www.fasticon.com/", winverstr[32], aux[1024];
 	OSVERSIONINFO winver;
+	unsigned short original_colors = 0;
 
 	write_log("Start");
 
-	init_cmd_colors();
+	original_colors = init_cmd_colors();
 	print_header();
 
 	winver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -335,6 +336,8 @@ int main(int argc, char *argv[])
 
 	fflush(stdin);
 	getchar();
+	/* Restore Original Console Colors */
+	restore_cmd_colors(original_colors);
 
 	return 0;
 }
