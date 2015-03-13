@@ -125,6 +125,14 @@ int main(int argc, char *argv[])
 	}
 	else print_not_traced();
 
+	printf("[*] Checking the difference between CPU timestamp counters (rdtsc) ... ");
+	if (gensandbox_rdtsc() == TRUE) {
+		print_traced();
+		write_log("Sandbox traced by checking the difference between CPU timestamp counters (rdtsc)");
+		write_trace("hi_sandbox_rdtsc");
+	}
+	else print_not_traced();
+
 	/* Hooks detection tricks */
 	printf("\n[-] Hooks detection\n");
 	printf("[*] Checking function DeleteFileW method 1 ... ");
