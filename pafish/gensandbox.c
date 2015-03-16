@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <winioctl.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "types.h"
 #include "gensandbox.h"
@@ -102,3 +103,33 @@ int gensandbox_sleep_patched() {
 	if ((GetTickCount() - time1) > 450 ) return FALSE;
 	else return TRUE;
 }
+
+int gensandbox_common_names() {
+    DWORD dwSize = MAX_PATH;
+    char szLogicalDrives[MAX_PATH] = {0};
+    char filename[MAX_PATH] = {0};
+    DWORD dwResult = GetLogicalDriveStrings(dwSize,szLogicalDrives);
+    BOOL exists;
+
+    if (dwResult > 0 && dwResult <= MAX_PATH)
+    {
+        char* szSingleDrive = szLogicalDrives;
+        while(*szSingleDrive)
+        {
+            snprintf(filename, MAX_PATH, "%ssample.exe",szSingleDrive);
+            exists = pafish_exists_file(filename);
+            if (exists)
+                return TRUE;
+
+            snprintf(filename, MAX_PATH, "%smalware.exe",szSingleDrive);
+            exists = pafish_exists_file(filename);
+            if (exists)
+                return TRUE;
+
+            szSingleDrive += strlen(szSingleDrive) + 1;
+        }
+    }
+
+    return FALSE;
+}
+

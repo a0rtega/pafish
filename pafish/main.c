@@ -124,6 +124,14 @@ int main(int argc, char *argv[])
 	}
 	else print_not_traced();
 
+    printf("[*] Checking common sample names ... ");
+    if (gensandbox_common_names() == TRUE) {
+        print_traced();
+        write_log("Sandbox traced by checking common sample names");
+        write_trace("hi_sandbox_common_names");
+    }
+    else print_not_traced();
+
 	/* Hooks detection tricks */
 	printf("\n[-] Hooks detection\n");
 	printf("[*] Checking function DeleteFileW method 1 ... ");
