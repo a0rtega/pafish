@@ -63,6 +63,34 @@ int gensandbox_path() {
 	return FALSE;
 }
 
+int gensandbox_common_names() {
+	DWORD dwSize = MAX_PATH;
+	char szLogicalDrives[MAX_PATH] = {0};
+	char filename[MAX_PATH] = {0};
+	DWORD dwResult = GetLogicalDriveStrings(dwSize,szLogicalDrives);
+	BOOL exists;
+
+	if (dwResult > 0 && dwResult <= MAX_PATH)
+	{
+		char* szSingleDrive = szLogicalDrives;
+		while(*szSingleDrive)
+		{
+			snprintf(filename, MAX_PATH, "%ssample.exe",szSingleDrive);
+			exists = pafish_exists_file(filename);
+			if (exists)
+				return TRUE;
+
+			snprintf(filename, MAX_PATH, "%smalware.exe",szSingleDrive);
+			exists = pafish_exists_file(filename);
+			if (exists)
+				return TRUE;
+
+			szSingleDrive += strlen(szSingleDrive) + 1;
+		}
+	}
+	return FALSE;
+}
+
 int gensandbox_drive_size() {
 	HANDLE drive;
 	BOOL result;
@@ -110,33 +138,5 @@ int gensandbox_rdtsc() {
 	asm volatile ( "rdtsc" : "=A"(ret) );
 	asm volatile ( "rdtsc" : "=A"(ret2) );
 	return (ret2 - ret) > 1000 ? TRUE : FALSE;
-}
-
-int gensandbox_common_names() {
-	DWORD dwSize = MAX_PATH;
-	char szLogicalDrives[MAX_PATH] = {0};
-	char filename[MAX_PATH] = {0};
-	DWORD dwResult = GetLogicalDriveStrings(dwSize,szLogicalDrives);
-	BOOL exists;
-
-	if (dwResult > 0 && dwResult <= MAX_PATH)
-	{
-		char* szSingleDrive = szLogicalDrives;
-		while(*szSingleDrive)
-		{
-			snprintf(filename, MAX_PATH, "%ssample.exe",szSingleDrive);
-			exists = pafish_exists_file(filename);
-			if (exists)
-				return TRUE;
-
-			snprintf(filename, MAX_PATH, "%smalware.exe",szSingleDrive);
-			exists = pafish_exists_file(filename);
-			if (exists)
-				return TRUE;
-
-			szSingleDrive += strlen(szSingleDrive) + 1;
-		}
-	}
-	return FALSE;
 }
 

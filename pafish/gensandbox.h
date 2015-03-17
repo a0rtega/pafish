@@ -8,6 +8,8 @@ int gensandbox_username();
 
 int gensandbox_path();
 
+int gensandbox_common_names();
+
 int gensandbox_drive_size();
 
 int gensandbox_drive_size2();
@@ -15,7 +17,5 @@ int gensandbox_drive_size2();
 int gensandbox_sleep_patched();
 
 int gensandbox_rdtsc();
-
-int gensandbox_common_names();
 
 #endif
