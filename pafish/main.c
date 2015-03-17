@@ -101,6 +101,14 @@ int main(int argc, char *argv[])
 	}
 	else print_not_traced();
 
+	printf("[*] Checking common sample names in drives root ... ");
+	if (gensandbox_common_names() == TRUE) {
+		print_traced();
+		write_log("Sandbox traced by checking common sample names in drives root");
+		write_trace("hi_sandbox_common_names");
+	}
+	else print_not_traced();
+
 	printf("[*] Checking if disk size <= 60GB via DeviceIoControl() ... ");
 	if (gensandbox_drive_size() == TRUE) {
 		print_traced();

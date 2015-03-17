@@ -16,4 +16,6 @@ int gensandbox_sleep_patched();
 
 int gensandbox_rdtsc();
 
+int gensandbox_common_names();
+
 #endif
