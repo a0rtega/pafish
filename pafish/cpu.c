@@ -1,6 +1,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "types.h"
 #include "cpu.h"
@@ -55,5 +56,19 @@ int cpu_hv() {
 
 void cpu_write_vendor(char * vendor) {
 	cpuid_vendor_00(vendor);
+}
+
+int cpu_known_vm_vendors(char * vendor) {
+	const int count = 4;
+	int i;
+	string strs[count];
+	strs[0] = "KVMKVMKVMKVM";
+	strs[1] = "Microsoft Hv";
+	strs[2] = "VMwareVMware";
+	strs[3] = "XenVMMXenVMM";
+	for (i = 0; i < count; i++) {
+		if (!memcmp(vendor, strs[i], 12)) return TRUE;
+	}
+	return FALSE;
 }
 

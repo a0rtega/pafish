@@ -8,4 +8,6 @@ int cpu_hv();
 
 void cpu_write_vendor(char *);
 
+int cpu_known_vm_vendors(char *);
+
 #endif

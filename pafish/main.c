@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* CPU information based detection tricks */
-	printf("\n[-] CPU information detection\n");
+	printf("\n[-] CPU information based detections\n");
 	printf("[*] Checking the difference between CPU timestamp counters (rdtsc) ... ");
 	if (cpu_rdtsc() == TRUE) {
 		print_traced();
@@ -96,6 +96,14 @@ int main(int argc, char *argv[])
 		print_traced();
 		write_log("CPU VM traced by checking hypervisor bit in cpuid feature bits");
 		write_trace("hi_CPU_VM_hypervisor_bit");
+	}
+	else print_not_traced();
+
+	printf("[*] Checking cpuid vendor for known VM vendors ... ");
+	if (cpu_known_vm_vendors(cpu_vendor) == TRUE) {
+		print_traced();
+		write_log("CPU VM traced by checking cpuid vendor for known VM vendors");
+		write_trace("hi_CPU_VM_vendor_name");
 	}
 	else print_not_traced();
 
