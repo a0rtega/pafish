@@ -31,11 +31,13 @@
 
 	- Alberto Ortega
 
+	Blue fish icon thanks to http://www.fasticon.com/
+
 */
 
 int main(int argc, char *argv[])
 {
-	char icon[] = "Blue fish icon thanks to http://www.fasticon.com/", winverstr[32], aux[1024];
+	char winverstr[32], aux[1024];
 	char cpu_vendor[13];
 	OSVERSIONINFO winver;
 	unsigned short original_colors = 0;
@@ -374,8 +376,8 @@ int main(int argc, char *argv[])
 
 	write_log("End");
 
-	fflush(stdin);
 	getchar();
+
 	/* Restore Original Console Colors */
 	restore_cmd_colors(original_colors);
 

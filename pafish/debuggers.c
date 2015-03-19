@@ -13,19 +13,6 @@ int debug_isdebuggerpresent() {
 	return FALSE;
 }
 
-/* This function is not used because it isn't reliable in
-some new environments */
-int debug_checkremotedebuggerpresent() {
-	BOOL isdebug = FALSE;
-	CheckRemoteDebuggerPresent(GetCurrentProcess(), &isdebug);
-	if (isdebug) {
-		return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-}
-
 int debug_outputdebugstring() {
 	DWORD err = 99; /* Random error */
 	SetLastError(err);

@@ -18,7 +18,6 @@ int vbox_reg_key1() {
 	HKEY regkey;
 	LONG retu;
 	char value[1024];
-	int i;
 	DWORD size;
 
 	size = sizeof(value);
@@ -26,6 +25,7 @@ int vbox_reg_key1() {
 	if (retu == ERROR_SUCCESS) {
 		retu = RegQueryValueEx(regkey, "Identifier", NULL, NULL, (BYTE*)value, &size);
 		if (retu == ERROR_SUCCESS) {
+			int i;
 			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
 				value[i] = toupper(value[i]);
 			}
@@ -52,7 +52,6 @@ int vbox_reg_key2() {
 	HKEY regkey;
 	LONG retu;
 	char value[1024];
-	int i;
 	DWORD size;
 
 	size = sizeof(value);
@@ -60,6 +59,7 @@ int vbox_reg_key2() {
 	if (retu == ERROR_SUCCESS) {
 		retu = RegQueryValueEx(regkey, "SystemBiosVersion", NULL, NULL, (BYTE*)value, &size);
 		if (retu == ERROR_SUCCESS) {
+			int i;
 			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
 				value[i] = toupper(value[i]);
 			}
@@ -93,7 +93,6 @@ int vbox_reg_key4() {
 	HKEY regkey;
 	LONG retu;
 	char value[1024];
-	int i;
 	DWORD size;
 
 	size = sizeof(value);
@@ -101,6 +100,7 @@ int vbox_reg_key4() {
 	if (retu == ERROR_SUCCESS) {
 		retu = RegQueryValueEx(regkey, "VideoBiosVersion", NULL, NULL, (BYTE*)value, &size);
 		if (retu == ERROR_SUCCESS) {
+			int i;
 			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
 				value[i] = toupper(value[i]);
 			}
@@ -169,7 +169,6 @@ int vbox_reg_key9(int writelogs) {
 * VirtualBox driver files in \\WINDOWS\\system32\\drivers\\
 **/
 int vbox_sysfile1(int writelogs) {
-	DWORD ret;
 	const int count = 4;
 	string strs[count];
 	int res = FALSE, i = 0;
@@ -193,7 +192,6 @@ int vbox_sysfile1(int writelogs) {
 * VirtualBox other system files
 **/
 int vbox_sysfile2(int writelogs) {
-	DWORD ret;
 	const int count = 14;
 	string strs[count];
 	int res = FALSE, i = 0;
@@ -229,7 +227,6 @@ int vbox_sysfile2(int writelogs) {
 int vbox_mac() {
 	WSADATA WSD;
 	int res = FALSE;
-	char mac[6]={0};
 
 	if(!WSAStartup(MAKEWORD(2,2),&WSD)){
 		unsigned long alist_size = 0;
@@ -239,6 +236,7 @@ int vbox_mac() {
 			if(palist) {
 				ret=GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,palist,&alist_size);
 				IP_ADAPTER_ADDRESSES* ppalist=palist;
+				char mac[6]={0};
 				while (ppalist){
 					if (ppalist->PhysicalAddressLength==0x6){
 						memcpy(mac,ppalist->PhysicalAddress,0x6);

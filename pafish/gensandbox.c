@@ -67,13 +67,13 @@ int gensandbox_path() {
 int gensandbox_common_names() {
 	DWORD dwSize = MAX_PATH;
 	char szLogicalDrives[MAX_PATH] = {0};
-	char filename[MAX_PATH] = {0};
 	DWORD dwResult = GetLogicalDriveStrings(dwSize,szLogicalDrives);
 	BOOL exists;
 
 	if (dwResult > 0 && dwResult <= MAX_PATH)
 	{
 		char* szSingleDrive = szLogicalDrives;
+		char filename[MAX_PATH] = {0};
 		while(*szSingleDrive)
 		{
 			if (GetDriveType(szSingleDrive) != DRIVE_REMOVABLE ) {

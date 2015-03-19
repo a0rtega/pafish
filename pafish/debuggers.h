@@ -4,8 +4,6 @@
 
 int debug_isdebuggerpresent();
 
-int debug_checkremotedebuggerpresent();
-
 int debug_outputdebugstring();
 
 #endif

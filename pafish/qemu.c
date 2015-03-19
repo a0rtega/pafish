@@ -9,7 +9,6 @@ int qemu_reg_key1() {
 	HKEY regkey;
 	LONG retu;
 	char value[1024];
-	int i;
 	DWORD size;
 
 	size = sizeof(value);
@@ -17,6 +16,7 @@ int qemu_reg_key1() {
 	if (retu == ERROR_SUCCESS) {
 		retu = RegQueryValueEx(regkey, "Identifier", NULL, NULL, (BYTE*)value, &size);
 		if (retu == ERROR_SUCCESS) {
+			int i;
 			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
 				value[i] = toupper(value[i]);
 			}
@@ -40,7 +40,6 @@ int qemu_reg_key2() {
 	HKEY regkey;
 	LONG retu;
 	char value[1024];
-	int i;
 	DWORD size;
 
 	size = sizeof(value);
@@ -48,6 +47,7 @@ int qemu_reg_key2() {
 	if (retu == ERROR_SUCCESS) {
 		retu = RegQueryValueEx(regkey, "SystemBiosVersion", NULL, NULL, (BYTE*)value, &size);
 		if (retu == ERROR_SUCCESS) {
+			int i;
 			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
 				value[i] = toupper(value[i]);
 			}

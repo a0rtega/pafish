@@ -47,13 +47,6 @@ void print_not_traced() {
 	SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
 }
 
-void print_suspicious() {
-	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(handler, 207);
-	printf("suspicious\n");
-	SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
-}
-
 void write_log(char msg[]) {
 	FILE *log;
 	char logstr[1024];
