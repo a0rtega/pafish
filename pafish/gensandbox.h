@@ -16,6 +16,4 @@ int gensandbox_drive_size2();
 
 int gensandbox_sleep_patched();
 
-int gensandbox_rdtsc();
-
 #endif

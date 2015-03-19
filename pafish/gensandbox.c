@@ -7,6 +7,7 @@
 
 #include "types.h"
 #include "gensandbox.h"
+#include "utils.h"
 
 int gensandbox_mouse_act() {
 	POINT position1, position2;
@@ -75,16 +76,14 @@ int gensandbox_common_names() {
 		char* szSingleDrive = szLogicalDrives;
 		while(*szSingleDrive)
 		{
-			snprintf(filename, MAX_PATH, "%ssample.exe",szSingleDrive);
-			exists = pafish_exists_file(filename);
-			if (exists)
-				return TRUE;
-
-			snprintf(filename, MAX_PATH, "%smalware.exe",szSingleDrive);
-			exists = pafish_exists_file(filename);
-			if (exists)
-				return TRUE;
-
+			if (GetDriveType(szSingleDrive) != DRIVE_REMOVABLE ) {
+				snprintf(filename, MAX_PATH, "%ssample.exe",szSingleDrive);
+				exists = pafish_exists_file(filename);
+				if (exists) return TRUE;
+				snprintf(filename, MAX_PATH, "%smalware.exe",szSingleDrive);
+				exists = pafish_exists_file(filename);
+				if (exists) return TRUE;
+			}
 			szSingleDrive += strlen(szSingleDrive) + 1;
 		}
 	}
@@ -131,12 +130,5 @@ int gensandbox_sleep_patched() {
 	Sleep(500);
 	if ((GetTickCount() - time1) > 450 ) return FALSE;
 	else return TRUE;
-}
-
-int gensandbox_rdtsc() {
-	uint64_t ret, ret2;
-	asm volatile ( "rdtsc" : "=A"(ret) );
-	asm volatile ( "rdtsc" : "=A"(ret2) );
-	return (ret2 - ret) > 1000 ? TRUE : FALSE;
 }
 
