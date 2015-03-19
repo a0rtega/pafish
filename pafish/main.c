@@ -15,6 +15,7 @@
 #include "wine.h"
 #include "vmware.h"
 #include "qemu.h"
+#include "cpu.h"
 
 /*
 	Pafish (Paranoid fish)
@@ -35,6 +36,7 @@
 int main(int argc, char *argv[])
 {
 	char icon[] = "Blue fish icon thanks to http://www.fasticon.com/", winverstr[32], aux[1024];
+	char cpu_vendor[13];
 	OSVERSIONINFO winver;
 	unsigned short original_colors = 0;
 
@@ -48,11 +50,15 @@ int main(int argc, char *argv[])
 	snprintf(winverstr, sizeof(winverstr)-sizeof(winverstr[0]), "%d.%d build %d",
 	winver.dwMajorVersion, winver.dwMinorVersion, winver.dwBuildNumber);
 
+	/* Get CPU vendor */
+	cpu_write_vendor(cpu_vendor);
+
 	printf("[*] Windows version: %s\n", winverstr);
+	printf("[*] CPU vendor: %s\n", cpu_vendor);
 	snprintf(aux, sizeof(aux)-sizeof(aux[0]), "Windows version: %s", winverstr);
 	write_log(aux);
-
-	printf("[*] Running checks ...\n");
+	snprintf(aux, sizeof(aux)-sizeof(aux[0]), "CPU vendor: %s", cpu_vendor);
+	write_log(aux);
 
 	/* Debuggers detection tricks */
 	printf("\n[-] Debuggers detection\n");
@@ -74,6 +80,24 @@ int main(int argc, char *argv[])
 		}
 		else print_not_traced();
 	}
+
+	/* CPU information based detection tricks */
+	printf("\n[-] CPU information detection\n");
+	printf("[*] Checking the difference between CPU timestamp counters (rdtsc) ... ");
+	if (cpu_rdtsc() == TRUE) {
+		print_traced();
+		write_log("CPU VM traced by checking the difference between CPU timestamp counters (rdtsc)");
+		write_trace("hi_CPU_VM_rdtsc");
+	}
+	else print_not_traced();
+
+	printf("[*] Checking hypervisor bit in cpuid feature bits ... ");
+	if (cpu_hv() == TRUE) {
+		print_traced();
+		write_log("CPU VM traced by checking hypervisor bit in cpuid feature bits");
+		write_trace("hi_CPU_VM_hypervisor_bit");
+	}
+	else print_not_traced();
 
 	/* Generic sandbox detection tricks */
 	printf("\n[-] Generic sandbox detection\n");
@@ -130,14 +154,6 @@ int main(int argc, char *argv[])
 		print_traced();
 		write_log("Sandbox traced by checking if Sleep() was patched using GetTickCount()");
 		write_trace("hi_sandbox_sleep_gettickcount");
-	}
-	else print_not_traced();
-
-	printf("[*] Checking the difference between CPU timestamp counters (rdtsc) ... ");
-	if (gensandbox_rdtsc() == TRUE) {
-		print_traced();
-		write_log("Sandbox traced by checking the difference between CPU timestamp counters (rdtsc)");
-		write_trace("hi_sandbox_rdtsc");
 	}
 	else print_not_traced();
 

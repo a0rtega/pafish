@@ -4,7 +4,7 @@ LINK      = i686-w64-mingw32-gcc
 WINDRES   = i686-w64-mingw32-windres
 OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/utils.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o \
             Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o \
-            Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/pafish_private.res
+            Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/cpu.o Objects/MingW/pafish_private.res
 LINKOBJ   = $(OBJ)
 LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -s
 INCS      =
@@ -53,6 +53,9 @@ Objects/MingW/qemu.o: $(GLOBALDEPS) qemu.c
 
 Objects/MingW/hooks.o: $(GLOBALDEPS) hooks.c
 	$(CC) -c hooks.c -o Objects/MingW/hooks.o $(CFLAGS)
+
+Objects/MingW/cpu.o: $(GLOBALDEPS) cpu.c
+	$(CC) -c cpu.c -o Objects/MingW/cpu.o $(CFLAGS)
 
 Objects/MingW/pafish_private.res: Objects/MingW/pafish_private.rc
 	$(WINDRES) Objects/MingW/pafish_private.rc --input-format=rc -o Objects/MingW/pafish_private.res -O coff
