@@ -9,7 +9,7 @@ LINKOBJ   = $(OBJ)
 LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -s
 INCS      =
 BIN       = Output/MingW/pafish.exe
-CFLAGS    = $(INCS) -Wall -Wextra -O2
+CFLAGS    = $(INCS) -Wall -Wextra -O1
 
 all: $(BIN)
 
