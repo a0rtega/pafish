@@ -14,9 +14,9 @@ CFLAGS    = $(INCS) -O1
 all: $(BIN)
 
 clean:
-	rm -f Objects\MingW\*.o
-	rm -f Objects\MingW\*.res
-	rm -f Output\MingW\*.exe
+	rm -f Objects/MingW/*.o
+	rm -f Objects/MingW/*.res
+	rm -f Output/MingW/*.exe
 
 $(BIN): $(OBJ)
 	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS)
