@@ -15,68 +15,14 @@
 * SCSI registry key check
 **/
 int vbox_reg_key1() {
-	HKEY regkey;
-	LONG retu;
-	char value[1024];
-	DWORD size;
-
-	size = sizeof(value);
-	retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0", 0, KEY_READ, &regkey);
-	if (retu == ERROR_SUCCESS) {
-		retu = RegQueryValueEx(regkey, "Identifier", NULL, NULL, (BYTE*)value, &size);
-		if (retu == ERROR_SUCCESS) {
-			int i;
-			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
-				value[i] = toupper(value[i]);
-			}
-			if (strstr(value, "VBOX") != NULL) {
-				return TRUE;
-			}
-			else {
-				return FALSE;
-			}
-		}
-		else {
-			return FALSE;
-		}
-	}
-	else {
-		return FALSE;
-	}
+	return pafish_exists_regkey_value_str(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0", "Identifier", "VBOX");
 }
 
 /**
 * SystemBiosVersion registry key check
 **/
 int vbox_reg_key2() {
-	HKEY regkey;
-	LONG retu;
-	char value[1024];
-	DWORD size;
-
-	size = sizeof(value);
-	retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\Description\\System", 0, KEY_READ, &regkey);
-	if (retu == ERROR_SUCCESS) {
-		retu = RegQueryValueEx(regkey, "SystemBiosVersion", NULL, NULL, (BYTE*)value, &size);
-		if (retu == ERROR_SUCCESS) {
-			int i;
-			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
-				value[i] = toupper(value[i]);
-			}
-			if (strstr(value, "VBOX") != NULL) {
-				return TRUE;
-			}
-			else {
-				return FALSE;
-			}
-		}
-		else {
-			return FALSE;
-		}
-	}
-	else {
-		return FALSE;
-	}
+	return pafish_exists_regkey_value_str(HKEY_LOCAL_MACHINE, "HARDWARE\\Description\\System", "SystemBiosVersion", "VBOX");
 }
 
 /**
@@ -90,34 +36,7 @@ int vbox_reg_key3() {
 * VideoBiosVersion key check
 **/
 int vbox_reg_key4() {
-	HKEY regkey;
-	LONG retu;
-	char value[1024];
-	DWORD size;
-
-	size = sizeof(value);
-	retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\Description\\System", 0, KEY_READ, &regkey);
-	if (retu == ERROR_SUCCESS) {
-		retu = RegQueryValueEx(regkey, "VideoBiosVersion", NULL, NULL, (BYTE*)value, &size);
-		if (retu == ERROR_SUCCESS) {
-			int i;
-			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
-				value[i] = toupper(value[i]);
-			}
-			if (strstr(value, "VIRTUALBOX") != NULL) {
-				return TRUE;
-			}
-			else {
-				return FALSE;
-			}
-		}
-		else {
-			return FALSE;
-		}
-	}
-	else {
-		return FALSE;
-	}
+	return pafish_exists_regkey_value_str(HKEY_LOCAL_MACHINE, "HARDWARE\\Description\\System", "VideoBiosVersion", "VIRTUALBOX");
 }
 
 /**
@@ -169,21 +88,7 @@ int vbox_reg_key9(int writelogs) {
 * HARDWARE\\DESCRIPTION\\System SystemBiosDate == 06/23/99
 **/
 int vbox_reg_key10() {
-	HKEY regkey;
-	LONG retu;
-	char value[1024];
-	DWORD size;
-
-	size = sizeof(value);
-	retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DESCRIPTION\\System", 0, KEY_READ, &regkey);
-	if (retu == ERROR_SUCCESS) {
-		retu = RegQueryValueEx(regkey, "SystemBiosDate", NULL, NULL, (BYTE*)value, &size);
-		if (retu == ERROR_SUCCESS) {
-			if (!strcmp(value, "06/23/99"))
-				return TRUE;
-		}
-	}
-	return FALSE;
+	return pafish_exists_regkey_value_str(HKEY_LOCAL_MACHINE, "HARDWARE\\DESCRIPTION\\System", "SystemBiosDate", "06/23/99");
 }
 
 /**
@@ -371,3 +276,4 @@ int vbox_processes(int writelogs) {
 	} while (Process32Next(hpSnap, &pentry));
 	return res;
 }
+
