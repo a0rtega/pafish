@@ -1,4 +1,31 @@
 
+v05
+
+- Added a new set of detections based on CPU information
+	- rdtsc timing detection
+	- cpuid vendor string
+	- cpuid hv bit
+- Added a new generic sandbox detection for sample.exe and malware.exe
+  in drives root
+- Added a new VirtualBox detection based on SystemBiosDate
+- Added more ports to Scsi in VMWare
+- Greatly reduced icon size
+
+- Bugfixes
+	- Restore CLI colors when finish
+
+- Code style
+	- Now CFLAGS includes -Wall -Wextra
+	- cppcheck scan
+	- With this, lots of code style changes and minor fixes
+	  have been done
+
+- Contributors for this release
+	Inaki Rodriguez
+	mlw.re
+	Sanchit Karve
+	Mikael Keri
+
 v04
 
 - Added new VirtualBox detections and system traces
@@ -75,3 +102,4 @@ v02
 v01
 
 - First version
+
