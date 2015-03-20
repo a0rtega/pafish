@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <ctype.h>
 
 #include "utils.h"
 #include "types.h"
@@ -31,7 +32,7 @@ inline int pafish_exists_regkey_value_str(HKEY hKey, char * regkey_s, char * val
 		ret = RegQueryValueEx(regkey, value_s, NULL, NULL, (BYTE*)value, &size);
 		RegCloseKey(regkey);
 		if (ret == ERROR_SUCCESS) {
-			int i;
+			size_t i;
 			for (i = 0; i < strlen(value); i++) { /* case-insensitive */
 				value[i] = toupper(value[i]);
 			}

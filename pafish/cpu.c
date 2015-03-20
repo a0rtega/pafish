@@ -19,7 +19,7 @@ static inline int rdtsc_diff() {
 }
 
 static inline void cpuid_vendor_00(char * vendor) {
-	int eax, ebx, ecx, edx;
+	int ebx, ecx, edx;
 
 	__asm__ volatile("cpuid" \
 			: "=b"(ebx), \

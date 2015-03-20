@@ -9,7 +9,7 @@ LINKOBJ   = $(OBJ)
 LIBS      = -L"C:/MinGW32/lib" -lwsock32 -liphlpapi -lsetupapi -lmpr -s
 INCS      = -I"C:/MinGW32/include"
 BIN       = Output/MingW/pafish.exe
-CFLAGS    = $(INCS) -O1
+CFLAGS    = $(INCS) -Wall -Wextra -O2
 
 all: $(BIN)
 

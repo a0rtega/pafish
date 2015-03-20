@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #include "types.h"
 #include "gensandbox.h"
@@ -26,7 +27,7 @@ int gensandbox_mouse_act() {
 
 int gensandbox_username() {
 	char username[200];
-	int i;
+	size_t i;
 	DWORD usersize = sizeof(username);
 	GetUserName(username, &usersize);
 	for (i = 0; i < strlen(username); i++) { /* case-insensitive */
@@ -46,7 +47,7 @@ int gensandbox_username() {
 
 int gensandbox_path() {
 	char path[500];
-	int i;
+	size_t i;
 	DWORD pathsize = sizeof(path);
 	GetModuleFileName(NULL, path, pathsize);
 	for (i = 0; i < strlen(path); i++) { /* case-insensitive */

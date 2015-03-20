@@ -35,7 +35,7 @@
 
 */
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	char winverstr[32], aux[1024];
 	char cpu_vendor[13];
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
 	winver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx(&winver);
-	snprintf(winverstr, sizeof(winverstr)-sizeof(winverstr[0]), "%d.%d build %d",
+	snprintf(winverstr, sizeof(winverstr)-sizeof(winverstr[0]), "%lu.%lu build %lu",
 	winver.dwMajorVersion, winver.dwMinorVersion, winver.dwBuildNumber);
 
 	/* Get CPU vendor */

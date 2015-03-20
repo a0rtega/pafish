@@ -10,6 +10,7 @@
 #include "vbox.h"
 #include "utils.h"
 #include "types.h"
+#include "common.h"
 
 /**
 * SCSI registry key check
