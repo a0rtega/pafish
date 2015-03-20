@@ -263,6 +263,14 @@ int main(int argc, char *argv[])
 	}
 	else print_not_traced();
 
+	printf("[*] Reg key (HKLM\\HARDWARE\\DESCRIPTION\\System \"SystemBiosDate\" ... ");
+	if (vbox_reg_key10() == TRUE) {
+		write_log("VirtualBox traced using Reg key HKLM\\HARDWARE\\DESCRIPTION\\System \"SystemBiosDate\"");
+		print_traced();
+		write_trace("hi_virtualbox");
+	}
+	else print_not_traced();
+
 	printf("[*] Driver files in C:\\WINDOWS\\system32\\drivers\\VBox* ... ");
 	if (vbox_sysfile1(TRUE) == TRUE) {
 		/* Log written inside function */

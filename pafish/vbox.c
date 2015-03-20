@@ -166,6 +166,27 @@ int vbox_reg_key9(int writelogs) {
 }
 
 /**
+* HARDWARE\\DESCRIPTION\\System SystemBiosDate == 06/23/99
+**/
+int vbox_reg_key10() {
+	HKEY regkey;
+	LONG retu;
+	char value[1024];
+	DWORD size;
+
+	size = sizeof(value);
+	retu = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DESCRIPTION\\System", 0, KEY_READ, &regkey);
+	if (retu == ERROR_SUCCESS) {
+		retu = RegQueryValueEx(regkey, "SystemBiosDate", NULL, NULL, (BYTE*)value, &size);
+		if (retu == ERROR_SUCCESS) {
+			if (!strcmp(value, "06/23/99"))
+				return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+/**
 * VirtualBox driver files in \\WINDOWS\\system32\\drivers\\
 **/
 int vbox_sysfile1(int writelogs) {

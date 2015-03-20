@@ -10,6 +10,7 @@ int vbox_reg_key5();
 int vbox_reg_key7();
 int vbox_reg_key8();
 int vbox_reg_key9(int writelogs);
+int vbox_reg_key10();
 
 int vbox_sysfile1(int writelogs);
 int vbox_sysfile2(int writelogs);
