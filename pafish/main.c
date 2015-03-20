@@ -329,9 +329,9 @@ int main(void)
 
 	/* VMware detection tricks */
 	printf("\n[-] VMware detection\n");
-	printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
+	printf("[*] Scsi port 0,1,2 ->bus->target id->logical unit id-> 0 identifier ... ");
 	if (vmware_reg_key1() == TRUE) {
-		write_log("VMWare traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
+		write_log("VMWare traced using Reg key HKLM\\HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0,1,2\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0 \"Identifier\"");
 		print_traced();
 		write_trace("hi_vmware");
 	}
