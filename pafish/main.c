@@ -93,6 +93,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Checking the difference between CPU timestamp counters (rdtsc) forcing VM exit ... ");
+	if (cpu_rdtsc_force_vmexit() == TRUE) {
+		print_traced();
+		write_log("CPU VM traced by checking the difference between CPU timestamp counters (rdtsc) forcing VM exit");
+		write_trace("hi_CPU_VM_rdtsc_force_vm_exit");
+	}
+	else print_not_traced();
+
 	printf("[*] Checking hypervisor bit in cpuid feature bits ... ");
 	if (cpu_hv() == TRUE) {
 		print_traced();

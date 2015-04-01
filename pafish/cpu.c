@@ -6,15 +6,26 @@
 #include "types.h"
 #include "cpu.h"
 
-static inline int rdtsc_diff() {
+static inline unsigned long long rdtsc_diff() {
 	unsigned long long ret, ret2;
 	unsigned eax, edx;
-
 	__asm__ volatile("rdtsc" : "=a" (eax), "=d" (edx));
 	ret  = ((unsigned long long)eax) | (((unsigned long long)edx) << 32);
 	__asm__ volatile("rdtsc" : "=a" (eax), "=d" (edx));
 	ret2  = ((unsigned long long)eax) | (((unsigned long long)edx) << 32);
+	return ret2 - ret;
+}
 
+static inline unsigned long long rdtsc_diff_vmexit() {
+	unsigned long long ret, ret2;
+	unsigned eax, edx;
+	__asm__ volatile("rdtsc" : "=a" (eax), "=d" (edx));
+	ret  = ((unsigned long long)eax) | (((unsigned long long)edx) << 32);
+	/* vm exit forced here. it uses: eax = 0; cpuid; */
+	__asm__ volatile("cpuid" : /* no output */ : "a"(0x00));
+	/**/
+	__asm__ volatile("rdtsc" : "=a" (eax), "=d" (edx));
+	ret2  = ((unsigned long long)eax) | (((unsigned long long)edx) << 32);
 	return ret2 - ret;
 }
 
@@ -41,13 +52,27 @@ static inline int cpuid_hv_bit() {
 }
 
 int cpu_rdtsc() {
-	int i, avg = 0, diff;
+	int i;
+	unsigned long long diff, avg = 0;
 	for (i = 0; i < 10; i++) {
 		diff = rdtsc_diff();
 		avg = avg + diff;
 		Sleep(500);
 	}
-	return (avg / 10) > 750 ? TRUE : FALSE;
+	avg = avg / 10;
+	return (avg < 750 && avg > 0) ? FALSE : TRUE;
+}
+
+int cpu_rdtsc_force_vmexit() {
+	int i;
+	unsigned long long diff, avg = 0;
+	for (i = 0; i < 10; i++) {
+		diff = rdtsc_diff_vmexit();
+		avg = avg + diff;
+		Sleep(500);
+	}
+	avg = avg / 10;
+	return (avg < 1000 && avg > 0) ? FALSE : TRUE;
 }
 
 int cpu_hv() {
