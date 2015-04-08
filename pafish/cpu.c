@@ -53,10 +53,9 @@ static inline int cpuid_hv_bit() {
 
 int cpu_rdtsc() {
 	int i;
-	unsigned long long diff, avg = 0;
+	unsigned long long avg = 0;
 	for (i = 0; i < 10; i++) {
-		diff = rdtsc_diff();
-		avg = avg + diff;
+		avg = avg + rdtsc_diff();
 		Sleep(500);
 	}
 	avg = avg / 10;
@@ -65,10 +64,9 @@ int cpu_rdtsc() {
 
 int cpu_rdtsc_force_vmexit() {
 	int i;
-	unsigned long long diff, avg = 0;
+	unsigned long long avg = 0;
 	for (i = 0; i < 10; i++) {
-		diff = rdtsc_diff_vmexit();
-		avg = avg + diff;
+		avg = avg + rdtsc_diff_vmexit();
 		Sleep(500);
 	}
 	avg = avg / 10;

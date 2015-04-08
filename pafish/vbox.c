@@ -161,7 +161,7 @@ int vbox_mac() {
 		if(ret==ERROR_BUFFER_OVERFLOW) {
 			IP_ADAPTER_ADDRESSES* palist = (IP_ADAPTER_ADDRESSES*)LocalAlloc(LMEM_ZEROINIT,alist_size);
 			if(palist) {
-				ret=GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,palist,&alist_size);
+				GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,palist,&alist_size);
 				IP_ADAPTER_ADDRESSES* ppalist=palist;
 				char mac[6]={0};
 				while (ppalist){
