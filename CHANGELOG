@@ -1,4 +1,12 @@
 
+v051
+
+- Minor release to add a new detection based on CPU information,
+  Checking the difference between CPU timestamp counters (rdtsc) forcing VM exit
+- gcc -O0 due to errors in low level functions caused by the
+  optimizations
+- Minor coding style changes
+
 v05
 
 - Added a new set of detections based on CPU information
