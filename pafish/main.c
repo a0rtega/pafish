@@ -175,6 +175,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Checking if NumberOfProcessors is < 2 via GetSystemInfo() ... ");
+	if (gensandbox_one_cpu_GetSystemInfo() == TRUE) {
+		print_traced();
+		write_log("Sandbox traced by checking if NumberOfProcessors is less than 2 via GetSystemInfo()");
+		write_trace("hi_sandbox_NumberOfProcessors_less_2_GetSystemInfo");
+	}
+	else print_not_traced();
+
 	/* Hooks detection tricks */
 	printf("\n[-] Hooks detection\n");
 	printf("[*] Checking function DeleteFileW method 1 ... ");

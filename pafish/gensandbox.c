@@ -133,3 +133,9 @@ int gensandbox_sleep_patched() {
 	else return TRUE;
 }
 
+int gensandbox_one_cpu_GetSystemInfo() {
+	SYSTEM_INFO siSysInfo;
+	GetSystemInfo(&siSysInfo);
+	return siSysInfo.dwNumberOfProcessors < 2 ? TRUE : FALSE;
+}
+
