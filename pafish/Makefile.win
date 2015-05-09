@@ -6,8 +6,8 @@ OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/utils.o Ob
             Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o \
             Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/cpu.o Objects/MingW/pafish_private.res
 LINKOBJ   = $(OBJ)
-LIBS      = -L"C:/MinGW32/lib" -lwsock32 -liphlpapi -lsetupapi -lmpr -s
-INCS      = -I"C:/MinGW32/include"
+LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -s
+INCS      =
 BIN       = Output/MingW/pafish.exe
 CFLAGS    = $(INCS) -Wall -Wextra -O0
 

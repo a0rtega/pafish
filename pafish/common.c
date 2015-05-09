@@ -47,6 +47,13 @@ void print_not_traced() {
 	SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
 }
 
+void print_warning(char * msg) {
+	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handler, 224);
+	printf("%s\n", msg);
+	SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
+}
+
 void write_log(char msg[]) {
 	FILE *log;
 	char logstr[1024];
