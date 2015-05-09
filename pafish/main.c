@@ -175,6 +175,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Checking if NumberOfProcessors is < 2 via raw access ... ");
+	if (gensandbox_one_cpu() == TRUE) {
+		print_traced();
+		write_log("Sandbox traced by checking if NumberOfProcessors is less than 2 via raw access");
+		write_trace("hi_sandbox_NumberOfProcessors_less_2_raw");
+	}
+	else print_not_traced();
+
 	printf("[*] Checking if NumberOfProcessors is < 2 via GetSystemInfo() ... ");
 	if (gensandbox_one_cpu_GetSystemInfo() == TRUE) {
 		print_traced();
