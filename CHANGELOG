@@ -1,4 +1,12 @@
 
+v052
+
+- Minor release to add two different NumberOfProcessors based detection used by
+  new Dyre malware version:
+	gensandbox_one_cpu()
+	gensandbox_one_cpu_GetSystemInfo()
+- Fixes #25 (compilation error in linux)
+
 v051
 
 - Minor release to add a new detection based on CPU information,
