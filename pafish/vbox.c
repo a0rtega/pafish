@@ -1,6 +1,7 @@
 
 #define _WIN32_WINNT 0x0501 /* _WIN32_WINNT_WINXP */
 
+#include <winsock2.h>
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
@@ -152,7 +153,6 @@ int vbox_sysfile2(int writelogs) {
 * NIC MAC check
 **/
 int vbox_mac() {
-	#if defined(_IPTYPES_H) && defined(_IPHLPAPI_H)
 	WSADATA WSD;
 	int res = FALSE;
 
@@ -181,10 +181,6 @@ int vbox_mac() {
 		WSACleanup();
 	}
 	return res;
-	#else
-		#warning "vbox_mac() function was not built in!"
-	return -1;
-	#endif
 }
 
 /**

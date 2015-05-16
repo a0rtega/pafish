@@ -312,19 +312,12 @@ int main(void)
 	else print_not_traced();
 
 	printf("[*] Looking for a MAC address starting with 08:00:27 ... ");
-	switch (vbox_mac()) {
-		case TRUE:
-			write_log("VirtualBox traced using MAC address starting with 08:00:27");
-			print_traced();
-			write_trace("hi_virtualbox");
-			break;
-		case FALSE:
-			print_not_traced();
-			break;
-		case -1:
-			print_warning("NOT BUILT");
-			break;
+	if (vbox_mac() == TRUE) {
+		write_log("VirtualBox traced using MAC address starting with 08:00:27");
+		print_traced();
+		write_trace("hi_virtualbox");
 	}
+	else print_not_traced();
 
 	printf("[*] Looking for pseudo devices ... ");
 	if (vbox_devices(TRUE) == TRUE) {
