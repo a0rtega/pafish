@@ -3,6 +3,7 @@
 
 #include "wine.h"
 #include "types.h"
+#include "utils.h"
 
 int wine_detect_get_unix_file_name() {
 	HMODULE k32;
@@ -18,4 +19,8 @@ int wine_detect_get_unix_file_name() {
 	else {
 		return FALSE;
 	}
+}
+
+int wine_reg_key1() {
+	return pafish_exists_regkey(HKEY_CURRENT_USER, "SOFTWARE\\Wine");
 }
