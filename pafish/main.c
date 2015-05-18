@@ -191,6 +191,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Checking if pysical memory is < 1Gb ... ");
+	if (gensandbox_less_than_onegb() == TRUE) {
+		print_traced();
+		write_log("Sandbox traced by checking if pysical memory is less than 1Gb");
+		write_trace("hi_sandbox_pysicalmemory_less_1Gb");
+	}
+	else print_not_traced();
+
 	/* Hooks detection tricks */
 	printf("\n[-] Hooks detection\n");
 	printf("[*] Checking function DeleteFileW method 1 ... ");
