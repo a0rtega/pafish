@@ -20,4 +20,6 @@ int gensandbox_one_cpu();
 
 int gensandbox_one_cpu_GetSystemInfo();
 
+int gensandbox_less_than_onegb();
+
 #endif

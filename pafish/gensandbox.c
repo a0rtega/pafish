@@ -1,4 +1,6 @@
 
+#define _WIN32_WINNT 0x0501 /* _WIN32_WINNT_WINXP */
+
 #include <windows.h>
 #include <winioctl.h>
 #include <string.h>
@@ -147,5 +149,13 @@ int gensandbox_one_cpu_GetSystemInfo() {
 	SYSTEM_INFO siSysInfo;
 	GetSystemInfo(&siSysInfo);
 	return siSysInfo.dwNumberOfProcessors < 2 ? TRUE : FALSE;
+}
+
+int gensandbox_less_than_onegb() {
+	MEMORYSTATUSEX statex;
+	statex.dwLength = sizeof (statex);
+
+	GlobalMemoryStatusEx(&statex);
+	return (statex.ullAvailPhys/1024) < 1048576 ? TRUE : FALSE;
 }
 
