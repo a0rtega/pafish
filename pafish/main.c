@@ -229,6 +229,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Reg key (HKCU\\SOFTWARE\\Wine) ... ");
+	if (wine_reg_key1() == TRUE) {
+		write_log("Wine traced using Reg key HKCU\\SOFTWARE\\Wine");
+		print_traced();
+		write_trace("hi_wine");
+	}
+	else print_not_traced();
+
 	/* VirtualBox detection tricks */
 	printf("\n[-] VirtualBox detection\n");
 	printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
@@ -388,6 +396,14 @@ int main(void)
 	printf("[*] Looking for C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys ... ");
 	if (vmware_sysfile2() == TRUE) {
 		write_log("VMware traced using file C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys");
+		print_traced();
+		write_trace("hi_vmware");
+	}
+	else print_not_traced();
+
+	printf("[*] Looking for pseudo devices ... ");
+	if (vmware_devices(TRUE) == TRUE) {
+		/* Log written inside function */
 		print_traced();
 		write_trace("hi_vmware");
 	}
