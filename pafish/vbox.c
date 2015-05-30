@@ -1,11 +1,9 @@
 
 #define _WIN32_WINNT 0x0501 /* _WIN32_WINNT_WINXP */
 
-#include <winsock2.h>
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
-#include <iphlpapi.h>
 #include <tlhelp32.h>
 
 #include "vbox.h"
@@ -153,34 +151,8 @@ int vbox_sysfile2(int writelogs) {
 * NIC MAC check
 **/
 int vbox_mac() {
-	WSADATA WSD;
-	int res = FALSE;
-
-	if(!WSAStartup(MAKEWORD(2,2),&WSD)){
-		unsigned long alist_size = 0;
-		int ret = GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,0,&alist_size);
-		if(ret==ERROR_BUFFER_OVERFLOW) {
-			IP_ADAPTER_ADDRESSES* palist = (IP_ADAPTER_ADDRESSES*)LocalAlloc(LMEM_ZEROINIT,alist_size);
-			if(palist) {
-				GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,palist,&alist_size);
-				IP_ADAPTER_ADDRESSES* ppalist=palist;
-				char mac[6]={0};
-				while (ppalist){
-					if (ppalist->PhysicalAddressLength==0x6){
-						memcpy(mac,ppalist->PhysicalAddress,0x6);
-						if(mac[0]==0x08 && mac[1]==0x00 && mac[2]==0x27) { // VirtualBox mac starts with 08:00:27
-							res = TRUE;
-							break;
-						}
-					}
-					ppalist = ppalist->Next;
-				}
-				LocalFree(palist);
-			}
-		}
-		WSACleanup();
-	}
-	return res;
+	/* VirtualBox mac starts with 08:00:27 */
+	return pafish_check_mac_vendor("\x08\x00\x27");
 }
 
 /**

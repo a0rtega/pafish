@@ -1,8 +1,13 @@
 
+#define _WIN32_WINNT 0x0501 /* _WIN32_WINNT_WINXP */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
 #include <ctype.h>
+#include <winsock2.h>
+#include <iphlpapi.h>
+#include <tlhelp32.h>
 
 #include "utils.h"
 #include "types.h"
@@ -120,5 +125,36 @@ inline int pafish_exists_file(char * filename) {
 	}
 
 	return (res != INVALID_FILE_ATTRIBUTES) ? TRUE : FALSE;
+}
+
+int pafish_check_mac_vendor(char * mac_vendor) {
+	WSADATA WSD;
+	int res = FALSE;
+
+	if(!WSAStartup(MAKEWORD(2,2),&WSD)){
+		unsigned long alist_size = 0;
+		int ret = GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,0,&alist_size);
+		if(ret==ERROR_BUFFER_OVERFLOW) {
+			IP_ADAPTER_ADDRESSES* palist = (IP_ADAPTER_ADDRESSES*)LocalAlloc(LMEM_ZEROINIT,alist_size);
+			if(palist) {
+				GetAdaptersAddresses(AF_UNSPEC,GAA_FLAG_INCLUDE_PREFIX,0,palist,&alist_size);
+				IP_ADAPTER_ADDRESSES* ppalist=palist;
+				char mac[6]={0};
+				while (ppalist){
+					if (ppalist->PhysicalAddressLength==0x6){
+						memcpy(mac,ppalist->PhysicalAddress,0x6);
+						if (!memcmp(mac_vendor, mac, 3)) { /* First 3 bytes are the same */
+							res = TRUE;
+							break;
+						}
+					}
+					ppalist = ppalist->Next;
+				}
+				LocalFree(palist);
+			}
+		}
+		WSACleanup();
+	}
+	return res;
 }
 

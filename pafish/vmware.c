@@ -30,6 +30,31 @@ int vmware_sysfile2() {
 	return pafish_exists_file("C:\\WINDOWS\\system32\\drivers\\vmhgfs.sys");
 }
 
+int vmware_mac() {
+	/*
+		VMware is any of
+		00:05:69
+		00:0C:29
+		00:1C:14
+		00:50:56
+	*/
+	if (pafish_check_mac_vendor("\x00\x05\x69")) {
+		return TRUE;
+	}
+	else if (pafish_check_mac_vendor("\x00\x0C\x29")) {
+		return TRUE;
+	}
+	else if (pafish_check_mac_vendor("\x00\x1C\x14")) {
+		return TRUE;
+	}
+	else if (pafish_check_mac_vendor("\x00\x50\x56")) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 int vmware_devices(int writelogs) {
 	HANDLE h;
 	const int count = 2;

@@ -401,6 +401,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Looking for a MAC address starting with 00:05:69, 00:0C:29, 00:1C:14 or 00:50:56 ... ");
+	if (vmware_mac() == TRUE) {
+		write_log("VMware traced using MAC address starting with 00:05:69, 00:0C:29, 00:1C:14 or 00:50:56");
+		print_traced();
+		write_trace("hi_vmware");
+	}
+	else print_not_traced();
+
 	printf("[*] Looking for pseudo devices ... ");
 	if (vmware_devices(TRUE) == TRUE) {
 		/* Log written inside function */

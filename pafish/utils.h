@@ -14,4 +14,6 @@ inline int pafish_exists_regkey_value_str(HKEY, char *, char *, char *);
 
 inline int pafish_exists_file(char * filename);
 
+int pafish_check_mac_vendor(char * mac_vendor);
+
 #endif
