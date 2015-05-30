@@ -9,7 +9,7 @@
 
 /**
  * Prototypes for the Wow64 API's since they aren't available in all Windows
- * versions, most notetably Windows XP 32 bits.
+ * versions, most notably Windows XP 32 bits.
  */
 typedef int (WINAPI *DisableWow64FsRedirectionProto) (void*);
 
