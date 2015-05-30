@@ -156,6 +156,6 @@ int gensandbox_less_than_onegb() {
 	statex.dwLength = sizeof (statex);
 
 	GlobalMemoryStatusEx(&statex);
-	return (statex.ullAvailPhys/1024) < 1048576 ? TRUE : FALSE;
+	return (statex.ullTotalPhys/1024) < 1048576 ? TRUE : FALSE;
 }
 
