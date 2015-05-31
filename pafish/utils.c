@@ -19,11 +19,11 @@
  * Prototypes for the Wow64 API's since they aren't available in all Windows
  * versions, most notably Windows XP 32 bits.
  */
-typedef int (WINAPI *DisableWow64FsRedirectionProto) (void*);
+typedef BOOL (WINAPI *DisableWow64FsRedirectionProto) (void*);
 
-typedef int (WINAPI *RevertWow64FsRedirectionProto) (void*);
+typedef BOOL (WINAPI *RevertWow64FsRedirectionProto) (void*);
 
-typedef int (WINAPI *IsWow64ProcessProto) (HANDLE, int*);
+typedef BOOL (WINAPI *IsWow64ProcessProto) (HANDLE, BOOL*);
 
 /**
  * Wrapper function for Wow64DisableWow64FsRedirection. The function returns
@@ -34,8 +34,9 @@ int pafish_disable_wow64_fs_redirection(void * old) {
 	DisableWow64FsRedirectionProto fndisable = (DisableWow64FsRedirectionProto) GetProcAddress(
 		GetModuleHandleA("kernel32"), "Wow64DisableWow64FsRedirection");
 
-	return (fndisable != NULL) && (fndisable(old) != 0) ? TRUE : FALSE;
+	return (fndisable) && (fndisable(old) != 0) ? TRUE : FALSE;
 }
+
 /**
  * Wrapper function for Wow64RevertWow64FsRedirection. The function returns
  * FALSE if the Wow64RevertWow64FsRedirection is not found or the invocation
@@ -45,7 +46,7 @@ int pafish_revert_wow64_fs_redirection(void * old) {
 	RevertWow64FsRedirectionProto fnrevert = (RevertWow64FsRedirectionProto) GetProcAddress(
 		GetModuleHandleA("kernel32"), "Wow64RevertWow64FsRedirection");
 
-	return (fnrevert != NULL) && (fnrevert(old) != 0) ? TRUE : FALSE;
+	return (fnrevert) && (fnrevert(old) != 0) ? TRUE : FALSE;
 }
 
 /**
@@ -59,7 +60,7 @@ int pafish_iswow64() {
 	IsWow64ProcessProto fniswow = (IsWow64ProcessProto) GetProcAddress(
 		GetModuleHandleA("kernel32"), "IsWow64Process");
 
-	return (fniswow != NULL) && (fniswow(GetCurrentProcess(), &result) != 0)  ? result : FALSE;
+	return (fniswow) && (fniswow(GetCurrentProcess(), &result) != 0) ? result : FALSE;
 }
 
 inline int pafish_exists_regkey(HKEY hKey, char * regkey_s) {
