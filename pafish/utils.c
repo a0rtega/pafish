@@ -12,6 +12,9 @@
 #include "utils.h"
 #include "types.h"
 
+#define KEY_WOW64_32KEY 0x0200
+#define KEY_WOW64_64KEY 0x0100
+
 /**
  * Prototypes for the Wow64 API's since they aren't available in all Windows
  * versions, most notably Windows XP 32 bits.
@@ -63,7 +66,12 @@ inline int pafish_exists_regkey(HKEY hKey, char * regkey_s) {
 	HKEY regkey;
 	LONG ret;
 
-	ret = RegOpenKeyEx(hKey, regkey_s, 0, KEY_READ, &regkey);
+	if (pafish_iswow64()) {
+		ret = RegOpenKeyEx(hKey, regkey_s, 0, KEY_READ | KEY_WOW64_64KEY, &regkey);
+	}
+	else {
+		ret = RegOpenKeyEx(hKey, regkey_s, 0, KEY_READ, &regkey);
+	}
 	if (ret == ERROR_SUCCESS) {
 		RegCloseKey(regkey);
 		return TRUE;
@@ -84,7 +92,12 @@ inline int pafish_exists_regkey_value_str(HKEY hKey, char * regkey_s, char * val
 	strncpy(lookup_str, lookup, lookup_size+sizeof(char));
 
 	size = sizeof(value);
-	ret = RegOpenKeyEx(hKey, regkey_s, 0, KEY_READ, &regkey);
+	if (pafish_iswow64()) {
+		ret = RegOpenKeyEx(hKey, regkey_s, 0, KEY_READ | KEY_WOW64_64KEY, &regkey);
+	}
+	else {
+		ret = RegOpenKeyEx(hKey, regkey_s, 0, KEY_READ, &regkey);
+	}
 	if (ret == ERROR_SUCCESS) {
 		ret = RegQueryValueEx(regkey, value_s, NULL, NULL, (BYTE*)value, &size);
 		RegCloseKey(regkey);
