@@ -1,4 +1,20 @@
 
+v053
+
+- Added new checks
+	- Systems with less than 1GB of memory
+	- Wine registry key HKCU\\SOFTWARE\\Wine
+	- VMware pseudo-devices
+	- VMware MAC addresses
+
+- Fixes
+	- Handle filesystem redirection in x86_64 systems
+	- Handle registry redirection in x86_64 systems
+	- A proper fix for Linux compilation
+
+- Contributors to this release
+	serializingme
+
 v052
 
 - Minor release to add two different NumberOfProcessors based detection used by
