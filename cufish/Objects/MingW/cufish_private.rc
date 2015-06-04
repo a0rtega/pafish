@@ -1,0 +1,31 @@
+
+#include <windows.h>
+
+A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "cufish.ico"
+
+1 VERSIONINFO
+FILEVERSION 0,5,2,1
+PRODUCTVERSION 0,5,2,1
+FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", ""
+            VALUE "FileVersion", ""
+            VALUE "FileDescription", "Curious Fish is curious"
+            VALUE "InternalName", ""
+            VALUE "LegalCopyright", ""
+            VALUE "LegalTrademarks", ""
+            VALUE "OriginalFilename", ""
+            VALUE "ProductName", "Curious Fish"
+            VALUE "ProductVersion", ""
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1252
+    END
+END
+

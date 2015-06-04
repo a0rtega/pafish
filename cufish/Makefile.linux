@@ -1,0 +1,36 @@
+
+CC        = i686-w64-mingw32-gcc
+LINK      = i686-w64-mingw32-gcc
+WINDRES   = i686-w64-mingw32-windres
+OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/wmi.o \
+            Objects/MingW/fingerprint.o Objects/MingW/cufish_private.res
+LINKOBJ   = $(OBJ)
+LIBS      = -lole32 -lwbemuuid -loleaut32 -lws2_32 -s
+INCS      =
+BIN       = Output/MingW/cufish.exe
+CFLAGS    = $(INCS) -Wall -Wextra -O0
+
+all: $(BIN)
+
+clean:
+	rm -f Objects/MingW/*.o
+	rm -f Objects/MingW/*.res
+	rm -f Output/MingW/*.exe
+
+$(BIN): $(OBJ)
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS)
+
+Objects/MingW/main.o: $(GLOBALDEPS) main.c
+	$(CC) -c main.c -o Objects/MingW/main.o $(CFLAGS)
+
+Objects/MingW/common.o: $(GLOBALDEPS) common.c
+	$(CC) -c common.c -o Objects/MingW/common.o $(CFLAGS)
+
+Objects/MingW/wmi.o: $(GLOBALDEPS) wmi.c
+	$(CC) -c wmi.c -o Objects/MingW/wmi.o $(CFLAGS)
+
+Objects/MingW/fingerprint.o: $(GLOBALDEPS) fingerprint.c
+	$(CC) -c fingerprint.c -o Objects/MingW/fingerprint.o $(CFLAGS)
+
+Objects/MingW/cufish_private.res: Objects/MingW/cufish_private.rc
+	$(WINDRES) Objects/MingW/cufish_private.rc --input-format=rc -o Objects/MingW/cufish_private.res -O coff
