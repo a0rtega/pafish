@@ -3,17 +3,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <winsock2.h>
 #include <windows.h>
 #include <ctype.h>
-#include <winsock2.h>
 #include <iphlpapi.h>
 #include <tlhelp32.h>
 
 #include "utils.h"
 #include "types.h"
 
+#ifndef KEY_WOW64_32KEY
 #define KEY_WOW64_32KEY 0x0200
+#endif
+
+#ifndef KEY_WOW64_64KEY
 #define KEY_WOW64_64KEY 0x0100
+#endif
 
 /**
  * Prototypes for the Wow64 API's since they aren't available in all Windows
