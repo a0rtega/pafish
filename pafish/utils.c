@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <winsock2.h>
 #include <windows.h>
 #include <ctype.h>
-#include <winsock2.h>
 #include <iphlpapi.h>
 #include <tlhelp32.h>
 
