@@ -12,8 +12,13 @@
 #include "utils.h"
 #include "types.h"
 
+#ifndef KEY_WOW64_32KEY
 #define KEY_WOW64_32KEY 0x0200
+#endif
+
+#ifndef KEY_WOW64_64KEY
 #define KEY_WOW64_64KEY 0x0100
+#endif
 
 /**
  * Prototypes for the Wow64 API's since they aren't available in all Windows
