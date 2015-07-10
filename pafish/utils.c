@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <iphlpapi.h>
 #include <tlhelp32.h>
+#include <wbemidl.h>
 
 #include "utils.h"
 #include "types.h"
@@ -177,3 +178,106 @@ int pafish_check_mac_vendor(char * mac_vendor) {
 	return res;
 }
 
+/**
+ * Initialise the WMI client that will connect to the local machine WMI
+ * namespace. It will return TRUE if the connection was successful, FALSE
+ * otherwise.
+ */
+int wmi_initialize(const wchar_t *query_namespace, IWbemServices **services) {
+	BSTR namespace;
+	IWbemLocator *locator = NULL;
+	int result;
+
+	HRESULT hresult = CoInitializeEx(0, COINIT_MULTITHREADED);
+
+	if (FAILED(hresult)) {
+		return FALSE;
+	}
+
+	hresult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_DEFAULT,
+		RPC_C_IMP_LEVEL_IMPERSONATE, NULL, EOAC_NONE, NULL);
+
+	if (FAILED(hresult)) {
+		CoUninitialize();
+
+		return FALSE;
+	}
+
+	hresult = CoCreateInstance(&CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER,
+		&IID_IWbemLocator, (LPVOID *) & locator);
+
+	if (FAILED(hresult)) {
+		CoUninitialize();
+
+		return FALSE;
+	}
+
+	namespace = SysAllocString(query_namespace);
+
+	// Connect to the namespace with the current user and obtain pointer
+	// services to make IWbemServices calls.
+	hresult = locator->lpVtbl->ConnectServer(locator, namespace, NULL, NULL, NULL, 0,
+		NULL, NULL, services);
+
+	result = FAILED(hresult) ? FALSE : TRUE;
+
+	SysFreeString(namespace);
+	locator->lpVtbl->Release(locator);
+
+	return result;
+}
+
+/**
+ * Execute the suplied WMI query and call the row checking function for each row returned.
+ */
+int wmi_check_query(IWbemServices *services, const wchar_t *language, const wchar_t *query,
+		wmi_check_row check_row) {
+	int status = FALSE;
+	IEnumWbemClassObject *queryrows = NULL;
+	IWbemClassObject * batchrows[10];
+	BSTR wmilang = SysAllocString(language);
+	BSTR wmiquery = SysAllocString(query);
+
+	// Execute the query.
+	HRESULT result = services->lpVtbl->ExecQuery(
+		services, wmilang, wmiquery, WBEM_FLAG_BIDIRECTIONAL, NULL, &queryrows);
+
+	if (!FAILED(result) && (queryrows != NULL)) {
+		ULONG index, count = 0;
+		result = WBEM_S_NO_ERROR;
+
+		while (WBEM_S_NO_ERROR == result && status == FALSE) {
+			// Retrieve 10 rows (instances) each time.
+			result = queryrows->lpVtbl->Next(queryrows, WBEM_INFINITE, 10,
+				batchrows, &count);
+
+			if (!SUCCEEDED(result)) {
+				continue;
+			}
+
+			for (index = 0; index < count && status == FALSE; index++) {
+				status = check_row(batchrows[index]);
+
+				batchrows[index]->lpVtbl->Release(batchrows[index]);
+			}
+		}
+
+		queryrows->lpVtbl->Release(queryrows);
+	}
+
+	SysFreeString(wmiquery);
+	SysFreeString(wmilang);
+
+	return status;
+}
+
+/**
+ * Cleanup WMI.
+ */
+void wmi_cleanup(IWbemServices *services) {
+	if (services != NULL) {
+		services->lpVtbl->Release(services);
+	}
+
+	CoUninitialize();
+}

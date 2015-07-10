@@ -14,4 +14,6 @@ int vmware_mac();
 
 int vmware_devices();
 
+int vmware_wmi_serial();
+
 #endif

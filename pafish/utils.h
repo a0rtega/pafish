@@ -16,4 +16,17 @@ inline int pafish_exists_file(char * filename);
 
 int pafish_check_mac_vendor(char * mac_vendor);
 
+/**
+ * Prototype for the WMI caller implemented function for checking the
+ * WMI query results.
+ */
+typedef int (*wmi_check_row) (IWbemClassObject *);
+
+int wmi_initialize(const wchar_t *, IWbemServices **);
+
+int wmi_check_query(IWbemServices *, const wchar_t *, const wchar_t *,
+	wmi_check_row check_row);
+
+void wmi_cleanup(IWbemServices *);
+
 #endif

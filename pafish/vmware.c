@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
+#include <wbemidl.h>
 
 #include "vmware.h"
 #include "types.h"
@@ -73,4 +74,38 @@ int vmware_devices(int writelogs) {
 		}
 	}
 	return res;
+}
+
+/**
+ * Check the serial number ("VMware") in the returned rows.
+ */
+int vmware_wmi_check_row(IWbemClassObject *row) {
+	CIMTYPE type = CIM_ILLEGAL;
+	VARIANT value;
+
+	HRESULT hresult = row->lpVtbl->Get(row, L"SerialNumber", 0, &value, &type, 0);
+
+	if (FAILED(hresult) || V_VT(&value) == VT_NULL || type != CIM_STRING) {
+		return FALSE;
+	}
+
+	return (wcsstr(V_BSTR(&value), L"VMware") != NULL) ? TRUE : FALSE;
+}
+
+/**
+ * Check for the computer serial using WMI.
+ */
+int vmware_wmi_serial() {
+	IWbemServices *services = NULL;
+
+	if (wmi_initialize(L"root\\cimv2", &services) != TRUE) {
+		return FALSE;
+	}
+
+	int result = wmi_check_query(services, L"WQL", L"SELECT SerialNumber FROM Win32_Bios",
+			&vmware_wmi_check_row);
+
+	wmi_cleanup(services);
+
+	return result;
 }

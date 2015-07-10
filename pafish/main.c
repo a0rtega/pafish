@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <wbemidl.h>
 
 #include "types.h"
 #include "common.h"
@@ -367,6 +368,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Looking for VBox devices using WMI ... ");
+	if (vbox_wmi_devices() == TRUE) {
+		write_log("VirtualBox device identifiers traced using WMI");
+		print_traced();
+		write_trace("hi_virtualbox_wmi");
+	}
+	else print_not_traced();
+
 	/* VMware detection tricks */
 	printf("\n[-] VMware detection\n");
 	printf("[*] Scsi port 0,1,2 ->bus->target id->logical unit id-> 0 identifier ... ");
@@ -414,6 +423,14 @@ int main(void)
 		/* Log written inside function */
 		print_traced();
 		write_trace("hi_vmware");
+	}
+	else print_not_traced();
+
+	printf("[*] Looking for VMware serial number ... ");
+	if (vmware_wmi_serial() == TRUE) {
+		write_log("VMware serial number traced using WMI");
+		print_traced();
+		write_trace("hi_vmware_wmi");
 	}
 	else print_not_traced();
 
