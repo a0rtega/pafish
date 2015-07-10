@@ -17,6 +17,7 @@
 #include "vmware.h"
 #include "qemu.h"
 #include "cpu.h"
+#include "cuckoo.h"
 
 /*
 	Pafish (Paranoid fish)
@@ -449,6 +450,16 @@ int main(void)
 		write_log("Qemu traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
 		print_traced();
 		write_trace("hi_qemu");
+	}
+	else print_not_traced();
+
+	/* Cuckoo detection tricks */
+	printf("\n[-] Cuckoo detection\n");
+	printf("[*] Looking in the TLS for the hooks information structure ... ");
+	if (cuckoo_check_tls() == TRUE) {
+		write_log("Cuckoo hooks information structure traced in the TLS");
+		print_traced();
+		write_trace("hi_cuckoo");
 	}
 	else print_not_traced();
 
