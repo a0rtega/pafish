@@ -234,7 +234,6 @@ int wmi_check_query(IWbemServices *services, const wchar_t *language, const wcha
 		wmi_check_row check_row) {
 	int status = FALSE;
 	IEnumWbemClassObject *queryrows = NULL;
-	IWbemClassObject * batchrows[10];
 	BSTR wmilang = SysAllocString(language);
 	BSTR wmiquery = SysAllocString(query);
 
@@ -243,6 +242,7 @@ int wmi_check_query(IWbemServices *services, const wchar_t *language, const wcha
 		services, wmilang, wmiquery, WBEM_FLAG_BIDIRECTIONAL, NULL, &queryrows);
 
 	if (!FAILED(result) && (queryrows != NULL)) {
+		IWbemClassObject * batchrows[10];
 		ULONG index, count = 0;
 		result = WBEM_S_NO_ERROR;
 
