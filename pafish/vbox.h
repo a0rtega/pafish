@@ -25,4 +25,6 @@ int vbox_network_share();
 
 int vbox_processes(int writelogs);
 
+int vbox_wmi_devices();
+
 #endif

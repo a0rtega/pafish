@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <wbemidl.h>
 
 #include "types.h"
 #include "common.h"
@@ -16,6 +17,7 @@
 #include "vmware.h"
 #include "qemu.h"
 #include "cpu.h"
+#include "cuckoo.h"
 
 /*
 	Pafish (Paranoid fish)
@@ -367,6 +369,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Looking for VBox devices using WMI ... ");
+	if (vbox_wmi_devices() == TRUE) {
+		write_log("VirtualBox device identifiers traced using WMI");
+		print_traced();
+		write_trace("hi_virtualbox_wmi");
+	}
+	else print_not_traced();
+
 	/* VMware detection tricks */
 	printf("\n[-] VMware detection\n");
 	printf("[*] Scsi port 0,1,2 ->bus->target id->logical unit id-> 0 identifier ... ");
@@ -417,6 +427,14 @@ int main(void)
 	}
 	else print_not_traced();
 
+	printf("[*] Looking for VMware serial number ... ");
+	if (vmware_wmi_serial() == TRUE) {
+		write_log("VMware serial number traced using WMI");
+		print_traced();
+		write_trace("hi_vmware_wmi");
+	}
+	else print_not_traced();
+
 	/* Qemu detection tricks */
 	printf("\n[-] Qemu detection\n");
 	printf("[*] Scsi port->bus->target id->logical unit id-> 0 identifier ... ");
@@ -432,6 +450,16 @@ int main(void)
 		write_log("Qemu traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
 		print_traced();
 		write_trace("hi_qemu");
+	}
+	else print_not_traced();
+
+	/* Cuckoo detection tricks */
+	printf("\n[-] Cuckoo detection\n");
+	printf("[*] Looking in the TLS for the hooks information structure ... ");
+	if (cuckoo_check_tls() == TRUE) {
+		write_log("Cuckoo hooks information structure traced in the TLS");
+		print_traced();
+		write_trace("hi_cuckoo");
 	}
 	else print_not_traced();
 

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <tlhelp32.h>
+#include <wbemidl.h>
 
 #include "vbox.h"
 #include "utils.h"
@@ -251,3 +252,36 @@ int vbox_processes(int writelogs) {
 	return res;
 }
 
+/**
+ * Check if the device identifier ("PCI\\VEN_80EE&DEV_CAFE") in the returned rows.
+ */
+int vbox_wmi_check_row(IWbemClassObject *row) {
+	CIMTYPE type = CIM_ILLEGAL;
+	VARIANT value;
+
+	HRESULT hresult = row->lpVtbl->Get(row, L"DeviceId", 0, &value, &type, 0);
+
+	if (FAILED(hresult) || V_VT(&value) == VT_NULL || type != CIM_STRING) {
+		return FALSE;
+	}
+
+	return (wcsstr(V_BSTR(&value), L"PCI\\VEN_80EE&DEV_CAFE") != NULL) ? TRUE : FALSE;
+}
+
+/**
+ * Check for devices VirtualBox devices using WMI.
+ */
+int vbox_wmi_devices() {
+	IWbemServices *services = NULL;
+
+	if (wmi_initialize(L"root\\cimv2", &services) != TRUE) {
+		return FALSE;
+	}
+
+	int result = wmi_check_query(services, L"WQL", L"SELECT DeviceId FROM Win32_PnPEntity",
+			&vbox_wmi_check_row);
+
+	wmi_cleanup(services);
+
+	return result;
+}
