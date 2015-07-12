@@ -373,7 +373,7 @@ int main(void)
 	if (vbox_wmi_devices() == TRUE) {
 		write_log("VirtualBox device identifiers traced using WMI");
 		print_traced();
-		write_trace("hi_virtualbox_wmi");
+		write_trace("hi_virtualbox");
 	}
 	else print_not_traced();
 
@@ -431,7 +431,7 @@ int main(void)
 	if (vmware_wmi_serial() == TRUE) {
 		write_log("VMware serial number traced using WMI");
 		print_traced();
-		write_trace("hi_vmware_wmi");
+		write_trace("hi_vmware");
 	}
 	else print_not_traced();
 
