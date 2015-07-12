@@ -1,4 +1,17 @@
 
+v054
+
+- Added new checks (Hacking Team antiVM)
+	- VirtualBox device identifiers using WMI
+	- VMware serial number using WMI
+	- HT's cuckoo evasion turned into detection
+	  (TLS_HOOK_INFO_RETADDR_SPACE address alloc check)
+- Fixes
+	- Fix #37 warning on MinGW linux
+
+- Contributors to this release
+	serializingme
+
 v053
 
 - Added new checks
