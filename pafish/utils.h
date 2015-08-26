@@ -2,6 +2,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <wbemidl.h>
+
 int pafish_disable_wow64_fs_redirection(void * old);
 
 int pafish_revert_wow64_fs_redirection(void * old);

@@ -1,7 +1,6 @@
 
 #include <windows.h>
 #include <string.h>
-#include <wbemidl.h>
 
 #include "qemu.h"
 #include "types.h"

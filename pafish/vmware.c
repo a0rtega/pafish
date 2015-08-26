@@ -2,7 +2,6 @@
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
-#include <wbemidl.h>
 
 #include "vmware.h"
 #include "types.h"

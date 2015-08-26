@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <tlhelp32.h>
-#include <wbemidl.h>
 
 #include "vbox.h"
 #include "utils.h"

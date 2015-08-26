@@ -1,6 +1,5 @@
 
 #include <windows.h>
-#include <wbemidl.h>
 
 #include "wine.h"
 #include "types.h"

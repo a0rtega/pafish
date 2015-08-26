@@ -7,7 +7,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <wbemidl.h>
 
 #include "types.h"
 #include "gensandbox.h"
