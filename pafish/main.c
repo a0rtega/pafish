@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-#include <wbemidl.h>
 
 #include "types.h"
 #include "common.h"
@@ -18,6 +17,7 @@
 #include "qemu.h"
 #include "cpu.h"
 #include "cuckoo.h"
+#include "bochs.h"
 
 /*
 	Pafish (Paranoid fish)
@@ -450,6 +450,16 @@ int main(void)
 		write_log("Qemu traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
 		print_traced();
 		write_trace("hi_qemu");
+	}
+	else print_not_traced();
+
+	/* Bochs detection tricks */
+	printf("\n[-] Bochs detection\n");
+	printf("[*] Reg key (HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\") ... ");
+	if (bochs_reg_key1() == TRUE) {
+		write_log("Bochs traced using Reg key HKLM\\HARDWARE\\Description\\System \"SystemBiosVersion\"");
+		print_traced();
+		write_trace("hi_bochs");
 	}
 	else print_not_traced();
 
