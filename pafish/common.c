@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "common.h"
+#include "types.h"
 
 unsigned short init_cmd_colors() {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;

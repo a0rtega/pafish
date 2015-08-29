@@ -4,7 +4,6 @@
 #include <string.h>
 #include <windows.h>
 
-#include "types.h"
 #include "common.h"
 
 #include "debuggers.h"
