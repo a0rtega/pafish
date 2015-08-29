@@ -68,3 +68,29 @@ void write_trace(char product[]) {
 	trace = fopen(product, "a");
 	fclose(trace);
 }
+
+void print_check_group(char * text) {
+	printf("\n[-] %s\n", text);
+}
+
+void exec_check(char * text, int (*callback)(), char * text_log, char * text_trace) {
+	int check_result;
+	int (*callback_writeslog)(int) = callback;
+
+	/* Handle functions that write logs */
+	if (text_log)
+		check_result = callback();
+	else
+		check_result = callback_writeslog(TRUE);
+
+	printf("[*] %s ... ", text);
+	if (check_result == TRUE) {
+		/* Some checks write their own logs */
+		if (text_log)
+			write_log(text_log);
+		print_traced();
+		write_trace(text_trace);
+	}
+	else print_not_traced();
+}
+

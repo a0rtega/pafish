@@ -118,16 +118,18 @@ void cpu_write_brand(char * brand) {
 	}
 }
 
-int cpu_known_vm_vendors(char * vendor) {
+int cpu_known_vm_vendors() {
 	const int count = 4;
 	int i;
+	char cpu_vendor[13];
 	string strs[count];
 	strs[0] = "KVMKVMKVMKVM";
 	strs[1] = "Microsoft Hv";
 	strs[2] = "VMwareVMware";
 	strs[3] = "XenVMMXenVMM";
+	cpu_write_vendor(cpu_vendor);
 	for (i = 0; i < count; i++) {
-		if (!memcmp(vendor, strs[i], 12)) return TRUE;
+		if (!memcmp(cpu_vendor, strs[i], 12)) return TRUE;
 	}
 	return FALSE;
 }

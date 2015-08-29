@@ -18,4 +18,8 @@ void write_log(char msg[]);
 
 void write_trace(char product[]);
 
+void print_check_group(char * text);
+
+void exec_check(char * text, int (*callback)(), char * text_log, char * text_trace);
+
 #endif
