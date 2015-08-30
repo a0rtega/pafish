@@ -178,6 +178,29 @@ int pafish_check_mac_vendor(char * mac_vendor) {
 	return res;
 }
 
+int pafish_check_adapter_name(char * name) {
+	unsigned long alist_size = 0, ret;
+	wchar_t aux[1024];
+
+	mbstowcs(aux, name, sizeof(aux)-sizeof(aux[0]));
+
+	ret = GetAdaptersAddresses(AF_UNSPEC, 0, 0, 0, &alist_size);
+	if (ret == ERROR_BUFFER_OVERFLOW) {
+		IP_ADAPTER_ADDRESSES *palist = (IP_ADAPTER_ADDRESSES*)LocalAlloc(LMEM_ZEROINIT, alist_size);
+		if (GetAdaptersAddresses(AF_UNSPEC, 0, 0, palist, &alist_size) == ERROR_SUCCESS) {
+			while (palist) {
+				if (wcsstr(palist->Description, aux)) {
+					LocalFree(palist);
+					return TRUE;
+				}
+				palist = palist->Next;
+			}
+		}
+		LocalFree(palist);
+	}
+	return FALSE;
+}
+
 /**
  * Initialise the WMI client that will connect to the local machine WMI
  * namespace. It will return TRUE if the connection was successful, FALSE

@@ -18,6 +18,8 @@ inline int pafish_exists_file(char * filename);
 
 int pafish_check_mac_vendor(char * mac_vendor);
 
+int pafish_check_adapter_name(char * name);
+
 /**
  * Prototype for the WMI caller implemented function for checking the
  * WMI query results.

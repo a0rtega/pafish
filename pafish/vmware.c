@@ -55,6 +55,10 @@ int vmware_mac() {
 	}
 }
 
+int vmware_adapter_name() {
+	return pafish_check_adapter_name("VMware");
+}
+
 int vmware_devices(int writelogs) {
 	HANDLE h;
 	const int count = 2;

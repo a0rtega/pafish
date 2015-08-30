@@ -247,6 +247,8 @@ int main(void)
 	     &vmware_mac,
 	     "VMware traced using MAC address starting with 00:05:69, 00:0C:29, 00:1C:14 or 00:50:56",
 	     "hi_vmware");
+	exec_check("Looking for network adapter name", &vmware_adapter_name,
+		   "VMware traced using network adapter name", "hi_vmware");
 	exec_check("Looking for pseudo devices", &vmware_devices, NULL,
 		   "hi_vmware");
 	exec_check("Looking for VMware serial number", &vmware_wmi_serial,

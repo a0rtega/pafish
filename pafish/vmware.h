@@ -12,6 +12,8 @@ int vmware_sysfile2();
 
 int vmware_mac();
 
+int vmware_adapter_name();
+
 int vmware_devices();
 
 int vmware_wmi_serial();
