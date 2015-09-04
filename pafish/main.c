@@ -144,7 +144,15 @@ int main(void)
 	exec_check("Checking function DeleteFileW method 1",
 		   &check_hook_DeleteFileW_m1,
 		   "Hooks traced using DeleteFileW method 1",
-		   "hi_hooks_deletefile_m1");
+		   "hi_hooks_deletefilew_m1");
+	exec_check("Checking function ShellExecuteExW method 1",
+		   &check_hook_ShellExecuteExW_m1,
+		   "Hooks traced using ShellExecuteExW method 1",
+		   "hi_hooks_shellexecuteexw_m1");
+	exec_check("Checking function CreateProcessA method 1",
+		   &check_hook_CreateProcessA_m1,
+		   "Hooks traced using CreateProcessA method 1",
+		   "hi_hooks_createprocessa_m1");
 
 	/* Sandboxie detection tricks */
 	print_check_group("Sandboxie detection");
