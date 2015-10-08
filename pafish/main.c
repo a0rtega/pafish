@@ -287,9 +287,11 @@ int main(void)
 	exec_check("cpuid AMD wrong value for processor name", &bochs_cpu_amd1,
 		   "Bochs traced using CPU AMD wrong value for processor name",
 		   "hi_bochs");
+	/*
 	exec_check("cpuid AMD wrong value for Easter egg", &bochs_cpu_amd2,
 		   "Bochs traced using CPU AMD wrong value for Easter egg",
 		   "hi_bochs");
+	*/
 	exec_check("cpuid Intel wrong value for processor name",
 		   &bochs_cpu_intel1,
 		   "Bochs traced using CPU Intel wrong value for processor name",
