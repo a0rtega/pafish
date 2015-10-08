@@ -1,4 +1,18 @@
 
+v055
+
+- Added new checks
+	- Neutrino bot bochs detection #40
+	- Qemu detection based on CPU brand string
+	- Bochs detections based on CPU brand string
+	- VMware detection based on network adapter name
+	- Minor refactor userland hook detection, added
+	  2 more functions to check.
+
+- Added cpu functions to query Processor Brand String
+- Some refactoring, specially main.c, making it easier
+  to add new checks.
+
 v054
 
 - Added new checks (Hacking Team antiVM)
