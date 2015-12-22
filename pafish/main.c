@@ -138,6 +138,10 @@ int main(void)
 		   &gensandbox_less_than_onegb,
 		   "Sandbox traced by checking if pysical memory is less than 1Gb",
 		   "hi_sandbox_pysicalmemory_less_1Gb");
+	exec_check("Checking operating system uptime using GetTickCount()",
+		   &gensandbox_uptime,
+		   "Sandbox traced by checking operating system uptime using GetTickCount()",
+		   "hi_sandbox_uptime");
 
 	/* Hooks detection tricks */
 	print_check_group("Hooks detection");

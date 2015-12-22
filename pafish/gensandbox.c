@@ -159,3 +159,8 @@ int gensandbox_less_than_onegb() {
 	return (statex.ullTotalPhys/1024) < 1048576 ? TRUE : FALSE;
 }
 
+int gensandbox_uptime() {
+	/* < ~12 minutes */
+	return GetTickCount() < 0xAFE74 ? TRUE : FALSE;
+}
+
