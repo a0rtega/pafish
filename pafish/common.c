@@ -1,9 +1,13 @@
 
+#define _WIN32_WINNT 0x0501 /* _WIN32_WINNT_WINXP */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ws2tcpip.h>
 #include <windows.h>
 
+#include "config.h"
 #include "common.h"
 #include "types.h"
 
@@ -68,6 +72,29 @@ void write_trace(char product[]) {
 	FILE *trace;
 	trace = fopen(product, "a");
 	fclose(trace);
+	#if ENABLE_DNS_TRACE
+		write_trace_dns(product);
+	#endif
+}
+
+void write_trace_dns(char product[]) {
+	char * dns, tld[] = ".pafish";
+	int i;
+	struct addrinfo* result;
+	int error;
+
+	dns = calloc(strlen(product) + strlen(tld) + sizeof(char), sizeof(char));
+	strncpy(dns, product, strlen(product));
+	strncat(dns, tld, strlen(tld));
+	for (i = 0; i < (int)strlen(dns); i++) {
+		if (dns[i] == '_')
+			dns[i] = '-';
+	}
+
+	error = getaddrinfo(dns, NULL, NULL, &result);
+	if (!error)
+		freeaddrinfo(result);
+	free(dns);
 }
 
 void print_check_group(char * text) {

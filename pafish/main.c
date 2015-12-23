@@ -4,6 +4,7 @@
 #include <string.h>
 #include <windows.h>
 
+#include "config.h"
 #include "common.h"
 
 #include "debuggers.h"
@@ -44,6 +45,9 @@ int main(void)
 	unsigned short original_colors = 0;
 
 	write_log("Start");
+	#if ENABLE_DNS_TRACE
+		write_trace_dns("analysis-start");
+	#endif
 
 	original_colors = init_cmd_colors();
 	print_header();
@@ -312,6 +316,9 @@ int main(void)
 	printf("[-] Feel free to RE me, check log file for more information.");
 
 	write_log("End");
+	#if ENABLE_DNS_TRACE
+		write_trace_dns("analysis-end");
+	#endif
 
 	getchar();
 
