@@ -69,7 +69,7 @@ int pafish_iswow64() {
 	return (fniswow) && (fniswow(GetCurrentProcess(), &result) != 0) ? result : FALSE;
 }
 
-inline int pafish_exists_regkey(HKEY hKey, char * regkey_s) {
+int pafish_exists_regkey(HKEY hKey, char * regkey_s) {
 	HKEY regkey;
 	LONG ret;
 
@@ -87,7 +87,7 @@ inline int pafish_exists_regkey(HKEY hKey, char * regkey_s) {
 		return FALSE;
 }
 
-inline int pafish_exists_regkey_value_str(HKEY hKey, char * regkey_s, char * value_s, char * lookup) {
+int pafish_exists_regkey_value_str(HKEY hKey, char * regkey_s, char * value_s, char * lookup) {
 	HKEY regkey;
 	LONG ret;
 	DWORD size;
@@ -126,7 +126,7 @@ inline int pafish_exists_regkey_value_str(HKEY hKey, char * regkey_s, char * val
 	return FALSE;
 }
 
-inline int pafish_exists_file(char * filename) {
+int pafish_exists_file(char * filename) {
 	DWORD res = INVALID_FILE_ATTRIBUTES;
 
 	if (pafish_iswow64() == TRUE) {

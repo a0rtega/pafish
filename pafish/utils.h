@@ -10,11 +10,11 @@ int pafish_revert_wow64_fs_redirection(void * old);
 
 int pafish_iswow64();
 
-inline int pafish_exists_regkey(HKEY hKey, char * regkey);
+int pafish_exists_regkey(HKEY hKey, char * regkey);
 
-inline int pafish_exists_regkey_value_str(HKEY, char *, char *, char *);
+int pafish_exists_regkey_value_str(HKEY, char *, char *, char *);
 
-inline int pafish_exists_file(char * filename);
+int pafish_exists_file(char * filename);
 
 int pafish_check_mac_vendor(char * mac_vendor);
 
