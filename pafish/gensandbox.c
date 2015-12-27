@@ -12,6 +12,11 @@
 #include "gensandbox.h"
 #include "utils.h"
 
+/**
+ * Prototype for IsNativeVhdBoot, which is only available in >= Windows 8
+ */
+typedef BOOL (WINAPI * IsNativeVhdBoot) (BOOL *);
+
 int gensandbox_mouse_act() {
 	POINT position1, position2;
 	GetCursorPos(&position1);
@@ -162,5 +167,15 @@ int gensandbox_less_than_onegb() {
 int gensandbox_uptime() {
 	/* < ~12 minutes */
 	return GetTickCount() < 0xAFE74 ? TRUE : FALSE;
+}
+
+int gensandbox_IsNativeVhdBoot() {
+	BOOL isnative = FALSE;
+	IsNativeVhdBoot fnnative = (IsNativeVhdBoot) GetProcAddress(
+			GetModuleHandleA("kernel32"), "IsNativeVhdBoot");
+	/* IsNativeVhdBoot always returns 1 on query success */
+	if (fnnative)
+		fnnative(&isnative);
+	return (isnative) ? TRUE : FALSE;
 }
 

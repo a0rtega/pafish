@@ -24,4 +24,6 @@ int gensandbox_less_than_onegb();
 
 int gensandbox_uptime();
 
+int gensandbox_IsNativeVhdBoot();
+
 #endif

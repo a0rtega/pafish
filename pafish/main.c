@@ -146,6 +146,10 @@ int main(void)
 		   &gensandbox_uptime,
 		   "Sandbox traced by checking operating system uptime using GetTickCount()",
 		   "hi_sandbox_uptime");
+	exec_check("Checking if operating system IsNativeVhdBoot()",
+		   &gensandbox_IsNativeVhdBoot,
+		   "Sandbox traced by checking IsNativeVhdBoot()",
+		   "hi_sandbox_IsNativeVhdBoot");
 
 	/* Hooks detection tricks */
 	print_check_group("Hooks detection");
