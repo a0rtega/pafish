@@ -1,4 +1,13 @@
 
+v056
+
+- Added new checks
+	- IsNativeVhdBoot #46
+	- OS uptime check #45
+
+- Added a DNS request trace for each detection #43
+- Disabled check_hook_DeleteFileW_m1 because it causes FP in Win 8
+
 v055
 
 - Added new checks
