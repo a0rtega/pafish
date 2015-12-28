@@ -153,10 +153,6 @@ int main(void)
 
 	/* Hooks detection tricks */
 	print_check_group("Hooks detection");
-	exec_check("Checking function DeleteFileW method 1",
-		   &check_hook_DeleteFileW_m1,
-		   "Hooks traced using DeleteFileW method 1",
-		   "hi_hooks_deletefilew_m1");
 	exec_check("Checking function ShellExecuteExW method 1",
 		   &check_hook_ShellExecuteExW_m1,
 		   "Hooks traced using ShellExecuteExW method 1",

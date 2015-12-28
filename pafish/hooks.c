@@ -10,6 +10,7 @@ static int check_hook_m1(DWORD * dwAddress) {
 	return (*b == 0x8b) && (*(b+1) == 0xff) ? FALSE : TRUE;
 }
 
+/* Causes FP in Win 8 */
 int check_hook_DeleteFileW_m1() {
 	return check_hook_m1((DWORD *)DeleteFileW);
 }
