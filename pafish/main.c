@@ -107,10 +107,10 @@ int main(void)
 	exec_check("Checking hypervisor bit in cpuid feature bits", &cpu_hv,
 		   "CPU VM traced by checking hypervisor bit in cpuid feature bits",
 		   "hi_CPU_VM_hypervisor_bit");
-	exec_check("Checking cpuid vendor for known VM vendors",
+	exec_check("Checking cpuid hypervisor vendor for known VM vendors",
 		   &cpu_known_vm_vendors,
-		   "CPU VM traced by checking cpuid vendor for known VM vendors",
-		   "hi_CPU_VM_vendor_name");
+		   "CPU VM traced by checking cpuid hypervisor vendor for known VM vendors",
+		   "hi_CPU_VM_hv_vendor_name");
 
 	/* Generic sandbox detection tricks */
 	print_check_group("Generic sandbox detection");

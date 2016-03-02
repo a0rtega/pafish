@@ -137,17 +137,19 @@ void cpu_write_brand(char * brand) {
 }
 
 int cpu_known_vm_vendors() {
-	const int count = 4;
+	const int count = 6;
 	int i;
-	char cpu_vendor[13];
+	char cpu_hv_vendor[13];
 	string strs[count];
-	strs[0] = "KVMKVMKVMKVM";
-	strs[1] = "Microsoft Hv";
-	strs[2] = "VMwareVMware";
-	strs[3] = "XenVMMXenVMM";
-	cpu_write_vendor(cpu_vendor);
+	strs[0] = "KVMKVMKVMKVM"; /* KVM */
+	strs[1] = "Microsoft Hv"; /* Microsoft Hyper-V or Windows Virtual PC */
+	strs[2] = "VMwareVMware"; /* VMware */
+	strs[3] = "XenVMMXenVMM"; /* Xen */
+	strs[4] = "prl hyperv  "; /* Parallels */
+	strs[5] = "VBoxVBoxVBox"; /* VirtualBox */
+	cpu_write_hv_vendor(cpu_hv_vendor);
 	for (i = 0; i < count; i++) {
-		if (!memcmp(cpu_vendor, strs[i], 12)) return TRUE;
+		if (!memcmp(cpu_hv_vendor, strs[i], 12)) return TRUE;
 	}
 	return FALSE;
 }
