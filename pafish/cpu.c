@@ -141,7 +141,7 @@ int cpu_known_vm_vendors() {
 	int i;
 	char cpu_hv_vendor[13];
 	string strs[count];
-	strs[0] = "KVMKVMKVMKVM"; /* KVM */
+	strs[0] = "KVMKVMKVM\0\0\0"; /* KVM */
 	strs[1] = "Microsoft Hv"; /* Microsoft Hyper-V or Windows Virtual PC */
 	strs[2] = "VMwareVMware"; /* VMware */
 	strs[3] = "XenVMMXenVMM"; /* Xen */
