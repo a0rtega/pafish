@@ -40,7 +40,7 @@
 int main(void)
 {
 	char winverstr[32], aux[1024];
-	char cpu_vendor[13], cpu_brand[49];
+	char cpu_vendor[13], cpu_hv_vendor[13], cpu_brand[49];
 	OSVERSIONINFO winver;
 	unsigned short original_colors = 0;
 
@@ -60,15 +60,23 @@ int main(void)
 
 	/* Get CPU vendor */
 	cpu_write_vendor(cpu_vendor);
+	cpu_write_hv_vendor(cpu_hv_vendor);
 	cpu_write_brand(cpu_brand);
 
 	printf("[*] Windows version: %s\n", winverstr);
-	printf("[*] CPU: %s %s \n", cpu_vendor, cpu_brand);
+	printf("[*] CPU: %s\n", cpu_vendor);
+	if (strlen(cpu_hv_vendor))
+		printf("    Hypervisor: %s\n", cpu_hv_vendor);
+	printf("    CPU brand: %s\n", cpu_brand);
 	snprintf(aux, sizeof(aux) - sizeof(aux[0]), "Windows version: %s",
 		 winverstr);
 	write_log(aux);
-	snprintf(aux, sizeof(aux) - sizeof(aux[0]), "CPU: %s %s", cpu_vendor,
-		 cpu_brand);
+	if (strlen(cpu_hv_vendor))
+		snprintf(aux, sizeof(aux) - sizeof(aux[0]), "CPU: %s (HV: %s) %s", cpu_vendor,
+			cpu_hv_vendor, cpu_brand);
+	else
+		snprintf(aux, sizeof(aux) - sizeof(aux[0]), "CPU: %s %s", cpu_vendor,
+			cpu_brand);
 	write_log(aux);
 
 	/* Debuggers detection tricks */

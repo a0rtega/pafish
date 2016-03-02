@@ -31,7 +31,7 @@ static inline unsigned long long rdtsc_diff_vmexit() {
 }
 
 static inline void cpuid_vendor_00(char * vendor) {
-	int ebx, ecx, edx;
+	int ebx = 0, ecx = 0, edx = 0;
 
 	__asm__ volatile("cpuid" \
 			: "=b"(ebx), \
@@ -44,8 +44,22 @@ static inline void cpuid_vendor_00(char * vendor) {
 	vendor[12] = 0x00;
 }
 
+static inline void cpuid_hv_vendor_00(char * vendor) {
+	int ebx = 0, ecx = 0, edx = 0;
+
+	__asm__ volatile("cpuid" \
+			: "=b"(ebx), \
+			"=c"(ecx), \
+			"=d"(edx) \
+			: "a"(0x40000000));
+	sprintf(vendor  , "%c%c%c%c", ebx, (ebx >> 8), (ebx >> 16), (ebx >> 24));
+	sprintf(vendor+4, "%c%c%c%c", ecx, (ecx >> 8), (ecx >> 16), (ecx >> 24));
+	sprintf(vendor+8, "%c%c%c%c", edx, (edx >> 8), (edx >> 16), (edx >> 24));
+	vendor[12] = 0x00;
+}
+
 static inline void cpuid_brand(char * brand, uint32_t eax_value) {
-	int eax, ebx, ecx, edx;
+	int eax = 0, ebx = 0, ecx = 0, edx = 0;
 
 	__asm__ volatile("cpuid" \
 			: "=a"(eax), \
@@ -95,6 +109,10 @@ int cpu_hv() {
 
 void cpu_write_vendor(char * vendor) {
 	cpuid_vendor_00(vendor);
+}
+
+void cpu_write_hv_vendor(char * vendor) {
+	cpuid_hv_vendor_00(vendor);
 }
 
 void cpu_write_brand(char * brand) {
