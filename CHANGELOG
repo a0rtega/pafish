@@ -1,4 +1,9 @@
 
+v057
+
+- Fix "Failure to detect Xen" #47
+- Add hypervisor information
+
 v056
 
 - Added new checks
