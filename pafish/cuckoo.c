@@ -14,7 +14,7 @@
 #define TLS_HOOK_INFO_RETADDR_SPACE 0x100
 
 /**
- * Hook informnation stored by Cuckoo at FS:[TLS_HOOK_INFO].
+ * Hook information stored by Cuckoo at FS:[TLS_HOOK_INFO].
  */
 struct hook_info {
 	unsigned int depth_count;
