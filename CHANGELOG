@@ -1,4 +1,11 @@
 
+v058
+
+- Bugfix release
+- Fix "LocalFree after advanced list" #49
+- Fix typo
+- Add Wpedantic
+
 v057
 
 - Fix "Failure to detect Xen" #47
