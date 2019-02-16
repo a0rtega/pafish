@@ -1,3 +1,4 @@
 *.o
 *.log
 hi_*
+.vagrant
