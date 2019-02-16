@@ -66,5 +66,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y make mingw-w64
+    cd /vagrant/pafish
+    make -f Makefile.linux
   SHELL
 end
