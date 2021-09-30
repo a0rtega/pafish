@@ -22,5 +22,4 @@ Check out "[How to build](https://github.com/a0rtega/pafish/wiki/How-to-build)" 
 
 # Author
 
-Alberto Ortega (@[a0rtega](https://twitter.com/#!/a0rtega) - [profile](http://aortega.badtrace.com))
-
+Alberto Ortega
