@@ -66,8 +66,8 @@ int main(void)
 	cpu_write_hv_vendor(cpu_hv_vendor);
 	cpu_write_brand(cpu_brand);
 
-	printf("[*] Windows version: %s\n", winverstr);
-	printf("[*] CPU: %s\n", cpu_vendor);
+	printf("[-] Windows version: %s\n", winverstr);
+	printf("[-] CPU: %s\n", cpu_vendor);
 	if (strlen(cpu_hv_vendor))
 		printf("    Hypervisor: %s\n", cpu_hv_vendor);
 	printf("    CPU brand: %s\n", cpu_brand);
@@ -344,8 +344,10 @@ int main(void)
 		   "Cuckoo hooks information structure traced in the TLS",
 		   "hi_cuckoo");
 
-	printf("\n\n");
-	printf("[-] Feel free to RE me, check log file for more information.");
+	printf("\n");
+	printf("[-] Pafish has finished analyzing the system, check the log file for more information\n");
+	printf("    and visit the project's site:\n\n");
+	printf("    https://github.com/a0rtega/pafish\n");
 
 	write_log("End");
 	#if ENABLE_DNS_TRACE

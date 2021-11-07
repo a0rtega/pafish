@@ -31,11 +31,9 @@ void print_header() {
 	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
 	printf("* Pafish (");
 	SetConsoleTextAttribute(handler, 11);
-	printf("Paranoid fish");
+	printf("Paranoid Fish");
 	SetConsoleTextAttribute(handler, FOREGROUND_INTENSITY);
 	printf(") *\n\n");
-	printf("Some anti(debugger/VM/sandbox) tricks\n");
-	printf("used by malware for the general public.\n\n");
 }
 
 void print_traced() {
@@ -105,13 +103,14 @@ void exec_check(char * text, int (*callback)(), char * text_log, char * text_tra
 	int check_result;
 	int (*callback_writeslog)(int) = callback;
 
+	printf("[*] %s ... ", text);
+
 	/* Handle functions that write logs */
 	if (text_log)
 		check_result = callback();
 	else
 		check_result = callback_writeslog(TRUE);
 
-	printf("[*] %s ... ", text);
 	if (check_result == TRUE) {
 		/* Some checks write their own logs */
 		if (text_log)
