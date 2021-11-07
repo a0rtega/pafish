@@ -138,7 +138,7 @@ int main(void)
 	exec_check("Checking plausible dialog confirmation", &rtt_plausible_confirm_dialog,
 		   "Sandbox traced by missing or implausible dialog confirmation",
 		   "hi_sandbox_rtt_implausible_confirm_dialog");
-	
+
         /* Generic sandbox detection tricks */
 	print_check_group("Generic sandbox detection");
 	exec_check("Checking username", &gensandbox_username,
