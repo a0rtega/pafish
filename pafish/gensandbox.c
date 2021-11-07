@@ -17,20 +17,6 @@
  */
 typedef BOOL (WINAPI * IsNativeVhdBoot) (BOOL *);
 
-int gensandbox_mouse_act() {
-	POINT position1, position2;
-	GetCursorPos(&position1);
-	Sleep(2000); /* Sleep time */
-	GetCursorPos(&position2);
-	if ((position1.x == position2.x) && (position1.y == position2.y)) {
-		/* No mouse activity during the sleep */
-		return TRUE;
-	}
-	else {
-		/* Mouse activity during the sleep */
-		return FALSE;
-	}
-}
 
 int gensandbox_username() {
 	char username[200];

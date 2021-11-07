@@ -18,7 +18,7 @@
 #include "cpu.h"
 #include "cuckoo.h"
 #include "bochs.h"
-
+#include "rtt.h"
 /*
    Pafish (Paranoid fish)
 
@@ -43,6 +43,9 @@ int main(void)
 	char cpu_vendor[13], cpu_hv_vendor[13], cpu_brand[49];
 	OSVERSIONINFO winver;
 	unsigned short original_colors = 0;
+
+	/* Minimize window at first to not interefere with human behaviour simulators */
+	ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
 
 	write_log("Start");
 	#if ENABLE_DNS_TRACE
@@ -112,11 +115,32 @@ int main(void)
 		   "CPU VM traced by checking cpuid hypervisor vendor for known VM vendors",
 		   "hi_CPU_VM_hv_vendor_name");
 
-	/* Generic sandbox detection tricks */
+        /* Generic reverse turing tests */
+	print_check_group("Generic reverse turing tests");
+	exec_check("Checking mouse presence", &rtt_mouse_presence,
+		   "Sandbox traced by absence of mouse device",
+		   "hi_sandbox_mouse_presence");
+	exec_check("Checking mouse movement", &rtt_mouse_move,
+		   "Sandbox traced by missing mouse movement",
+		   "hi_sandbox_rtt_mouse_movement");
+	exec_check("Checking mouse speed", &rtt_mouse_speed_limit,
+		   "Sandbox traced by missing mouse movement or supernatural speed",
+		   "hi_sandbox_rtt_mouse_speed_limit");
+	exec_check("Checking mouse click activity", &rtt_mouse_click,
+		   "Sandbox traced by missing mouse click activity",
+		   "hi_sandbox_rtt_mouse_click");
+	exec_check("Checking mouse double click activity", &rtt_mouse_double_click,
+		   "Sandbox traced by missing double click activity",
+		   "hi_sandbox_rtt_mouse_double_click");
+	exec_check("Checking dialog confirmation", &rtt_confirm_dialog,
+		   "Sandbox traced by missing dialog confirmation",
+		   "hi_sandbox_rtt_confirm_dialog");
+	exec_check("Checking plausible dialog confirmation", &rtt_plausible_confirm_dialog,
+		   "Sandbox traced by missing or implausible dialog confirmation",
+		   "hi_sandbox_rtt_implausible_confirm_dialog");
+	
+        /* Generic sandbox detection tricks */
 	print_check_group("Generic sandbox detection");
-	exec_check("Using mouse activity", &gensandbox_mouse_act,
-		   "Sandbox traced using mouse activity",
-		   "hi_sandbox_mouse_act");
 	exec_check("Checking username", &gensandbox_username,
 		   "Sandbox traced by checking username",
 		   "hi_sandbox_username");
