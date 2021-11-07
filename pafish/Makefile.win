@@ -3,8 +3,8 @@ CC        = gcc.exe
 LINK      = gcc.exe
 WINDRES   = windres.exe
 OBJ       = Objects/MingW/main.o Objects/MingW/common.o Objects/MingW/utils.o Objects/MingW/debuggers.o Objects/MingW/sandboxie.o \
-            Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o \
-            Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/cpu.o Objects/MingW/cuckoo.o Objects/MingW/bochs.o \
+	    Objects/MingW/vbox.o Objects/MingW/gensandbox.o Objects/MingW/wine.o Objects/MingW/vmware.o \
+	    Objects/MingW/qemu.o Objects/MingW/hooks.o Objects/MingW/cpu.o Objects/MingW/cuckoo.o Objects/MingW/bochs.o \
 	    Objects/MingW/rtt.o Objects/MingW/pafish_private.res
 LINKOBJ   = $(OBJ)
 LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -lole32 -lwbemuuid -loleaut32 -lws2_32 -s
