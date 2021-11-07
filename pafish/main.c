@@ -6,6 +6,7 @@
 
 #include "config.h"
 #include "common.h"
+#include "utils.h"
 
 #include "debuggers.h"
 #include "sandboxie.h"
@@ -39,7 +40,7 @@
 
 int main(void)
 {
-	char winverstr[32], aux[1024];
+	char winverstr[64], aux[1024];
 	char cpu_vendor[13], cpu_hv_vendor[13], cpu_brand[49];
 	OSVERSIONINFO winver;
 	unsigned short original_colors = 0;
@@ -48,9 +49,9 @@ int main(void)
 	ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
 
 	write_log("Start");
-	#if ENABLE_DNS_TRACE
-		write_trace_dns("analysis-start");
-	#endif
+#if ENABLE_DNS_TRACE
+	write_trace_dns("analysis-start");
+#endif
 
 	original_colors = init_cmd_colors();
 	print_header();
@@ -67,6 +68,15 @@ int main(void)
 	cpu_write_brand(cpu_brand);
 
 	printf("[-] Windows version: %s\n", winverstr);
+	printf("[-] Running in WoW64: ");
+	if (pafish_iswow64()) {
+		printf("True\n");
+		strncat(winverstr, " (WoW64)", 10);
+	}
+	else {
+		printf("False\n");
+		strncat(winverstr, " (native)", 10);
+	}
 	printf("[-] CPU: %s\n", cpu_vendor);
 	if (strlen(cpu_hv_vendor))
 		printf("    Hypervisor: %s\n", cpu_hv_vendor);
@@ -162,10 +172,12 @@ int main(void)
 		   &gensandbox_sleep_patched,
 		   "Sandbox traced by checking if Sleep() was patched using GetTickCount()",
 		   "hi_sandbox_sleep_gettickcount");
+#if __i386__
 	exec_check("Checking if NumberOfProcessors is < 2 via raw access",
 		   &gensandbox_one_cpu,
 		   "Sandbox traced by checking if NumberOfProcessors is less than 2 via raw access",
 		   "hi_sandbox_NumberOfProcessors_less_2_raw");
+#endif
 	exec_check("Checking if NumberOfProcessors is < 2 via GetSystemInfo()",
 		   &gensandbox_one_cpu_GetSystemInfo,
 		   "Sandbox traced by checking if NumberOfProcessors is less than 2 via GetSystemInfo()",
@@ -183,6 +195,7 @@ int main(void)
 		   "Sandbox traced by checking IsNativeVhdBoot()",
 		   "hi_sandbox_IsNativeVhdBoot");
 
+#if __i386__
 	/* Hooks detection tricks */
 	print_check_group("Hooks detection");
 	exec_check("Checking function ShellExecuteExW method 1",
@@ -193,6 +206,7 @@ int main(void)
 		   &check_hook_CreateProcessA_m1,
 		   "Hooks traced using CreateProcessA method 1",
 		   "hi_hooks_createprocessa_m1");
+#endif
 
 	/* Sandboxie detection tricks */
 	print_check_group("Sandboxie detection");
@@ -337,12 +351,14 @@ int main(void)
 		   "Bochs traced using CPU Intel wrong value for processor name",
 		   "hi_bochs");
 
+#if __i386__
 	/* Cuckoo detection tricks */
 	print_check_group("Cuckoo detection");
 	exec_check("Looking in the TLS for the hooks information structure",
 		   &cuckoo_check_tls,
 		   "Cuckoo hooks information structure traced in the TLS",
 		   "hi_cuckoo");
+#endif
 
 	printf("\n");
 	printf("[-] Pafish has finished analyzing the system, check the log file for more information\n");
@@ -350,9 +366,9 @@ int main(void)
 	printf("    https://github.com/a0rtega/pafish\n");
 
 	write_log("End");
-	#if ENABLE_DNS_TRACE
+#if ENABLE_DNS_TRACE
 		write_trace_dns("analysis-end");
-	#endif
+#endif
 
 	/* Restore window */
 	ShowWindow(GetConsoleWindow(), SW_RESTORE);
