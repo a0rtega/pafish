@@ -259,8 +259,7 @@ LRESULT CALLBACK timed_dialog_proc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 			CreateWindowW(L"Button", L"Quit", WS_VISIBLE | WS_CHILD, 0 + btn_w,
 					TEXT_OFF, btn_w, btn_h, hwnd, (HMENU) ID_QUIT, NULL, NULL);
 			/* Ensure dialog is displayed at the very top */
-			/* SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | */
-			/* 			 SWP_SHOWWINDOW); */
+			//SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 			break;
 
 		case WM_TIMER:
@@ -326,7 +325,7 @@ int confirm_dialog(BOOL is_plausibility_check) {
 	my = GetSystemMetrics(SM_CYFULLSCREEN);
 
 	/* Limits for window size */
-	mw = GetSystemMetrics(SM_CXMIN);
+	mw = GetSystemMetrics(SM_CXMIN) * 3;
 	mh = GetSystemMetrics(SM_CYMIN) * 3;
 
 	/* Randomize window position */
@@ -334,8 +333,8 @@ int confirm_dialog(BOOL is_plausibility_check) {
 	ry = ((double) rand() / RAND_MAX) * (my - (4 * mh)) + mh;
 
 	RegisterClassW(&wc);
-	CreateWindowW(wc.lpszClassName, L"RTT window",
-			WS_OVERLAPPEDWINDOW | WS_VISIBLE, rx, ry, mw,
+	CreateWindowW(wc.lpszClassName, L"Pafish RTT window",
+			WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CAPTION, rx, ry, mw,
 			mh, 0, 0, NULL, 0);
 
 	while (GetMessage(&msg, NULL, 0, 0)) {
