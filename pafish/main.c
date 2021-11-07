@@ -352,6 +352,9 @@ int main(void)
 		write_trace_dns("analysis-end");
 	#endif
 
+	/* Restore window */
+	ShowWindow(GetConsoleWindow(), SW_RESTORE);
+
 	getchar();
 
 	/* Restore Original Console Colors */
