@@ -44,6 +44,9 @@ int main(void)
 	OSVERSIONINFO winver;
 	unsigned short original_colors = 0;
 
+	/* Minimize window at first to not interefere with human behaviour simulators */
+	ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
+
 	write_log("Start");
 	#if ENABLE_DNS_TRACE
 		write_trace_dns("analysis-start");
