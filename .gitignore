@@ -1,4 +1,5 @@
 *.o
+*.exe
 *.log
 hi_*
 .vagrant
