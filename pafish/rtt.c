@@ -15,6 +15,16 @@
 /* Duration of each check */
 #define MAX_DURATION 3000
 
+/* Some RTT global variables */
+HHOOK rtt_hook;
+BOOL rtt_is_success = FALSE;
+BOOL rtt_is_timeout = FALSE;
+BOOL rtt_is_within_rect = FALSE;
+/* Tracks the point in time of last click */
+u_int64 rtt_last = 0;
+/* Default double click time in milliseconds */
+u_int rtt_double_click_time = 500;
+
 /*
  * Checks, for the presence of a mouse device.
  *
@@ -114,20 +124,17 @@ VOID CALLBACK timer_proc() {
 	PostMessageA(NULL, WM_CUSTOM, 0, 0);
 }
 
-HHOOK hook;
-BOOL is_success = FALSE;
-
 /*
  * Callback for a low-level mouse hook, which checks, if a single click occurs.
  */
 LRESULT CALLBACK single_click_proc(int nCode, WPARAM wParam, LPARAM lp) {
 	if (nCode >= 0) {
 		if (wParam == WM_LBUTTONUP) {
-			is_success = TRUE;
+			rtt_is_success = TRUE;
 			PostMessageA(NULL, WM_CUSTOM, 0 , 0);
 		}
 	}
-	return CallNextHookEx(hook, nCode, wParam, lp);
+	return CallNextHookEx(rtt_hook, nCode, wParam, lp);
 }
 
 /*
@@ -155,30 +162,23 @@ u_int64 get_current_time_in_millis(){
 	return ms;
 }
 
-/* Tracks the point in time of last click */
-u_int64 last = 0;
-
-/* Default double click time in milliseconds */
-u_int double_click_time = 500;
-
 /*
  * Callback for a low-level mouse hook, which checks, if a double click occurs.
  * The presence of a double click is assumed if two clicks are observed within
- * the time frame double_click_time.
+ * the time frame rtt_double_click_time.
  */
 LRESULT CALLBACK double_click_proc(int code, WPARAM wp, LPARAM lp) {
 	if (code >= 0) {
 		if (wp == WM_LBUTTONDOWN) {
-		  
-		  u_int64 now = get_current_time_in_millis();
-		    if((now - last) < double_click_time){
-  	 	        is_success = TRUE;
-		    	PostMessageA(NULL, WM_CUSTOM, 0 , 0);
-		    }
-		    last = now;
+			u_int64 now = get_current_time_in_millis();
+			if((now - rtt_last) < rtt_double_click_time){
+				rtt_is_success = TRUE;
+				PostMessageA(NULL, WM_CUSTOM, 0 , 0);
+			}
+			rtt_last = now;
 		}
 	}
-	return CallNextHookEx(hook, code, wp, lp);
+	return CallNextHookEx(rtt_hook, code, wp, lp);
 }
 
 /*
@@ -186,7 +186,7 @@ LRESULT CALLBACK double_click_proc(int code, WPARAM wp, LPARAM lp) {
  */
 int install_hook(LRESULT CALLBACK (*callback)(int code, WPARAM wp, LPARAM lp)){
 	SetTimer(NULL, 0, MAX_DURATION, (TIMERPROC) &timer_proc);
-	hook = SetWindowsHookEx(WH_MOUSE_LL, callback, NULL, 0);
+	rtt_hook = SetWindowsHookEx(WH_MOUSE_LL, callback, NULL, 0);
 	MSG msg;
 
 	while (GetMessage(&msg, NULL, 0, 0) > 0) {
@@ -201,19 +201,20 @@ int install_hook(LRESULT CALLBACK (*callback)(int code, WPARAM wp, LPARAM lp)){
 
 	/* Clean up */
 	KillTimer(NULL, 0);
-	UnhookWindowsHookEx(hook);
+	UnhookWindowsHookEx(rtt_hook);
 
-	if (is_success)
-	       return FALSE;
+	if (rtt_is_success)
+		return FALSE;
 
 	return TRUE;
 }
+
 /*
  * Checks for a single click with a technique used in the UpClicker trojan.
  * See https://webcache.googleusercontent.com/search?q=cache:NeVZ4J1Y-cQJ:https://www.fireeye.com/blog/threat-research/2012/12/dont-click-the-left-mouse-button-trojan-upclicker.html+&cd=1&hl=en&ct=clnk&gl=de
  */
 int rtt_mouse_click() {
-    return install_hook(&single_click_proc);
+	return install_hook(&single_click_proc);
 }
 
 /*
@@ -230,13 +231,10 @@ int rtt_mouse_click() {
  */
 int rtt_mouse_double_click() {
 	/* Determines double click time set on system */
-	double_click_time = GetDoubleClickTime();
-    /* Checks, if a double click occurs */
+	rtt_double_click_time = GetDoubleClickTime();
+	/* Checks, if a double click occurs */
 	return install_hook(&double_click_proc);
 }
-
-BOOL is_timeout = FALSE;
-BOOL is_within_rect = FALSE;
 
 LRESULT CALLBACK timed_dialog_proc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 
@@ -244,67 +242,68 @@ LRESULT CALLBACK timed_dialog_proc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
 	int btn_w, btn_h;
 
 	switch (msg) {
-	case WM_CREATE:
-		SetTimer(hwnd, 1, MAX_DURATION, NULL);
+		case WM_CREATE:
+			SetTimer(hwnd, 1, MAX_DURATION, NULL);
 
-		/* Determines "usable" size inside of the current window */
-		GetClientRect(hwnd, &rect);
+			/* Determines "usable" size inside of the current window */
+			GetClientRect(hwnd, &rect);
 
-		/* Calculates button size */
-		btn_w = (rect.right - rect.left) / 2;
-		btn_h = (rect.bottom - rect.top) / 2;
+			/* Calculates button size */
+			btn_w = (rect.right - rect.left) / 2;
+			btn_h = (rect.bottom - rect.top) / 2;
 
-		/* Create two buttons - randomly chosen and "Quit" */
-		CreateWindowW(L"Button", L"OK", WS_VISIBLE | WS_CHILD, 0, TEXT_OFF,
-				btn_w, btn_h, hwnd, (HMENU) ID_OK, NULL, NULL);
+			/* Create two buttons - randomly chosen and "Quit" */
+			CreateWindowW(L"Button", L"OK", WS_VISIBLE | WS_CHILD, 0, TEXT_OFF,
+					btn_w, btn_h, hwnd, (HMENU) ID_OK, NULL, NULL);
 
-		CreateWindowW(L"Button", L"Quit", WS_VISIBLE | WS_CHILD, 0 + btn_w,
-					  TEXT_OFF, btn_w, btn_h, hwnd, (HMENU) ID_QUIT, NULL, NULL);
-		/* Ensure dialog is displayed at the very top */
-		/* SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | */
-		/* 			 SWP_SHOWWINDOW); */
-		break;
+			CreateWindowW(L"Button", L"Quit", WS_VISIBLE | WS_CHILD, 0 + btn_w,
+					TEXT_OFF, btn_w, btn_h, hwnd, (HMENU) ID_QUIT, NULL, NULL);
+			/* Ensure dialog is displayed at the very top */
+			/* SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | */
+			/* 			 SWP_SHOWWINDOW); */
+			break;
 
-	case WM_TIMER:
-		is_timeout = TRUE;
-		DestroyWindow(hwnd);
-		break;
-
-	case WM_COMMAND:
-
-	{
-		/*
-		 * Plausibility check, whether cursor is still within rect.
-		 * Buttons are not focusable, therefore pressing return is not in this case possible
-		 */
-		POINT p;
-		GetCursorPos(&p);
-		GetWindowRect(hwnd, &rect);
-
-		if (p.x >= rect.left && p.x <= rect.right && p.y >= rect.top
-				&& p.y <= rect.bottom)
-			is_within_rect = TRUE;
-	}
-
-		/* Destroys and recreates a new window on "Ok" */
-		if (LOWORD(wp) == ID_OK) {
-			MessageBeep(MB_OK);
+		case WM_TIMER:
+			rtt_is_timeout = TRUE;
 			DestroyWindow(hwnd);
-		}
+			break;
 
-		/* Sets stop condition, if "Quit" was clicked */
-		if (LOWORD(wp) == ID_QUIT) {
-			DestroyWindow(hwnd);
-		}
-		break;
+		case WM_COMMAND:
 
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
+			{
+				/*
+				 * Plausibility check, whether cursor is still within rect.
+				 * Buttons are not focusable, therefore pressing return is not in this case possible
+				 */
+				POINT p;
+				GetCursorPos(&p);
+				GetWindowRect(hwnd, &rect);
+
+				if (p.x >= rect.left && p.x <= rect.right && p.y >= rect.top
+						&& p.y <= rect.bottom)
+					rtt_is_within_rect = TRUE;
+			}
+
+			/* Destroys and recreates a new window on "Ok" */
+			if (LOWORD(wp) == ID_OK) {
+				MessageBeep(MB_OK);
+				DestroyWindow(hwnd);
+			}
+
+			/* Sets stop condition, if "Quit" was clicked */
+			if (LOWORD(wp) == ID_QUIT) {
+				DestroyWindow(hwnd);
+			}
+			break;
+
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
 	}
 
 	return DefWindowProcW(hwnd, msg, wp, lp);
 }
+
 /*
  * Displays a dialog and waits for interaction
  */
@@ -331,8 +330,8 @@ int confirm_dialog(BOOL is_plausibility_check) {
 	mh = GetSystemMetrics(SM_CYMIN) * 3;
 
 	/* Randomize window position */
-    rx = ((double) rand() / RAND_MAX) * (mx - (4 * mw)) + mw;
-    ry = ((double) rand() / RAND_MAX) * (my - (4 * mh)) + mh;
+	rx = ((double) rand() / RAND_MAX) * (mx - (4 * mw)) + mw;
+	ry = ((double) rand() / RAND_MAX) * (my - (4 * mh)) + mh;
 
 	RegisterClassW(&wc);
 	CreateWindowW(wc.lpszClassName, L"RTT window",
@@ -344,9 +343,9 @@ int confirm_dialog(BOOL is_plausibility_check) {
 		DispatchMessage(&msg);
 	}
 
-	if (!is_timeout) {
+	if (!rtt_is_timeout) {
 		if (is_plausibility_check)
-			return !is_within_rect;
+			return !rtt_is_within_rect;
 		else
 			return FALSE;
 	}
