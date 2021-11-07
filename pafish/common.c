@@ -70,9 +70,9 @@ void write_trace(char product[]) {
 	FILE *trace;
 	trace = fopen(product, "a");
 	fclose(trace);
-	#if ENABLE_DNS_TRACE
-		write_trace_dns(product);
-	#endif
+#if ENABLE_DNS_TRACE
+	write_trace_dns(product);
+#endif
 }
 
 void write_trace_dns(char product[]) {

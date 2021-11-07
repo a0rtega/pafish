@@ -367,7 +367,7 @@ int main(void)
 
 	write_log("End");
 #if ENABLE_DNS_TRACE
-		write_trace_dns("analysis-end");
+	write_trace_dns("analysis-end");
 #endif
 
 	/* Restore window */
