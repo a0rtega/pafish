@@ -1,0 +1,71 @@
+
+CC        = x86_64-w64-mingw32-gcc
+LINK      = x86_64-w64-mingw32-gcc
+WINDRES   = x86_64-w64-mingw32-windres
+OBJ       = Objects/MingW/main64.o Objects/MingW/common64.o Objects/MingW/utils64.o Objects/MingW/debuggers64.o Objects/MingW/sandboxie64.o \
+	    Objects/MingW/vbox64.o Objects/MingW/gensandbox64.o Objects/MingW/wine64.o Objects/MingW/vmware64.o \
+	    Objects/MingW/qemu64.o Objects/MingW/hooks64.o Objects/MingW/cpu64.o Objects/MingW/cuckoo64.o Objects/MingW/bochs64.o \
+	    Objects/MingW/rtt64.o Objects/MingW/pafish_private64.res
+LINKOBJ   = $(OBJ)
+LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -lole32 -lwbemuuid -loleaut32 -lws2_32 -s
+INCS      =
+BIN       = Output/MingW/pafish64.exe
+CFLAGS    = $(INCS) -Wall -Wextra -Wpedantic -O0
+
+all: $(BIN)
+
+clean:
+	rm -f Objects/MingW/*.o
+	rm -f Objects/MingW/*.res
+	rm -f Output/MingW/*.exe
+
+$(BIN): $(OBJ)
+	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS)
+
+Objects/MingW/main64.o: $(GLOBALDEPS) main.c
+	$(CC) -c main.c -o Objects/MingW/main64.o $(CFLAGS)
+
+Objects/MingW/common64.o: $(GLOBALDEPS) common.c
+	$(CC) -c common.c -o Objects/MingW/common64.o $(CFLAGS)
+
+Objects/MingW/utils64.o: $(GLOBALDEPS) utils.c
+	$(CC) -c utils.c -o Objects/MingW/utils64.o $(CFLAGS)
+
+Objects/MingW/debuggers64.o: $(GLOBALDEPS) debuggers.c
+	$(CC) -c debuggers.c -o Objects/MingW/debuggers64.o $(CFLAGS)
+
+Objects/MingW/sandboxie64.o: $(GLOBALDEPS) sandboxie.c
+	$(CC) -c sandboxie.c -o Objects/MingW/sandboxie64.o $(CFLAGS)
+
+Objects/MingW/vbox64.o: $(GLOBALDEPS) vbox.c
+	$(CC) -c vbox.c -o Objects/MingW/vbox64.o $(CFLAGS)
+
+Objects/MingW/gensandbox64.o: $(GLOBALDEPS) gensandbox.c
+	$(CC) -c gensandbox.c -o Objects/MingW/gensandbox64.o $(CFLAGS)
+
+Objects/MingW/wine64.o: $(GLOBALDEPS) wine.c
+	$(CC) -c wine.c -o Objects/MingW/wine64.o $(CFLAGS)
+
+Objects/MingW/vmware64.o: $(GLOBALDEPS) vmware.c
+	$(CC) -c vmware.c -o Objects/MingW/vmware64.o $(CFLAGS)
+
+Objects/MingW/qemu64.o: $(GLOBALDEPS) qemu.c
+	$(CC) -c qemu.c -o Objects/MingW/qemu64.o $(CFLAGS)
+
+Objects/MingW/hooks64.o: $(GLOBALDEPS) hooks.c
+	$(CC) -c hooks.c -o Objects/MingW/hooks64.o $(CFLAGS)
+
+Objects/MingW/cpu64.o: $(GLOBALDEPS) cpu.c
+	$(CC) -c cpu.c -o Objects/MingW/cpu64.o $(CFLAGS)
+
+Objects/MingW/cuckoo64.o: $(GLOBALDEPS) cuckoo.c
+	$(CC) -c cuckoo.c -o Objects/MingW/cuckoo64.o $(CFLAGS)
+
+Objects/MingW/bochs64.o: $(GLOBALDEPS) bochs.c
+	$(CC) -c bochs.c -o Objects/MingW/bochs64.o $(CFLAGS)
+
+Objects/MingW/rtt64.o: $(GLOBALDEPS) rtt.c
+	$(CC) -c rtt.c -o Objects/MingW/rtt64.o $(CFLAGS)
+
+Objects/MingW/pafish_private64.res: Objects/MingW/pafish_private.rc
+	$(WINDRES) Objects/MingW/pafish_private.rc --input-format=rc -o Objects/MingW/pafish_private64.res -O coff
