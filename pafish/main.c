@@ -8,16 +8,18 @@
 #include "common.h"
 #include "utils.h"
 
+#if __i386__
+#include "hooks.h"
+#include "cuckoo.h"
+#endif
 #include "debuggers.h"
 #include "sandboxie.h"
 #include "gensandbox.h"
-#include "hooks.h"
 #include "vbox.h"
 #include "wine.h"
 #include "vmware.h"
 #include "qemu.h"
 #include "cpu.h"
-#include "cuckoo.h"
 #include "bochs.h"
 #include "rtt.h"
 /*
