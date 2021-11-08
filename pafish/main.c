@@ -99,6 +99,9 @@ int main(void)
 	exec_check("Using IsDebuggerPresent()", &debug_isdebuggerpresent,
 		   "Debugger traced using IsDebuggerPresent()",
 		   "hi_debugger_isdebuggerpresent");
+	exec_check("Using BeingDebugged via PEB access", &debug_beingdebugged_peb,
+		   "Debugger traced using PEB BeingDebugged",
+		   "hi_debugger_beingdebugged_PEB");
 	/* This is only working on MS Windows systems prior to Vista */
 	if (winver.dwMajorVersion < 6) {
 		exec_check("Using OutputDebugString()",

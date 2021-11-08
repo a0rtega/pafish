@@ -4,6 +4,7 @@
 #include <windows.h>
 
 #include "debuggers.h"
+#include "utils.h"
 #include "types.h"
 
 int debug_isdebuggerpresent() {
@@ -25,4 +26,10 @@ int debug_outputdebugstring() {
 	else {
 		return FALSE;
 	}
+}
+
+int debug_beingdebugged_peb() {
+	struct _PEB_wine * PEB;
+	PEB = pafish_get_PEB();
+	return PEB->BeingDebugged == 1 ? TRUE : FALSE;
 }
