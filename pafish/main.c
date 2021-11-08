@@ -172,12 +172,10 @@ int main(void)
 		   &gensandbox_sleep_patched,
 		   "Sandbox traced by checking if Sleep() was patched using GetTickCount()",
 		   "hi_sandbox_sleep_gettickcount");
-#if __i386__
-	exec_check("Checking if NumberOfProcessors is < 2 via raw access",
+	exec_check("Checking if NumberOfProcessors is < 2 via PEB access",
 		   &gensandbox_one_cpu,
-		   "Sandbox traced by checking if NumberOfProcessors is less than 2 via raw access",
-		   "hi_sandbox_NumberOfProcessors_less_2_raw");
-#endif
+		   "Sandbox traced by checking if NumberOfProcessors is less than 2 via PEB access",
+		   "hi_sandbox_NumberOfProcessors_less_2_PEB");
 	exec_check("Checking if NumberOfProcessors is < 2 via GetSystemInfo()",
 		   &gensandbox_one_cpu_GetSystemInfo,
 		   "Sandbox traced by checking if NumberOfProcessors is less than 2 via GetSystemInfo()",

@@ -127,13 +127,9 @@ int gensandbox_sleep_patched() {
 }
 
 int gensandbox_one_cpu() {
-	DWORD NumberOfProcessors = 0;
-	__asm__ volatile (
-			"mov %%fs:0x18, %%eax;"
-			"mov %%ds:0x30(%%eax), %%eax;"
-			"mov %%ds:0x64(%%eax), %%eax;"
-			: "=a"(NumberOfProcessors));
-	return NumberOfProcessors < 2 ? TRUE : FALSE;
+	struct _PEB_wine * PEB;
+	PEB = pafish_get_PEB();
+	return PEB->NumberOfProcessors < 2 ? TRUE : FALSE;
 }
 
 int gensandbox_one_cpu_GetSystemInfo() {
