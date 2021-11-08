@@ -284,7 +284,8 @@ int wmi_check_query(IWbemServices *services, const wchar_t *language, const wcha
 
 		while (WBEM_S_NO_ERROR == result && status == FALSE) {
 			// Retrieve 10 rows (instances) each time.
-			result = queryrows->lpVtbl->Next(queryrows, WBEM_INFINITE, 10,
+			// WBEM_INFINITE = 0xFFFFFFFF
+			result = queryrows->lpVtbl->Next(queryrows, 0xFFFFFFFF, 10,
 				batchrows, &count);
 
 			if (!SUCCEEDED(result)) {

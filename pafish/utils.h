@@ -6,10 +6,12 @@
 #include <windows.h>
 #include <winternl.h>
 
+#ifndef _WDMDDK_
 typedef struct _RTL_BITMAP {
 	ULONG SizeOfBitMap;
 	PULONG Buffer;
 } RTL_BITMAP, *PRTL_BITMAP;
+#endif
 
 /*
   PEB data structure

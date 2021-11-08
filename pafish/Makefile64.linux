@@ -10,7 +10,7 @@ LINKOBJ   = $(OBJ)
 LIBS      = -lwsock32 -liphlpapi -lsetupapi -lmpr -lole32 -lwbemuuid -loleaut32 -lws2_32 -s
 INCS      =
 BIN       = Output/MingW/pafish64.exe
-CFLAGS    = $(INCS) -Wall -Wextra -Wpedantic -O0
+CFLAGS    = $(INCS) -Wall -Wextra -Wpedantic -O0 -Wno-cast-function-type
 
 all: $(BIN)
 
