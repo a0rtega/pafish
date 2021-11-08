@@ -11,6 +11,8 @@
 #include "common.h"
 #include "types.h"
 
+char pafish_pe_img_log[2048];
+
 unsigned short init_cmd_colors() {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	HANDLE handler = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -73,6 +75,9 @@ void write_trace(char product[]) {
 #if ENABLE_DNS_TRACE
 	write_trace_dns(product);
 #endif
+#if ENABLE_PE_IMG_TRACE
+	write_trace_pe_img(product, TRUE);
+#endif
 }
 
 void write_trace_dns(char product[]) {
@@ -93,6 +98,12 @@ void write_trace_dns(char product[]) {
 	if (!error)
 		freeaddrinfo(result);
 	free(dns);
+}
+
+void write_trace_pe_img(char product[], BOOLEAN add_comma) {
+	strncat(pafish_pe_img_log, product, strlen(product));
+	if (add_comma)
+		strncat(pafish_pe_img_log, ",", 2);
 }
 
 void print_check_group(char * text) {

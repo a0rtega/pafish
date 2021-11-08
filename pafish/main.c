@@ -54,6 +54,9 @@ int main(void)
 #if ENABLE_DNS_TRACE
 	write_trace_dns("analysis-start");
 #endif
+#if ENABLE_PE_IMG_TRACE
+	write_trace_pe_img("analysis-start ", FALSE);
+#endif
 
 	original_colors = init_cmd_colors();
 	print_header();
@@ -371,6 +374,9 @@ int main(void)
 	write_log("End");
 #if ENABLE_DNS_TRACE
 	write_trace_dns("analysis-end");
+#endif
+#if ENABLE_PE_IMG_TRACE
+	write_trace_pe_img(" analysis-end", FALSE);
 #endif
 
 	/* Restore window */
