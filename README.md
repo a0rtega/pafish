@@ -7,7 +7,7 @@ Pafish is a demonstration tool that employs several techniques to detect sandbox
 
 The project is open source, you can read the code of all anti-analysis checks. You can also **[download](https://github.com/a0rtega/pafish/raw/master/pafish.exe)** the executable of the latest stable version.
 
-![pafish screenshot](https://raw.githubusercontent.com/a0rtega/pafish/dev-chaos/screenshots/v057/pafish_vbox_win8.png)
+![pafish screenshot](https://github.com/a0rtega/pafish/raw/dev/screenshots/v06/pafish_native_win10.png)
 
 # Scope
 
