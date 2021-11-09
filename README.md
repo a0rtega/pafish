@@ -3,26 +3,27 @@
 
 # Pafish
 
-Pafish is a demonstration tool that employs several techniques to detect sandboxes and analysis environments in the same way as malware families do.
+Pafish is a testing tool that uses different techniques to detect virtual machines and malware analysis environments in the same way that malware families do.
 
-The project is open source, you can read the code of all anti-analysis checks. You can also **[download](https://github.com/a0rtega/pafish/raw/master/pafish.exe)** the executable of the latest stable version.
+The project is free and open source; the code of all the anti-analysis techniques is publicly available. Pafish executables for Windows (x86 32-bit and 64-bit) can be downloaded from the [releases page](https://github.com/a0rtega/pafish/releases).
 
 ![pafish screenshot](https://github.com/a0rtega/pafish/raw/dev/screenshots/v06/pafish_native_win10.png)
 
 # Scope
 
-The objective of this project is to collect usual tricks seen in malware samples. This allows us to study them, and test if our analysis environments are properly implemented.
+The goal of this project is to collect techniques commonly observed in malware samples to evade analysis systems. This allows analysts to study them and test whether the analysis environments are properly implemented.
 
-# Build
+# Building Pafish
 
-Pafish is written in C and can be built with MinGW (gcc + make).
+Pafish is written in C and can be built with `Mingw-w64` and `make`.
 
-Check out "[How to build](https://github.com/a0rtega/pafish/wiki/How-to-build)" for detailed instructions.
+The wiki page "[How to build](https://github.com/a0rtega/pafish/wiki/How-to-build)" contains detailed instructions.
 
 # Author
 
-Alberto Ortega
+Alberto Ortega and many awesome [contributors](https://github.com/a0rtega/pafish/graphs/contributors).
 
 # License
 
 [GPL-3.0](LICENSE.txt)
+
